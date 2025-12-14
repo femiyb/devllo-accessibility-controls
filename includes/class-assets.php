@@ -68,6 +68,14 @@ final class Assets {
             ],
         ];
 
+        /**
+         * Filter the frontend configuration passed to JavaScript.
+         *
+         * @param array $config   Configuration array.
+         * @param array $settings Plugin settings.
+         */
+        $config = apply_filters( 'da11y_frontend_config', $config, $settings );
+
         wp_localize_script( 'da11y-frontend', 'da11yConfig', $config );
     }
 }

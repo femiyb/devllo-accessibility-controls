@@ -572,4 +572,87 @@ Devllo Accessibility Controls – v0.4.0 Build Checklist
 - [ ] CSS scanning handles missing or unreadable styles gracefully
 - [ ] JS for font-size detection does not break the frontend for regular visitors
 
-4.4 Update Readme
+
+Devllo Accessibility Controls – v0.5.0 Build Checklist
+
+1. Scope for 0.5.0
+
+1.1 Frontend UX & accessibility polish
+- [ ] Refine the accessibility widget UI for clarity and responsiveness
+- [ ] Add explicit close controls and state indicators
+- [ ] Tighten ARIA usage and focus management
+
+1.2 Developer extensibility
+- [ ] Expose filters/actions so developers can adjust defaults and markup
+- [ ] Document key hooks for theme/plugin authors
+
+2. Frontend UI Improvements
+
+2.1 Dialog close controls
+- [ ] Add a visible close button inside the dialog:
+  - [ ] Accessible label (e.g. “Close accessibility settings”)
+  - [ ] Keyboard focusable and operable via Enter/Space
+- [ ] Ensure Escape key and close button both call the same close logic
+
+2.2 Trigger state indicators
+- [ ] Add `aria-expanded` or similar attribute on the trigger button
+- [ ] Keep it in sync with dialog open/close state in JS
+
+2.3 ARIA & semantics review
+- [ ] Review `role="dialog"` usage and consider `role="alertdialog"` only where appropriate
+- [ ] Confirm `aria-labelledby` and `aria-describedby` reference visible elements
+- [ ] Ensure no redundant or misleading ARIA attributes
+
+2.4 Responsive layout
+- [ ] Test the dialog and controls on small screens
+- [ ] Adjust spacing/stacking so controls remain usable on mobile
+
+3. Keyboard & Screen Reader Flow
+
+3.1 Focus order and loops
+- [ ] Verify focus order inside the dialog is logical
+- [ ] Ensure focus trap logic is robust with additional controls (close button, new toggles)
+
+3.2 Screen reader announcements
+- [ ] Confirm dialog opening is announced clearly by at least one screen reader
+- [ ] Ensure new controls (close button, any additional toggles) have clear labels and state feedback
+
+4. Developer Extensibility
+
+4.1 Filters for defaults
+- [ ] Add filters to allow developers to override:
+  - [ ] Default enabled features (text size, contrast, dyslexia, reduced motion)
+  - [ ] Default button position
+
+4.2 Markup customization hooks
+- [ ] Add actions (do_action) around:
+  - [ ] Before/after trigger button
+  - [ ] Before/after dialog sections
+- [ ] Keep defaults intact so hooks are optional
+
+4.3 Config object extensibility
+- [ ] Allow additional data to be injected into the localized JS config via a filter
+
+5. Documentation & Examples
+
+5.1 Developer docs
+- [ ] Document new filters/actions in a simple “Developer Notes” section (e.g. in readme or a separate doc)
+- [ ] Provide minimal code examples for:
+  - [ ] Changing default button position via a filter
+  - [ ] Disabling a feature globally via a filter
+
+5.2 Readme updates
+- [ ] Update `readme.txt` to mention:
+  - [ ] Improved UI/UX for the widget and dialog
+  - [ ] New hooks available for developers
+
+6. Tests for v0.5.0
+
+6.1 Frontend behavior
+- [ ] Close button and Escape both close the dialog and restore focus correctly
+- [ ] `aria-expanded` on trigger reflects open/closed state
+- [ ] Dialog remains usable and readable on mobile devices
+
+6.2 Accessibility & extensibility
+- [ ] New hooks do not break existing behavior when unused
+- [ ] Screen reader and keyboard tests still pass after UI changes

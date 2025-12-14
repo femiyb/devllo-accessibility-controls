@@ -106,9 +106,10 @@
 
         cacheElements() {
             // Dialog + trigger.
-            this.$trigger  = document.querySelector('.da11y-trigger');
-            this.$backdrop = document.querySelector('.da11y-dialog-backdrop');
-            this.$dialog   = document.querySelector('.da11y-dialog');
+            this.$trigger      = document.querySelector('.da11y-trigger');
+            this.$backdrop     = document.querySelector('.da11y-dialog-backdrop');
+            this.$dialog       = document.querySelector('.da11y-dialog');
+            this.$closeButton  = document.querySelector('.da11y-dialog-close');
 
             // Controls.
             this.$textSmaller    = document.querySelector('.da11y-text-smaller');
@@ -211,6 +212,13 @@
                 });
             }
 
+            // Close button inside dialog.
+            if (this.$closeButton) {
+                this.$closeButton.addEventListener('click', () => {
+                    this.closeDialog();
+                });
+            }
+
             // Text size controls.
             if (this.$textSmaller) {
                 this.$textSmaller.addEventListener('click', () => {
@@ -270,6 +278,10 @@
             this.$backdrop.hidden = false;
             this.isOpen = true;
 
+            if (this.$trigger) {
+                this.$trigger.setAttribute('aria-expanded', 'true');
+            }
+
             // Find focusable elements inside the dialog.
             const focusables = this.$dialog.querySelectorAll(this.focusableSelector);
 
@@ -289,6 +301,10 @@
 
             this.$backdrop.hidden = true;
             this.isOpen = false;
+
+            if (this.$trigger) {
+                this.$trigger.setAttribute('aria-expanded', 'false');
+            }
 
             // Restore focus to previously focused element (ideally the trigger).
             if (this.previouslyFocused && typeof this.previouslyFocused.focus === 'function') {

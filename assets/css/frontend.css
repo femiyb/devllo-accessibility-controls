@@ -67,6 +67,23 @@
     font-size: 0.875rem;
 }
 
+/* Dialog close button */
+.da11y-dialog-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.da11y-dialog-close:focus {
+    outline: 2px solid #005fcc;
+    outline-offset: 2px;
+}
+
 /* Focus styles for plugin controls */
 .da11y-trigger:focus,
 .da11y-dialog button:focus,
@@ -109,4 +126,13 @@
 .da11y-reduced-motion-on .da11y-trigger {
     animation: none !important;
     transition: none !important;
+}
+
+@media (max-width: 600px) {
+    .da11y-dialog {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: none;
+    }
 }

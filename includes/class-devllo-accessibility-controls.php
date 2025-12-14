@@ -58,18 +58,41 @@ class Accessibility_Controls {
 
         ?>
         <?php
+        /**
+         * Fires before the accessibility trigger button is rendered.
+         *
+         * @param array $settings Plugin settings.
+         */
+        do_action( 'da11y_before_trigger', $settings );
+
         // Trigger button that opens the accessibility dialog.
         ?>
         <button
             type="button"
             class="da11y-trigger <?php echo esc_attr( $position_class ); ?>"
+            aria-expanded="false"
             aria-label="<?php echo esc_attr__( 'Accessibility Controls', 'devllo-accessibility-controls' ); ?>"
         >
             <?php echo esc_html__( 'Accessibility Options', 'devllo-accessibility-controls' ); ?>
         </button>
 
         <?php
+        /**
+         * Fires after the accessibility trigger button is rendered.
+         *
+         * @param array $settings Plugin settings.
+         */
+        do_action( 'da11y_after_trigger', $settings );
+
         // Dialog backdrop and panel (initially hidden; JS will toggle visibility).
+        ?>
+        <?php
+        /**
+         * Fires before the accessibility dialog markup is rendered.
+         *
+         * @param array $settings Plugin settings.
+         */
+        do_action( 'da11y_before_dialog', $settings );
         ?>
         <div
             class="da11y-dialog-backdrop"
@@ -85,6 +108,13 @@ class Accessibility_Controls {
                 <?php
                 // Dialog title and description provide context for screen readers.
                 ?>
+                <button
+                    type="button"
+                    class="da11y-dialog-close"
+                    aria-label="<?php echo esc_attr__( 'Close accessibility settings', 'devllo-accessibility-controls' ); ?>"
+                >
+                    &times;
+                </button>
                 <h2 id="da11y-dialog-title">
                     <?php echo esc_html__( 'Accessibility Settings', 'devllo-accessibility-controls' ); ?>
                 </h2>
@@ -192,6 +222,14 @@ class Accessibility_Controls {
                 </div>
             </div>
         </div>
+        <?php
+        /**
+         * Fires after the accessibility dialog markup is rendered.
+         *
+         * @param array $settings Plugin settings.
+         */
+        do_action( 'da11y_after_dialog', $settings );
+        ?>
         <?php
     }
 }

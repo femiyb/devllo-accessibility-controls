@@ -232,12 +232,19 @@ class Settings {
      * @return array
      */
     public static function get_defaults() {
-        return [
+        $defaults = [
             'enabled'         => true,
             'button_position'        => 'bottom_right',
             'dyslexia_enabled'       => true,
             'reduced_motion_enabled' => true,
         ];
+
+        /**
+         * Filter the default plugin settings.
+         *
+         * @param array $defaults Default settings.
+         */
+        return apply_filters( 'da11y_default_settings', $defaults );
     }
 
     /**

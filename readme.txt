@@ -4,7 +4,7 @@ Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,7 +59,24 @@ No. This version focuses on user-facing controls (text size, contrast, dyslexia-
 * **Preference persistence** – store user settings in the browser so they persist across page loads.
 * **Keyboard accessible UI** – the widget and dialog are designed to be usable from the keyboard.
 
+== Developer Notes ==
+
+Filters:
+
+* `da11y_default_settings` – adjust the default plugin settings array before it is used.
+* `da11y_frontend_config` – modify the configuration array passed to the frontend script (`da11yConfig`).
+
+Actions:
+
+* `da11y_before_trigger` / `da11y_after_trigger` – run before/after the frontend trigger button markup.
+* `da11y_before_dialog` / `da11y_after_dialog` – run before/after the accessibility dialog markup.
+
 == Changelog ==
+
+= 0.5.0 =
+* Improved the accessibility dialog with a visible close button and `aria-expanded` state on the trigger.
+* Adjusted dialog layout for better usability on small screens.
+* Added filters (`da11y_default_settings`, `da11y_frontend_config`) and actions around the trigger and dialog markup for developers.
 
 = 0.4.0 =
 * Added a “Basic automated checks” section on the Accessibility Guidance page.
