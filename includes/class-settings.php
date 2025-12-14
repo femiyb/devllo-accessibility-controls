@@ -30,6 +30,13 @@ class Settings {
     const CHECKLIST_OPTION_NAME = 'da11y_checklist';
 
     /**
+     * Option name used to store basic check results.
+     *
+     * @var string
+     */
+    const CHECK_RESULTS_OPTION_NAME = 'da11y_check_results';
+
+    /**
      * Constructor.
      *
      * Hooks into admin_init to register the settings and into admin_menu
@@ -41,6 +48,7 @@ class Settings {
         if ( is_admin() ) {
             add_action( 'admin_init', [ $this, 'register' ] );
             add_action( 'admin_init', [ $this, 'register_checklist' ] );
+            add_action( 'admin_init', [ $this, 'maybe_run_basic_checks' ] );
             add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
             add_action( 'admin_menu', [ $this, 'add_guidance_page' ] );
         }
@@ -122,6 +130,32 @@ class Settings {
                 'default'           => self::get_checklist_defaults(),
             ]
         );
+    }
+
+    /**
+     * Maybe run basic automated checks when requested.
+     *
+     * @return void
+     */
+    public function maybe_run_basic_checks() {
+        if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        if ( ! isset( $_GET['da11y_run_checks'] ) ) {
+            return;
+        }
+
+        check_admin_referer( 'da11y_run_checks' );
+
+        $results = $this->run_basic_checks();
+
+        update_option( self::CHECK_RESULTS_OPTION_NAME, $results );
+
+        // Redirect back to the guidance page without the query arg.
+        $redirect = remove_query_arg( 'da11y_run_checks' );
+        wp_safe_redirect( $redirect );
+        exit;
     }
 
     /**
@@ -317,6 +351,175 @@ class Settings {
     }
 
     /**
+     * Run a small set of basic automated accessibility checks.
+     *
+     * @return array
+     */
+    protected function run_basic_checks() {
+        $results = [
+            'last_run' => time(),
+            'checks'   => [],
+        ];
+
+        $results['checks']['skip_link']      = $this->check_skip_link();
+        $results['checks']['focus_outline']  = $this->check_focus_outline();
+        $results['checks']['font_size']      = $this->check_font_size_heuristic();
+
+        return $results;
+    }
+
+    /**
+     * Check for presence of a skip link on the homepage.
+     *
+     * @return array
+     */
+    protected function check_skip_link() {
+        $url      = home_url( '/' );
+        $response = wp_remote_get(
+            $url,
+            [
+                'timeout' => 5,
+            ]
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return [
+                'status'  => 'error',
+                'message' => sprintf(
+                    /* translators: %s: error message */
+                    __( 'Skip link check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
+                    $response->get_error_message()
+                ),
+            ];
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+
+        if ( ! is_string( $body ) || '' === $body ) {
+            return [
+                'status'  => 'error',
+                'message' => __( 'Skip link check: the homepage response was empty.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        // Only inspect the beginning of the document.
+        $snippet = substr( $body, 0, 5000 );
+
+        if ( preg_match( '/<a[^>]+href=["\']#(main|content|primary|skip)/i', $snippet ) ) {
+            return [
+                'status'  => 'ok',
+                'message' => __( 'Skip link check: a skip link appears to be present on the homepage.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        return [
+            'status'  => 'warn',
+            'message' => __( 'Skip link check: no skip link was detected on the homepage; consider adding one to improve keyboard navigation.', 'devllo-accessibility-controls' ),
+        ];
+    }
+
+    /**
+     * Check for CSS that removes focus outlines in the active theme stylesheets.
+     *
+     * @return array
+     */
+    protected function check_focus_outline() {
+        $paths   = [];
+        $paths[] = trailingslashit( get_stylesheet_directory() ) . 'style.css';
+
+        if ( get_stylesheet_directory() !== get_template_directory() ) {
+            $paths[] = trailingslashit( get_template_directory() ) . 'style.css';
+        }
+
+        $found = false;
+
+        foreach ( $paths as $path ) {
+            if ( ! file_exists( $path ) || ! is_readable( $path ) ) {
+                continue;
+            }
+
+            $contents = file_get_contents( $path );
+
+            if ( false === $contents ) {
+                continue;
+            }
+
+            if ( preg_match( '/outline\s*:\s*(none|0)\s*;?/i', $contents ) ) {
+                $found = true;
+                break;
+            }
+        }
+
+        if ( $found ) {
+            return [
+                'status'  => 'warn',
+                'message' => __( 'Focus outline check: CSS that removes focus outlines was detected in the active theme; ensure a visible focus style is still provided.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        return [
+            'status'  => 'ok',
+            'message' => __( 'Focus outline check: no focus-outline removal was detected in the main theme stylesheets.', 'devllo-accessibility-controls' ),
+        ];
+    }
+
+    /**
+     * Heuristic base font size check.
+     *
+     * @return array
+     */
+    protected function check_font_size_heuristic() {
+        // This is intentionally conservative; many themes do not define a base size in style.css.
+        $path = trailingslashit( get_stylesheet_directory() ) . 'style.css';
+
+        if ( ! file_exists( $path ) || ! is_readable( $path ) ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Font size check: could not find a readable theme stylesheet; verify that your base font size is comfortably readable (for example, 16px or larger).', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        $contents = file_get_contents( $path );
+
+        if ( false === $contents ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Font size check: could not read the theme stylesheet; verify that your base font size is comfortably readable (for example, 16px or larger).', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        // Try to find a font-size declaration on html or body.
+        if ( preg_match( '/(html|body)\s*{[^}]*font-size\s*:\s*([\d.]+)px/i', $contents, $matches ) ) {
+            $size = (float) $matches[2];
+
+            if ( $size < 16 ) {
+                return [
+                    'status'  => 'warn',
+                    'message' => sprintf(
+                        /* translators: %s: detected font size in px */
+                        __( 'Font size check: base font size appears to be approximately %spx; this may be small for some users. Verify that text is comfortably readable.', 'devllo-accessibility-controls' ),
+                        $size
+                    ),
+                ];
+            }
+
+            return [
+                'status'  => 'ok',
+                'message' => sprintf(
+                    /* translators: %s: detected font size in px */
+                    __( 'Font size check: base font size appears to be approximately %spx.', 'devllo-accessibility-controls' ),
+                    $size
+                ),
+            ];
+        }
+
+        return [
+            'status'  => 'info',
+            'message' => __( 'Font size check: could not automatically determine a base font size; verify manually that text is comfortably readable.', 'devllo-accessibility-controls' ),
+        ];
+    }
+
+    /**
      * Render the settings page wrapper.
      *
      * @return void
@@ -350,8 +553,12 @@ class Settings {
             return;
         }
 
-        $items    = self::get_checklist_items();
-        $statuses = self::get_checklist_statuses();
+        $items       = self::get_checklist_items();
+        $statuses    = self::get_checklist_statuses();
+        $results     = get_option( self::CHECK_RESULTS_OPTION_NAME, [] );
+
+        $last_run    = isset( $results['last_run'] ) ? (int) $results['last_run'] : 0;
+        $check_msgs  = isset( $results['checks'] ) && is_array( $results['checks'] ) ? $results['checks'] : [];
 
         $status_labels = [
             'reviewed'       => __( 'Reviewed', 'devllo-accessibility-controls' ),
@@ -371,6 +578,52 @@ class Settings {
                 <strong><?php esc_html_e( 'Important:', 'devllo-accessibility-controls' ); ?></strong>
                 <?php esc_html_e( 'These notes are informational only and do not guarantee ADA, WCAG, or any legal compliance.', 'devllo-accessibility-controls' ); ?>
             </p>
+
+            <h2><?php esc_html_e( 'Basic automated checks', 'devllo-accessibility-controls' ); ?></h2>
+            <p class="description">
+                <?php esc_html_e( 'These checks are limited and informational. They are not a full audit and do not guarantee compliance.', 'devllo-accessibility-controls' ); ?>
+            </p>
+
+            <?php
+            $run_url = wp_nonce_url(
+                add_query_arg(
+                    'da11y_run_checks',
+                    1,
+                    admin_url( 'options-general.php?page=da11y_accessibility_guidance' )
+                ),
+                'da11y_run_checks'
+            );
+            ?>
+            <p>
+                <a href="<?php echo esc_url( $run_url ); ?>" class="button button-secondary">
+                    <?php esc_html_e( 'Run basic accessibility checks', 'devllo-accessibility-controls' ); ?>
+                </a>
+            </p>
+
+            <?php if ( $last_run ) : ?>
+                <p>
+                    <?php
+                    printf(
+                        /* translators: %s: human-readable datetime */
+                        esc_html__( 'Last run: %s', 'devllo-accessibility-controls' ),
+                        esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run ) )
+                    );
+                    ?>
+                </p>
+                <?php if ( ! empty( $check_msgs ) ) : ?>
+                    <ul>
+                        <?php foreach ( $check_msgs as $check_id => $check ) : ?>
+                            <li>
+                                <?php echo esc_html( $check['message'] ?? '' ); ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            <?php else : ?>
+                <p class="description">
+                    <?php esc_html_e( 'No basic checks have been run yet.', 'devllo-accessibility-controls' ); ?>
+                </p>
+            <?php endif; ?>
 
             <form action="options.php" method="post">
                 <?php settings_fields( 'da11y_checklist_group' ); ?>
@@ -410,16 +663,6 @@ class Settings {
                     <?php endforeach; ?>
                     </tbody>
                 </table>
-
-                <h2><?php esc_html_e( 'Informational checks', 'devllo-accessibility-controls' ); ?></h2>
-                <p class="description">
-                    <?php esc_html_e( 'These are prompts to help you manually review your site. They are not automated tests or a complete audit.', 'devllo-accessibility-controls' ); ?>
-                </p>
-                <ul>
-                    <li><?php esc_html_e( 'Check that there is a visible “skip to content” link near the top of your pages.', 'devllo-accessibility-controls' ); ?></li>
-                    <li><?php esc_html_e( 'Review your CSS to ensure focus outlines are not removed without providing an accessible alternative.', 'devllo-accessibility-controls' ); ?></li>
-                    <li><?php esc_html_e( 'Verify that your base font size is large enough for comfortable reading (for example, 16px or larger).', 'devllo-accessibility-controls' ); ?></li>
-                </ul>
 
                 <?php submit_button(); ?>
             </form>

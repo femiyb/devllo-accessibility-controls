@@ -61,6 +61,18 @@ No. This version focuses on user-facing controls (text size, contrast, dyslexia-
 
 == Changelog ==
 
+= 0.4.0 =
+* Added a “Basic automated checks” section on the Accessibility Guidance page.
+* Added a skip link heuristic check for the homepage.
+* Added a focus outline removal check for the active theme stylesheets.
+* Added a base font size heuristic check for the theme stylesheet.
+* Stored results with a timestamp and clear messaging that checks are partial and informational only.
+
+= 0.3.0 =
+* Added an Accessibility Guidance admin page with a checklist of key accessibility topics.
+* Let site owners track status per item (Reviewed, Needs attention, Not applicable).
+* Added strong messaging to clarify that guidance is not a compliance audit or legal advice.
+
 = 0.2.0 =
 * Added dyslexia-friendly reading mode (toggle in the accessibility panel).
 * Added reduced motion mode for the accessibility controls UI, respecting system prefers-reduced-motion.

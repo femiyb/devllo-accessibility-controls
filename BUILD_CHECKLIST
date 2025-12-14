@@ -457,4 +457,119 @@ Devllo Accessibility Controls – v0.3.0 Build Checklist
 - [ ] All controls on the guidance page are keyboard accessible
 - [ ] Headings and structure are logical for screen readers
 
+
+Devllo Accessibility Controls – v0.4.0 Build Checklist
+
+1. Scope for 0.4.0
+
+1.1 Basic automated checks (admin-only)
+- [ ] Add a “Run basic checks” action on the Accessibility Guidance page
+- [ ] Implement a few small, safe, clearly messaged checks
+- [ ] Store and display results for admins only
+
+1.2 Guardrails
+- [ ] No compliance scores or “pass/fail” ratings
+- [ ] No legal or WCAG compliance guarantees
+- [ ] Clear messaging that checks are partial and informational
+
+2. “Run Basic Checks” UI
+
+2.1 Button and layout
+- [ ] On `Settings → Accessibility Guidance`, add:
+  - [ ] A “Run basic checks” button
+  - [ ] A results area (e.g. a list under “Basic automated checks”)
+- [ ] Ensure the button is:
+  - [ ] Keyboard accessible
+  - [ ] Clearly labeled (e.g. “Run basic accessibility checks”)
+
+2.2 Request handling
+- [ ] Implement a secure way to trigger checks:
+  - [ ] Either via a form submit with nonce
+  - [ ] Or via AJAX (`wp_ajax_...`) with capability checks and nonce
+- [ ] Ensure only users with `manage_options` can run checks
+
+3. Check #1 – Skip Link Presence (Homepage)
+
+3.1 Implementation
+- [ ] Retrieve the homepage HTML (e.g. `get_home_url()` + `wp_remote_get()` or output buffering)
+- [ ] Search for a skip link near the top of the document:
+  - [ ] Look for `<a>` with `href` pointing to an in-page anchor (`#content`, `#main`, etc.)
+- [ ] Be tolerant of variations and avoid strict assumptions
+
+3.2 Output
+- [ ] If a likely skip link is detected:
+  - [ ] Show a message like: “A skip link appears to be present on the homepage.”
+- [ ] If no skip link is detected:
+  - [ ] Show a message like: “We did not detect a skip link on the homepage; consider adding one to improve keyboard navigation.”
+- [ ] Add a note that this is a heuristic, not a definitive assessment
+
+4. Check #2 – Focus Outline Removal in CSS
+
+4.1 Implementation
+- [ ] Inspect enqueued styles for rules that remove focus outlines:
+  - [ ] Search for `outline: none` or `outline: 0`
+  - [ ] Optionally, limit search to theme stylesheets
+- [ ] Avoid over-parsing; a simple text search is acceptable
+
+4.2 Output
+- [ ] If no outline removal is detected:
+  - [ ] Show a message like: “We did not find CSS that removes focus outlines.”
+- [ ] If outline removal is detected:
+  - [ ] Show a message like: “We found CSS rules that remove focus outlines; ensure a visible focus style is still provided.”
+- [ ] Remind admins this is a partial check and not exhaustive
+
+5. Check #3 – Base Font Size Heuristic
+
+5.1 Implementation approach
+- [ ] Use a small frontend JS snippet (enqueued only when checks are requested or for admins) to:
+  - [ ] Read computed font size on `html` or `body` (e.g. `getComputedStyle`)
+  - [ ] Send that value back to the server or store it in an option/transient
+- [ ] Alternatively, display the computed size in a notice on the guidance page sourced from JS
+
+5.2 Output
+- [ ] Show a message like:
+  - [ ] “Base font size appears to be approximately 16px.” (or whatever is detected)
+- [ ] If detected size is small (e.g. < 16px):
+  - [ ] Add: “This may be small for some users; verify that text is comfortably readable.”
+
+6. Results Storage and Display
+
+6.1 Storage
+- [ ] Create an option or transient (e.g. `da11y_check_results`) to store:
+  - [ ] Timestamp of last run
+  - [ ] Per-check outcomes and messages
+
+6.2 Display
+- [ ] On the guidance page, show:
+  - [ ] When checks were last run (human-readable timestamp)
+  - [ ] A list of messages per check
+- [ ] Ensure messages are:
+  - [ ] Clear
+  - [ ] Non-technical where possible
+  - [ ] Framed as “possible issues” or “observations”
+
+7. Documentation & Messaging
+
+7.1 Readme updates
+- [ ] Update `readme.txt` to mention:
+  - [ ] “Basic automated checks” available for admins
+  - [ ] They are partial and informational only
+
+7.2 In-plugin messaging
+- [ ] On or above the “Run basic checks” button, add:
+  - [ ] Text like: “These checks are limited and do not replace a full accessibility audit.”
+- [ ] Ensure wording does not over-claim or imply compliance
+
+8. Tests for v0.4.0
+
+8.1 Admin behavior
+- [ ] “Run basic checks” button works for admins with `manage_options`
+- [ ] Results persist across page reloads
+- [ ] Running checks again updates the timestamp and results
+
+8.2 Safety and robustness
+- [ ] Network failures (for homepage fetch) show a friendly message, not a fatal error
+- [ ] CSS scanning handles missing or unreadable styles gracefully
+- [ ] JS for font-size detection does not break the frontend for regular visitors
+
 4.4 Update Readme
