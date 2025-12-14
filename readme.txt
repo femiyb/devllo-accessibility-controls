@@ -4,7 +4,7 @@ Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,13 @@ Actions:
 * `da11y_before_dialog` / `da11y_after_dialog` – run before/after the accessibility dialog markup.
 
 == Changelog ==
+
+= 0.6.2 =
+* Extended the Basic automated checks on the Accessibility Guidance page to include:
+* Heading structure heuristics (presence of H1 and obvious level jumps).
+* Image alternative text sampling on the homepage (summary of alt usage).
+* A heuristic check for form controls that appear to lack accessible labels or names.
+* All checks remain partial, informational, and admin-only.
 
 = 0.6.1 =
 * Added an “Accessibility hints” sidebar panel to the block editor with soft, post-specific accessibility hints.

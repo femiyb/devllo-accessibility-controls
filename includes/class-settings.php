@@ -368,9 +368,12 @@ class Settings {
             'checks'   => [],
         ];
 
-        $results['checks']['skip_link']      = $this->check_skip_link();
-        $results['checks']['focus_outline']  = $this->check_focus_outline();
-        $results['checks']['font_size']      = $this->check_font_size_heuristic();
+        $results['checks']['skip_link']       = $this->check_skip_link();
+        $results['checks']['focus_outline']   = $this->check_focus_outline();
+        $results['checks']['font_size']       = $this->check_font_size_heuristic();
+        $results['checks']['headings']        = $this->check_heading_structure();
+        $results['checks']['image_alt_usage'] = $this->check_image_alt_usage();
+        $results['checks']['form_labels']     = $this->check_form_labels();
 
         return $results;
     }
@@ -523,6 +526,289 @@ class Settings {
         return [
             'status'  => 'info',
             'message' => __( 'Font size check: could not automatically determine a base font size; verify manually that text is comfortably readable.', 'devllo-accessibility-controls' ),
+        ];
+    }
+
+    /**
+     * Check heading structure on the homepage.
+     *
+     * @return array
+     */
+    protected function check_heading_structure() {
+        $url      = home_url( '/' );
+        $response = wp_remote_get(
+            $url,
+            [
+                'timeout' => 5,
+            ]
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return [
+                'status'  => 'error',
+                'message' => sprintf(
+                    /* translators: %s: error message */
+                    __( 'Heading check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
+                    $response->get_error_message()
+                ),
+            ];
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+
+        if ( ! is_string( $body ) || '' === $body ) {
+            return [
+                'status'  => 'error',
+                'message' => __( 'Heading check: the homepage response was empty.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        preg_match_all( '/<h([1-6])\b[^>]*>/i', $body, $matches );
+
+        if ( empty( $matches[1] ) ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Heading check: no headings were detected on the homepage. Ensure there is a clear heading structure.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        $levels = array_map( 'intval', $matches[1] );
+        $h1_count = count( array_filter( $levels, static function ( $level ) {
+            return 1 === (int) $level;
+        } ) );
+
+        $has_jump = false;
+        $previous = null;
+        foreach ( $levels as $level ) {
+            if ( null !== $previous && $level > $previous + 1 ) {
+                $has_jump = true;
+                break;
+            }
+            $previous = $level;
+        }
+
+        if ( $h1_count === 0 ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Heading check: no H1 heading was detected on the homepage. Ensure there is a clear main heading.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        if ( $h1_count > 1 ) {
+            return [
+                'status'  => 'warn',
+                'message' => __( 'Heading check: multiple H1 headings were detected on the homepage; review heading structure for clarity.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        if ( $has_jump ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Heading check: heading levels on the homepage may skip levels (e.g. H1 to H3); review for a logical outline.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        return [
+            'status'  => 'ok',
+            'message' => __( 'Heading check: no obvious heading structure issues were detected on the homepage.', 'devllo-accessibility-controls' ),
+        ];
+    }
+
+    /**
+     * Sample image alt usage on the homepage.
+     *
+     * @return array
+     */
+    protected function check_image_alt_usage() {
+        $url      = home_url( '/' );
+        $response = wp_remote_get(
+            $url,
+            [
+                'timeout' => 5,
+            ]
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return [
+                'status'  => 'error',
+                'message' => sprintf(
+                    /* translators: %s: error message */
+                    __( 'Image alt check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
+                    $response->get_error_message()
+                ),
+            ];
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+
+        if ( ! is_string( $body ) || '' === $body ) {
+            return [
+                'status'  => 'error',
+                'message' => __( 'Image alt check: the homepage response was empty.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        preg_match_all( '/<img\b[^>]*>/i', $body, $matches );
+        $images = $matches[0] ?? [];
+
+        if ( empty( $images ) ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Image alt check: no images were detected on the homepage.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        $limit            = 100;
+        $total_sampled    = 0;
+        $with_alt         = 0;
+        $decorative_alt   = 0;
+        $missing_alt      = 0;
+
+        foreach ( $images as $img ) {
+            if ( $total_sampled >= $limit ) {
+                break;
+            }
+
+            $total_sampled++;
+
+            if ( preg_match( '/\balt=["\']([^"\']*)["\']/i', $img, $alt_match ) ) {
+                $alt_value = $alt_match[1];
+
+                if ( '' === $alt_value ) {
+                    $decorative_alt++;
+                } else {
+                    $with_alt++;
+                }
+            } else {
+                $missing_alt++;
+            }
+        }
+
+        $message = sprintf(
+            /* translators: 1: total images sampled, 2: with alt, 3: decorative (empty alt), 4: missing alt */
+            __( 'Image alt check: sampled %1$d images on the homepage – %2$d with alt text, %3$d decorative (empty alt), %4$d with missing alt attributes.', 'devllo-accessibility-controls' ),
+            $total_sampled,
+            $with_alt,
+            $decorative_alt,
+            $missing_alt
+        );
+
+        $status = 'ok';
+        if ( $missing_alt > 0 ) {
+            $status = 'warn';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
+        ];
+    }
+
+    /**
+     * Heuristic check for form label presence on the homepage.
+     *
+     * @return array
+     */
+    protected function check_form_labels() {
+        $url      = home_url( '/' );
+        $response = wp_remote_get(
+            $url,
+            [
+                'timeout' => 5,
+            ]
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return [
+                'status'  => 'error',
+                'message' => sprintf(
+                    /* translators: %s: error message */
+                    __( 'Form label check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
+                    $response->get_error_message()
+                ),
+            ];
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+
+        if ( ! is_string( $body ) || '' === $body ) {
+            return [
+                'status'  => 'error',
+                'message' => __( 'Form label check: the homepage response was empty.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        // Collect all label for= attributes.
+        $label_for_ids = [];
+        if ( preg_match_all( '/<label\b[^>]*for=["\']([^"\']+)["\']/i', $body, $label_matches ) ) {
+            $label_for_ids = array_map( 'trim', $label_matches[1] );
+        }
+
+        // Inputs/selects/textareas to inspect.
+        $controls = [];
+        if ( preg_match_all( '/<(input|select|textarea)\b[^>]*>/i', $body, $control_matches ) ) {
+            $controls = $control_matches[0];
+        }
+
+        if ( empty( $controls ) ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Form label check: no form controls were detected on the homepage.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        $total_controls = 0;
+        $likely_labeled = 0;
+        $unlabeled      = 0;
+
+        foreach ( $controls as $control ) {
+            $total_controls++;
+
+            // Ignore hidden inputs.
+            if ( preg_match( '/<input\b[^>]*type=["\']hidden["\']/i', $control ) ) {
+                $total_controls--;
+                continue;
+            }
+
+            $has_aria = preg_match( '/\baria-label=["\']([^"\']+)["\']/i', $control )
+                || preg_match( '/\baria-labelledby=["\']([^"\']+)["\']/i', $control );
+
+            $has_for_label = false;
+            if ( preg_match( '/\bid=["\']([^"\']+)["\']/i', $control, $id_match ) ) {
+                $control_id    = $id_match[1];
+                $has_for_label = in_array( $control_id, $label_for_ids, true );
+            }
+
+            if ( $has_aria || $has_for_label ) {
+                $likely_labeled++;
+            } else {
+                $unlabeled++;
+            }
+        }
+
+        if ( 0 === $total_controls ) {
+            return [
+                'status'  => 'info',
+                'message' => __( 'Form label check: no visible form controls were detected on the homepage.', 'devllo-accessibility-controls' ),
+            ];
+        }
+
+        $message = sprintf(
+            /* translators: 1: total controls, 2: likely labeled, 3: unlabeled */
+            __( 'Form label check: sampled %1$d form controls on the homepage – %2$d appear to have labels or accessible names, %3$d appear unlabeled.', 'devllo-accessibility-controls' ),
+            $total_controls,
+            $likely_labeled,
+            $unlabeled
+        );
+
+        $status = 'ok';
+        if ( $unlabeled > 0 ) {
+            $status = 'warn';
+        }
+
+        return [
+            'status'  => $status,
+            'message' => $message,
         ];
     }
 
