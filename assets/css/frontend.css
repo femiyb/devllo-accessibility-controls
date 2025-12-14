@@ -128,6 +128,102 @@
     transition: none !important;
 }
 
+/* Spacing controls (applied to html/body) */
+.da11y-spacing-1 body,
+.da11y-spacing-1 .site,
+.da11y-spacing-1 .entry-content {
+    line-height: 1.6;
+}
+
+.da11y-spacing-1 .entry-content p,
+.da11y-spacing-1 .entry-content li {
+    margin-bottom: 1.25em;
+}
+
+.da11y-spacing-2 body,
+.da11y-spacing-2 .site,
+.da11y-spacing-2 .entry-content {
+    line-height: 1.8;
+}
+
+.da11y-spacing-2 .entry-content p,
+.da11y-spacing-2 .entry-content li {
+    margin-bottom: 1.5em;
+}
+
+/* Dark mode (applied more broadly for readability) */
+.da11y-theme-dark-mode body {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Common text elements: ensure light text in dark mode */
+.da11y-theme-dark-mode body p,
+.da11y-theme-dark-mode body li,
+.da11y-theme-dark-mode body span,
+.da11y-theme-dark-mode body div,
+.da11y-theme-dark-mode body td,
+.da11y-theme-dark-mode body th {
+    color: #e0e0e0 !important;
+}
+
+/* Header / footer / nav backgrounds in dark mode */
+.da11y-theme-dark-mode header,
+.da11y-theme-dark-mode .site-header,
+.da11y-theme-dark-mode footer,
+.da11y-theme-dark-mode .site-footer,
+.da11y-theme-dark-mode nav {
+    background-color: #121212 !important;
+}
+
+.da11y-theme-dark-mode body a {
+    color: #80b3ff !important;
+}
+
+.da11y-theme-dark-mode body h1,
+.da11y-theme-dark-mode body h2,
+.da11y-theme-dark-mode body h3,
+.da11y-theme-dark-mode body h4,
+.da11y-theme-dark-mode body h5,
+.da11y-theme-dark-mode body h6 {
+    color: #ffffff !important;
+}
+
+.da11y-theme-dark-mode body input,
+.da11y-theme-dark-mode body textarea,
+.da11y-theme-dark-mode body select {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+    border-color: #444444 !important;
+}
+
+/* In blocks explicitly marked as light, keep text dark on light backgrounds */
+.da11y-theme-dark-mode .is-light,
+.da11y-theme-dark-mode .is-light * {
+    color: #111111 !important;
+}
+
+/* Keep accessibility trigger readable and distinct in dark mode */
+.da11y-theme-dark-mode .da11y-trigger {
+    background-color: #005fcc !important;
+    color: #ffffff !important;
+}
+
+/* Reading mode (applied to html) */
+.da11y-reading-mode-on body {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 782px) {
+    .da11y-reading-mode-on body {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 @media (max-width: 600px) {
     .da11y-dialog {
         left: 1rem;

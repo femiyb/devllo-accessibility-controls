@@ -4,7 +4,7 @@ Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,8 @@ No. This version focuses on user-facing controls (text size, contrast, dyslexia-
 * **High contrast mode** – toggle a high contrast color scheme for better readability.
 * **Dyslexia-friendly reading mode** – optional font and spacing adjustments to improve readability for some readers.
 * **Reduced motion mode** – minimize motion in the accessibility controls UI and respect system reduced-motion preferences.
+* **Spacing and reading mode** – adjust line spacing and enable a focused reading mode for longer content.
+* **Color themes** – choose between default and optional dark mode color themes (dark mode is experimental and may require theme-specific tuning).
 * **Preference persistence** – store user settings in the browser so they persist across page loads.
 * **Keyboard accessible UI** – the widget and dialog are designed to be usable from the keyboard.
 
@@ -72,6 +74,11 @@ Actions:
 * `da11y_before_dialog` / `da11y_after_dialog` – run before/after the accessibility dialog markup.
 
 == Changelog ==
+
+= 0.6.3 =
+* Added spacing controls to increase or reset line spacing for improved readability.
+* Introduced color themes (default, high-contrast light, high-contrast dark) selectable from the accessibility panel.
+* Added a reading mode toggle that narrows content width and combines readability-oriented settings for longer content.
 
 = 0.6.2 =
 * Extended the Basic automated checks on the Accessibility Guidance page to include:

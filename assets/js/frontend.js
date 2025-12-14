@@ -11,6 +11,9 @@
             contrast: false,
             dyslexia: false,
             reducedMotion: false,
+            spacing: 0,
+            theme: 'default',
+            readingMode: false,
         },
 
         init() {
@@ -39,6 +42,18 @@
             if (typeof defaults.reducedMotion === 'boolean') {
                 this.state.reducedMotion = defaults.reducedMotion;
             }
+
+            if (typeof defaults.spacing === 'number') {
+                this.state.spacing = defaults.spacing;
+            }
+
+            if (typeof defaults.theme === 'string') {
+                this.state.theme = defaults.theme;
+            }
+
+            if (typeof defaults.readingMode === 'boolean') {
+                this.state.readingMode = defaults.readingMode;
+            }
         },
 
         loadStoredPreferences() {
@@ -65,6 +80,26 @@
 
                     if (typeof stored.reducedMotion === 'boolean') {
                         this.state.reducedMotion = stored.reducedMotion;
+                    }
+
+                    if (typeof stored.spacing === 'number') {
+                        this.state.spacing = stored.spacing;
+                    }
+
+                    if (typeof stored.theme === 'string') {
+                        // Map legacy high-contrast themes back to default.
+                        if (
+                            stored.theme === 'high-contrast-light' ||
+                            stored.theme === 'high-contrast-dark'
+                        ) {
+                            this.state.theme = 'default';
+                        } else {
+                            this.state.theme = stored.theme;
+                        }
+                    }
+
+                    if (typeof stored.readingMode === 'boolean') {
+                        this.state.readingMode = stored.readingMode;
                     }
                 }
             } catch (e) {
@@ -118,6 +153,10 @@
             this.$contrastToggle      = document.querySelector('.da11y-contrast-toggle');
             this.$dyslexiaToggle      = document.querySelector('.da11y-dyslexia-toggle');
             this.$reducedMotionToggle = document.querySelector('.da11y-reduced-motion-toggle');
+            this.$spacingMore    = document.querySelector('.da11y-spacing-more');
+            this.$spacingReset   = document.querySelector('.da11y-spacing-reset');
+            this.$themeButtons   = document.querySelectorAll('.da11y-theme-button');
+            this.$readingMode    = document.querySelector('.da11y-reading-mode-toggle');
             this.$resetAll       = document.querySelector('.da11y-reset-all');
 
             // Selector for focusable elements inside the dialog.
@@ -143,8 +182,8 @@
                 root.classList.add('da11y-text-scale-2');
             }
 
-            // Contrast.
-            if (this.state.contrast) {
+            // Contrast (only when no explicit theme override is selected).
+            if (this.state.theme === 'default' && this.state.contrast) {
                 root.classList.add('da11y-contrast-on');
             } else {
                 root.classList.remove('da11y-contrast-on');
@@ -156,7 +195,8 @@
                     'aria-pressed',
                     this.state.contrast ? 'true' : 'false'
                 );
-                this.$contrastToggle.classList.toggle('da11y-toggle-active', !!this.state.contrast);
+                const contrastActive = this.state.theme === 'default' && !!this.state.contrast;
+                this.$contrastToggle.classList.toggle('da11y-toggle-active', contrastActive);
             }
 
             // Dyslexia mode.
@@ -187,6 +227,46 @@
                     this.state.reducedMotion ? 'true' : 'false'
                 );
                 this.$reducedMotionToggle.classList.toggle('da11y-toggle-active', !!this.state.reducedMotion);
+            }
+
+            // Spacing.
+            root.classList.remove('da11y-spacing-1', 'da11y-spacing-2');
+            if (this.state.spacing === 1) {
+                root.classList.add('da11y-spacing-1');
+            } else if (this.state.spacing === 2) {
+                root.classList.add('da11y-spacing-2');
+            }
+
+            // Color themes: default or dark mode.
+            root.classList.remove(
+                'da11y-theme-dark-mode'
+            );
+            if (this.state.theme === 'dark-mode') {
+                root.classList.add('da11y-theme-dark-mode');
+            }
+
+            if (this.$themeButtons && this.$themeButtons.length) {
+                this.$themeButtons.forEach((button) => {
+                    const theme = button.getAttribute('data-da11y-theme');
+                    const isActive = theme === this.state.theme;
+                    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                    button.classList.toggle('da11y-toggle-active', isActive);
+                });
+            }
+
+            // Reading mode.
+            if (this.state.readingMode) {
+                root.classList.add('da11y-reading-mode-on');
+            } else {
+                root.classList.remove('da11y-reading-mode-on');
+            }
+
+            if (this.$readingMode) {
+                this.$readingMode.setAttribute(
+                    'aria-pressed',
+                    this.state.readingMode ? 'true' : 'false'
+                );
+                this.$readingMode.classList.toggle('da11y-toggle-active', !!this.state.readingMode);
             }
         },
 
@@ -263,6 +343,36 @@
             if (this.$reducedMotionToggle) {
                 this.$reducedMotionToggle.addEventListener('click', () => {
                     this.toggleReducedMotion();
+                });
+            }
+
+            // Spacing controls.
+            if (this.$spacingMore) {
+                this.$spacingMore.addEventListener('click', () => {
+                    this.changeSpacing(1);
+                });
+            }
+
+            if (this.$spacingReset) {
+                this.$spacingReset.addEventListener('click', () => {
+                    this.resetSpacing();
+                });
+            }
+
+            // Theme buttons.
+            if (this.$themeButtons && this.$themeButtons.length) {
+                this.$themeButtons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        const theme = button.getAttribute('data-da11y-theme') || 'default';
+                        this.setTheme(theme);
+                    });
+                });
+            }
+
+            // Reading mode toggle.
+            if (this.$readingMode) {
+                this.$readingMode.addEventListener('click', () => {
+                    this.toggleReadingMode();
                 });
             }
         },
@@ -390,11 +500,48 @@
             this.savePreferences();
         },
 
+        changeSpacing(delta) {
+            const min = 0;
+            const max = 2;
+            let next = this.state.spacing + delta;
+
+            if (next < min) {
+                next = min;
+            } else if (next > max) {
+                next = max;
+            }
+
+            this.state.spacing = next;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        resetSpacing() {
+            this.state.spacing = 0;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        setTheme(theme) {
+            this.state.theme = theme || 'default';
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        toggleReadingMode() {
+            this.state.readingMode = !this.state.readingMode;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
         resetAll() {
             this.state.textSize = 0;
             this.state.contrast = false;
             this.state.dyslexia = false;
             this.state.reducedMotion = false;
+             this.state.spacing = 0;
+             this.state.theme = 'default';
+             this.state.readingMode = false;
 
             this.applyStateToDOM();
             this.clearPreferences();

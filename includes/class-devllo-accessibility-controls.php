@@ -152,6 +152,29 @@ class Accessibility_Controls {
                 </section>
 
                 <?php
+                // Section: Spacing controls (line height and paragraph spacing).
+                ?>
+                <section class="da11y-section da11y-section-spacing">
+                    <h3>
+                        <?php echo esc_html__( 'Spacing', 'devllo-accessibility-controls' ); ?>
+                    </h3>
+                    <div class="da11y-controls-row">
+                        <button
+                            type="button"
+                            class="da11y-spacing-more"
+                        >
+                            <?php echo esc_html__( 'Increase spacing', 'devllo-accessibility-controls' ); ?>
+                        </button>
+                        <button
+                            type="button"
+                            class="da11y-spacing-reset"
+                        >
+                            <?php echo esc_html__( 'Reset spacing', 'devllo-accessibility-controls' ); ?>
+                        </button>
+                    </div>
+                </section>
+
+                <?php
                 // Section: Dyslexia-friendly reading mode (if enabled).
                 if ( $dyslexia_enabled ) :
                     ?>
@@ -205,6 +228,51 @@ class Accessibility_Controls {
                             aria-pressed="false"
                         >
                             <?php echo esc_html__( 'Toggle high contrast', 'devllo-accessibility-controls' ); ?>
+                        </button>
+                    </div>
+                </section>
+
+                <?php
+                // Section: Color themes.
+                ?>
+                <section class="da11y-section da11y-section-themes">
+                    <h3>
+                        <?php echo esc_html__( 'Color themes', 'devllo-accessibility-controls' ); ?>
+                    </h3>
+                    <div class="da11y-controls-row">
+                        <button
+                            type="button"
+                            class="da11y-theme-button"
+                            data-da11y-theme="default"
+                            aria-pressed="true"
+                        >
+                            <?php echo esc_html__( 'Default', 'devllo-accessibility-controls' ); ?>
+                        </button>
+                        <button
+                            type="button"
+                            class="da11y-theme-button"
+                            data-da11y-theme="dark-mode"
+                            aria-pressed="false"
+                        >
+                            <?php echo esc_html__( 'Dark mode (beta)', 'devllo-accessibility-controls' ); ?>
+                        </button>
+                    </div>
+                </section>
+
+                <?php
+                // Section: Reading mode.
+                ?>
+                <section class="da11y-section da11y-section-reading-mode">
+                    <h3>
+                        <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
+                    </h3>
+                    <div class="da11y-controls-row">
+                        <button
+                            type="button"
+                            class="da11y-reading-mode-toggle"
+                            aria-pressed="false"
+                        >
+                            <?php echo esc_html__( 'Toggle reading mode', 'devllo-accessibility-controls' ); ?>
                         </button>
                     </div>
                 </section>

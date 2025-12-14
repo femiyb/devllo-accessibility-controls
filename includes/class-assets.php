@@ -59,6 +59,9 @@ final class Assets {
                 'contrast'      => false,
                 'dyslexia'      => false,
                 'reducedMotion' => false,
+                'spacing'       => 0,
+                'theme'         => 'default',
+                'readingMode'   => false,
             ],
             'settings' => [
                 'enabled'                => ! empty( $settings['enabled'] ),
