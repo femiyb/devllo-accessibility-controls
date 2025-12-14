@@ -1,0 +1,223 @@
+Devllo Accessibility Controls – v0.1.0 Build Checklist
+
+1. Identity & Structure
+
+1.1 Decide identity
+- [ ] Confirm plugin slug: `devllo-accessibility-controls`
+- [ ] Confirm text domain: `devllo-accessibility-controls`
+- [ ] Confirm namespace: `DA11Y\`
+- [ ] Confirm function prefix: `da11y_`
+- [ ] Confirm constant prefix: `DA11Y_`
+
+1.2 Folder & files
+- [ ] Use existing folder: `wp-content/plugins/devllo-accessibility-controls/`
+- [ ] Use main file: `devllo-accessibility-controls.php`
+- [ ] Create/complete `readme.txt`
+
+1.3 Directories
+- [ ] Ensure `includes/` exists
+- [ ] Ensure `assets/css/` exists
+- [ ] Ensure `assets/js/` exists
+- [ ] Ensure `languages/` exists
+
+1.4 Class files (stubs)
+- [ ] `includes/class-plugin.php`
+- [ ] `includes/class-assets.php`
+- [ ] `includes/class-devllo-accessibility-controls.php` (controls)
+- [ ] `includes/class-settings.php`
+
+2. Core Bootstrap
+
+2.1 Main plugin file (`devllo-accessibility-controls.php`)
+- [ ] Add/verify standard plugin header (name, description, version, etc.)
+- [ ] Define constants: `DA11Y_PLUGIN_VERSION`, `DA11Y_PLUGIN_PATH`, `DA11Y_PLUGIN_URL`
+- [ ] `require_once` `includes/class-plugin.php`
+- [ ] Define `da11y_init_plugin()` that calls `DA11Y\Plugin::instance()`
+- [ ] Hook `da11y_init_plugin()` to `plugins_loaded`
+
+2.2 Plugin singleton (`includes/class-plugin.php`)
+- [ ] Create `DA11Y\Plugin` singleton with `instance()` and `init()`
+- [ ] Implement `load_textdomain()` for `devllo-accessibility-controls` from `/languages`
+- [ ] Include:
+  - [ ] `class-assets.php`
+  - [ ] `class-devllo-accessibility-controls.php`
+  - [ ] `class-settings.php`
+- [ ] Instantiate:
+  - [ ] `DA11Y\Assets`
+  - [ ] `DA11Y\Accessibility_Controls`
+  - [ ] `DA11Y\Settings`
+
+3. Frontend Asset Loading
+
+3.1 Assets class (`includes/class-assets.php`)
+- [ ] Create `DA11Y\Assets` class
+- [ ] Hook into `wp_enqueue_scripts` (frontend only)
+- [ ] Enqueue CSS: `assets/css/frontend.css` (handle e.g. `da11y-frontend`)
+- [ ] Enqueue JS: `assets/js/frontend.js` (handle e.g. `da11y-frontend`, in footer, no jQuery)
+- [ ] Localize minimal config to JS:
+  - [ ] Enabled features: `textSize`, `contrast` (both `true` for 0.1.0)
+  - [ ] Default states: both off
+
+3.2 CSS planning (`assets/css/frontend.css`)
+- [ ] Define `.da11y-` prefix for all plugin UI styles
+- [ ] Floating trigger button base styles (bottom-right position)
+- [ ] Basic dialog/modal layout (overlay, panel, spacing, typography)
+- [ ] Visible focus styles for all interactive elements
+- [ ] Classes for:
+  - [ ] Text size scaling (e.g. `.da11y-text-scale-X`)
+  - [ ] High contrast mode (e.g. `.da11y-contrast-on` on `html`/`body`)
+
+3.3 JS planning (`assets/js/frontend.js`)
+- [ ] Define one main module/object (avoid global pollution)
+- [ ] On DOM ready:
+  - [ ] Read localized config object
+  - [ ] Cache DOM elements: trigger, dialog, controls
+  - [ ] Load preferences from `localStorage`
+  - [ ] Apply initial classes to `html`/`body`
+
+4. Frontend UI Markup
+
+4.1 Controls class (`includes/class-devllo-accessibility-controls.php`)
+- [ ] Create `DA11Y\Accessibility_Controls` class
+- [ ] Hook into `wp_footer` or `wp_body_open`
+
+4.2 Trigger button (always rendered when plugin enabled)
+- [ ] Render “Accessibility Options” button (translatable)
+- [ ] Apply position class (e.g. `.da11y-position-bottom-right`)
+- [ ] Ensure it is keyboard focusable
+
+4.3 Dialog markup
+- [ ] Render a single dialog container with:
+  - [ ] Heading (e.g. “Accessibility Settings”)
+  - [ ] Short description text
+  - [ ] Section: Text size
+    - [ ] Smaller button
+    - [ ] Larger button
+    - [ ] Reset button
+  - [ ] Section: High contrast
+    - [ ] Toggle (button or checkbox)
+  - [ ] Global reset button
+- [ ] Add ARIA attributes:
+  - [ ] `role="dialog"`
+  - [ ] `aria-modal="true"`
+  - [ ] `aria-labelledby` (point to heading)
+  - [ ] `aria-describedby` (point to description)
+
+4.4 Class application target
+- [ ] Choose whether to apply mode classes on `html` or `body` (pick one)
+- [ ] Standardize on a class naming pattern (e.g. `.da11y-contrast-on`, `.da11y-text-scale-1`)
+
+5. JS Behavior (Prototype Features)
+
+5.1 State model
+- [ ] Define preferences object with:
+  - [ ] `textScale` (integer, 0 as default)
+  - [ ] `contrast` (boolean)
+- [ ] On init:
+  - [ ] Load existing preferences from `localStorage`
+  - [ ] Merge with defaults from PHP config
+  - [ ] Apply classes to `html`/`body`
+
+5.2 Dialog control
+- [ ] Trigger button:
+  - [ ] On click/Enter/Space → open dialog
+  - [ ] Move focus to first focusable element inside dialog
+- [ ] Escape key:
+  - [ ] Close dialog
+  - [ ] Return focus to trigger button
+- [ ] Basic focus trap:
+  - [ ] Identify first and last focusable items
+  - [ ] Loop Tab/Shift+Tab inside dialog
+
+5.3 Text size controls
+- [ ] Increase:
+  - [ ] Increment `textScale` up to max
+  - [ ] Update classes on `html`/`body`
+  - [ ] Save to `localStorage`
+- [ ] Decrease:
+  - [ ] Decrement `textScale` down to min
+  - [ ] Update classes
+  - [ ] Save to `localStorage`
+- [ ] Reset:
+  - [ ] Set `textScale` back to 0 (default)
+  - [ ] Update classes
+  - [ ] Save to `localStorage`
+
+5.4 High contrast toggle
+- [ ] Toggle:
+  - [ ] Flip `contrast` boolean in state
+  - [ ] Add/remove high contrast class on `html`/`body`
+  - [ ] Save to `localStorage`
+
+5.5 Reset all
+- [ ] Clear/restore preferences to defaults
+- [ ] Remove/adjust all mode classes
+- [ ] Clear or overwrite `localStorage` entry
+
+5.6 Error handling
+- [ ] Wrap `localStorage` usage in try/catch
+- [ ] Guard against missing DOM nodes
+
+6. Minimal Hybrid Settings
+
+6.1 Settings class (`includes/class-settings.php`)
+- [ ] Create `DA11Y\Settings` class
+- [ ] Register single option `da11y_settings` (array)
+- [ ] Define defaults:
+  - [ ] `enabled` = `true`
+  - [ ] `button_position` = `bottom_right`
+
+6.2 Settings page
+- [ ] Add options page under `Settings → Accessibility Controls`
+- [ ] Create fields:
+  - [ ] Checkbox: “Enable Accessibility Controls”
+  - [ ] Select: “Button position” (bottom-right, bottom-left, top-right, top-left)
+- [ ] Implement sanitization for option values
+
+6.3 Settings integration
+- [ ] Provide helper, e.g. `DA11Y\Settings::get()` to return merged defaults + stored values
+- [ ] In `DA11Y\Accessibility_Controls`:
+  - [ ] Only output UI if `enabled` is true
+  - [ ] Apply position class based on `button_position`
+- [ ] In `DA11Y\Assets`:
+  - [ ] Optionally pass `button_position` and `enabled` to JS via localized config
+
+7. Internationalization & Readme
+
+7.1 i18n
+- [ ] Wrap all PHP UI strings in `__()` / `_e()` with text domain `devllo-accessibility-controls`
+- [ ] Ensure `load_plugin_textdomain()` points to `/languages`
+- [ ] Plan to localize any JS strings via `wp_localize_script`
+
+7.2 `readme.txt`
+- [ ] Add required headers (Requires at least, Tested up to, Requires PHP, Stable tag = `0.1.0`)
+- [ ] Short description: user-controlled accessibility enhancements (text size + high contrast + persistence)
+- [ ] Long description: clarify scope and limitations
+- [ ] Features list:
+  - [ ] Text size controls
+  - [ ] High contrast mode
+  - [ ] Preference persistence
+- [ ] FAQ entry:
+  - [ ] “Does this make my site legally compliant?” → Answer: no, it helps users adjust the interface but doesn’t guarantee compliance
+
+8. Manual Testing for v0.1.0
+
+8.1 Frontend behavior
+- [ ] On default theme, confirm:
+  - [ ] Trigger button appears on all frontend pages
+  - [ ] Clicking trigger opens dialog
+  - [ ] Escape closes dialog and focus returns to trigger
+  - [ ] Tab/Shift+Tab stay within dialog while open
+  - [ ] Text size controls visually change content scale
+  - [ ] High contrast toggles correctly change background/text colors
+  - [ ] Preferences persist after page reload
+
+8.2 Admin behavior
+- [ ] Settings page loads without errors
+- [ ] Changing “Enable” option hides/shows frontend UI
+- [ ] Changing “Button position” moves trigger as expected
+
+8.3 Basic accessibility checks
+- [ ] All interactive elements reachable via keyboard
+- [ ] Visible focus indicator on trigger and all dialog controls
+- [ ] Dialog announced correctly by at least one screen reader (later)

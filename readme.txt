@@ -1,0 +1,63 @@
+=== Devllo Accessibility Controls ===
+Contributors: your-name
+Tags: accessibility, contrast, font-size, a11y
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Visitor-controlled accessibility enhancements: text size, high contrast, and saved preferences for better readability.
+
+== Description ==
+
+Devllo Accessibility Controls adds a small, accessible widget to your site that lets visitors adjust how they experience your content.
+
+This plugin focuses on **user-controlled adjustments**, not on automated "fix everything" promises or legal guarantees. It is designed to complement good accessible design, not replace it.
+
+What it does in this version:
+
+* Lets visitors increase or decrease text size, or reset back to your theme's baseline.
+* Adds a high contrast mode for improved readability.
+* Remembers the visitor's choices using local storage so their preferences persist as they browse.
+
+What it does not do:
+
+* It does **not** run a full accessibility audit.
+* It does **not** guarantee ADA or WCAG compliance.
+* It does **not** modify your content or automatically fix accessibility issues.
+
+Use this plugin as one part of a broader accessibility strategy that includes proper design, development, and testing.
+
+== Installation ==
+
+1. Upload the plugin folder `devllo-accessibility-controls` to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the “Plugins” menu in WordPress.
+3. Go to **Settings → Accessibility Controls** to enable the widget and choose its position.
+4. Visit the frontend to see the “Accessibility Options” button and open the accessibility panel.
+
+== Frequently Asked Questions ==
+
+= Does this plugin make my site legally compliant (ADA/WCAG)? =
+
+No. This plugin helps visitors adjust how they view your site and supports accessibility best practices, but it does **not** guarantee legal or standards compliance. You still need proper accessible design, development, and testing.
+
+= Does this plugin run a full accessibility audit? =
+
+No. This version focuses on user-facing controls (text size and contrast) and preference persistence, not on site-wide auditing.
+
+== Features ==
+
+* **Text size controls** – increase, decrease, and reset text size.
+* **High contrast mode** – toggle a high contrast color scheme for better readability.
+* **Preference persistence** – store user settings in the browser so they persist across page loads.
+* **Keyboard accessible UI** – the widget and dialog are designed to be usable from the keyboard.
+
+== Changelog ==
+
+= 0.1.0 =
+* Initial prototype release with:
+* Text size controls.
+* High contrast mode.
+* Local preference storage.

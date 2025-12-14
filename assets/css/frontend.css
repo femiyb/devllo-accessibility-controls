@@ -1,0 +1,90 @@
+/* Root scope: all plugin UI uses .da11y- prefix */
+
+/* Trigger button */
+.da11y-trigger {
+    z-index: 9999;
+
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+
+    background-color: #111;
+    color: #fff;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+/* Trigger positioning */
+.da11y-position-bottom-right {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.da11y-position-bottom-left {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+}
+
+.da11y-position-top-right {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+}
+
+.da11y-position-top-left {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+}
+
+/* Dialog overlay + panel */
+.da11y-dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+}
+
+.da11y-dialog {
+    position: fixed;
+    right: 1rem;
+    bottom: 4rem;
+    max-width: 20rem;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background: #fff;
+    color: #111;
+    z-index: 10001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 0.875rem;
+}
+
+/* Focus styles for plugin controls */
+.da11y-trigger:focus,
+.da11y-dialog button:focus,
+.da11y-dialog [href]:focus,
+.da11y-dialog [role="button"]:focus {
+    outline: 2px solid #005fcc;
+    outline-offset: 2px;
+}
+
+/* Text size scaling (applied to html/body) */
+.da11y-text-scale-1 {
+    font-size: 110%;
+}
+
+.da11y-text-scale-2 {
+    font-size: 120%;
+}
+
+/* High contrast mode (applied to html/body) */
+.da11y-contrast-on {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+.da11y-contrast-on a {
+    color: #ffea00 !important;
+}
