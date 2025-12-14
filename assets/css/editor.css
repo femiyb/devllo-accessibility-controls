@@ -1,0 +1,24 @@
+.da11y-editor-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.da11y-editor-icon .dashicons {
+    font-size: 20px;
+}
+
+.da11y-editor-badge {
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    min-width: 12px;
+    height: 12px;
+    padding: 0 1px;
+    border-radius: 999px;
+    background: #d63638; /* WP error red */
+    color: #fff;
+    font-size: 8px;
+    line-height: 12px;
+    text-align: center;
+    box-sizing: border-box;
+}

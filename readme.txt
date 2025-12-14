@@ -4,7 +4,7 @@ Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.5.0
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,11 @@ Actions:
 * `da11y_before_dialog` / `da11y_after_dialog` – run before/after the accessibility dialog markup.
 
 == Changelog ==
+
+= 0.6.1 =
+* Added an “Accessibility hints” sidebar panel to the block editor with soft, post-specific accessibility hints.
+* Highlights issues such as multiple H1 headings, images without alt text, generic link text, long paragraphs, ALL CAPS text, tables without clear headers, and presence of video/audio content.
+* Added a hint count badge to the accessibility icon in the editor toolbar so authors can quickly see when hints are present.
 
 = 0.5.0 =
 * Improved the accessibility dialog with a visible close button and `aria-expanded` state on the trigger.

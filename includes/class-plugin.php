@@ -59,6 +59,7 @@ final class Plugin {
         require_once DA11Y_PLUGIN_PATH . 'includes/class-assets.php';
         require_once DA11Y_PLUGIN_PATH . 'includes/class-devllo-accessibility-controls.php';
         require_once DA11Y_PLUGIN_PATH . 'includes/class-settings.php';
+        require_once DA11Y_PLUGIN_PATH . 'includes/class-editor.php';
     }
 
     /**
@@ -70,6 +71,7 @@ final class Plugin {
         new Assets();
         new Accessibility_Controls();
         new Settings();
+        new Editor();
     }
 
 }

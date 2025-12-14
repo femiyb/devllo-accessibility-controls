@@ -656,3 +656,189 @@ Devllo Accessibility Controls – v0.5.0 Build Checklist
 6.2 Accessibility & extensibility
 - [ ] New hooks do not break existing behavior when unused
 - [ ] Screen reader and keyboard tests still pass after UI changes
+
+
+Devllo Accessibility Controls – v0.6.1 Build Checklist (Block Editor Integration)
+
+1. Scope for 0.6.1
+
+1.1 Editor-focused guidance
+- [ ] Add a block editor (Gutenberg) panel with accessibility hints
+- [ ] Keep behavior read-only (no automatic content changes)
+
+2. Block Editor Panel
+
+2.1 Panel registration
+- [ ] Register a sidebar panel in the post editor (e.g. “Accessibility” or “Accessibility hints”)
+- [ ] Ensure it appears for posts and pages by default
+
+2.2 Panel content
+- [ ] Show high-level reminders:
+  - [ ] Headings: “Use clear, structured headings (H1–H2–H3…).”
+  - [ ] Images: “Provide meaningful alt text or mark decorative images appropriately.”
+  - [ ] Links: “Use descriptive link text (avoid ‘click here’).”
+- [ ] Make text translatable and concise
+
+3. Post-Specific Hints (Soft Checks)
+
+3.1 Optional inline hints
+- [ ] For the current post, surface soft hints such as:
+  - [ ] Warn when multiple H1 blocks are present
+  - [ ] Warn when Image blocks have empty `alt` text
+  - [ ] Warn when link text is generic (e.g. “click here”) where feasible
+- [ ] Present hints as informational messages in the panel (no blocking)
+
+3.2 Data retrieval
+- [ ] Use block editor APIs (e.g. `wp.data.select( 'core/block-editor' )`) to:
+  - [ ] Inspect blocks for headings, images, and links
+  - [ ] Update hints reactively when blocks change
+
+4. Safety & UX
+
+4.1 Performance
+- [ ] Ensure panel logic is lightweight and does not slow down the editor
+
+4.2 Messaging
+- [ ] Include a short note in the panel clarifying:
+  - [ ] “These hints are partial and do not replace a full accessibility review.”
+
+5. Documentation
+
+5.1 Readme updates
+- [ ] Mention the block editor accessibility hints panel under Features
+- [ ] Clarify that hints are advisory and non-blocking
+
+
+Devllo Accessibility Controls – v0.6.2 Build Checklist (More Basic Checks)
+
+1. Scope for 0.6.2
+
+1.1 Expand Basic Automated Checks
+- [ ] Extend the existing “Basic automated checks” with additional heuristics:
+  - [ ] Headings structure
+  - [ ] Image alternative text usage sampling
+  - [ ] Form label presence
+
+2. Check #4 – Heading Structure
+
+2.1 Implementation
+- [ ] Parse the homepage (and/or a selected sample page) markup
+- [ ] Inspect heading usage:
+  - [ ] Check if at least one H1 is present
+  - [ ] Warn if headings jump levels significantly (e.g. H1 → H3 with no H2)
+- [ ] Keep logic simple and robust
+
+2.2 Output
+- [ ] If heading structure looks reasonable:
+  - [ ] Show an informational “no obvious structural issues detected” message
+- [ ] If potential issues detected:
+  - [ ] Message like: “Heading structure on the homepage may have gaps or jumps; review headings manually.”
+
+3. Check #5 – Image Alt Usage Sampling
+
+3.1 Implementation
+- [ ] Sample a limited set of `<img>` elements (e.g. from the homepage/selected page)
+- [ ] Count:
+  - [ ] Images with non-empty alt
+  - [ ] Images with `alt=""`
+  - [ ] Images with no alt attribute
+
+3.2 Output
+- [ ] Show a summary: e.g. “Out of 50 sampled images: 30 with alt text, 10 decorative (empty alt), 10 missing alt.”
+- [ ] Encourage manual review rather than claiming completeness
+
+4. Check #6 – Form Label Presence
+
+4.1 Implementation
+- [ ] Inspect forms on the sampled page:
+  - [ ] Look for text inputs, selects, and textareas
+  - [ ] Check for associated `<label>` or `aria-label`/`aria-labelledby`
+
+4.2 Output
+- [ ] If most fields appear labeled:
+  - [ ] Show a positive but cautious message
+- [ ] If unlabeled fields are found:
+  - [ ] Message like: “Some form fields appear to lack accessible labels; review your forms for accessible names.”
+
+5. Results Integration
+
+5.1 Storage
+- [ ] Extend `da11y_check_results` to include new check entries
+
+5.2 Display
+- [ ] Add new messages to the existing “Basic automated checks” list on the guidance page
+- [ ] Maintain clear, non-technical summaries where possible
+
+6. Documentation
+
+6.1 Readme updates
+- [ ] Update changelog for 0.6.2 to mention the new checks
+- [ ] Clarify in Description that basic checks now cover headings, alt text sampling, and form labels (still partial and informational)
+
+
+Devllo Accessibility Controls – v0.6.3 Build Checklist (Richer Frontend Controls)
+
+1. Scope for 0.6.3
+
+1.1 Enhanced user controls
+- [ ] Add line-height/spacing controls
+- [ ] Add a small set of color/contrast themes
+- [ ] Add a “reading mode” profile
+
+2. Line Height & Spacing Controls
+
+2.1 UI
+- [ ] Add controls in the dialog for:
+  - [ ] Increasing line height
+  - [ ] Increasing paragraph spacing
+  - [ ] Resetting to defaults
+
+2.2 CSS
+- [ ] Define new classes (e.g. `.da11y-spacing-1`, `.da11y-spacing-2`) applied to `<html>` or `<body>`
+- [ ] Adjust `line-height` and `margin-bottom` for paragraphs/headings in a conservative way
+
+2.3 JS
+- [ ] Extend state and persistence for `spacing`/`lineHeight`
+- [ ] Wire up controls to adjust classes and save preferences
+
+3. Color Themes
+
+3.1 UI
+- [ ] Add a section in the dialog for “Color themes” with a few options:
+  - [ ] Default
+  - [ ] High-contrast light
+  - [ ] High-contrast dark
+  - [ ] Low blue light/night mode (optional)
+
+3.2 CSS
+- [ ] For each theme, define a class on `<html>` (e.g. `.da11y-theme-high-contrast-light`) that:
+  - [ ] Adjusts background, text, and link colors
+  - [ ] Maintains WCAG AA contrast where feasible
+
+3.3 JS
+- [ ] Extend state/persistence for selected theme
+- [ ] Ensure theme selection plays nicely with existing contrast toggle (decide on precedence or integration)
+
+4. Reading Mode Profile
+
+4.1 UI
+- [ ] Add a “Reading mode” toggle/button
+
+4.2 Behavior
+- [ ] Reading mode could:
+  - [ ] Increase text size slightly
+  - [ ] Increase line height
+  - [ ] Narrow content width (where possible, via a class) without breaking layouts
+- [ ] Implement as a combination of existing settings (text size, spacing) plus optional extra CSS
+
+4.3 State
+- [ ] Ensure reading mode is persisted alongside other preferences
+
+5. Documentation & Testing
+
+5.1 Readme updates
+- [ ] Add new features (spacing controls, color themes, reading mode) to the Features section
+
+5.2 Tests
+- [ ] Verify new controls are keyboard accessible and screen-reader friendly
+- [ ] Confirm layouts remain usable across a variety of themes
