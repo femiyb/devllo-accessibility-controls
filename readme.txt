@@ -14,7 +14,7 @@ Visitor-controlled accessibility enhancements: text size, high contrast, and sav
 
 Devllo Accessibility Controls adds a small, accessible widget to your site that lets visitors adjust how they experience your content.
 
-This plugin focuses on **user-controlled adjustments**, not on automated "fix everything" promises or legal guarantees. It is designed to complement good accessible design, not replace it.
+This plugin focuses on **user-controlled adjustments** and **admin guidance**, not on automated "fix everything" promises or legal guarantees. It is designed to complement good accessible design, not replace it.
 
 What it does in this version:
 
@@ -22,6 +22,7 @@ What it does in this version:
 * Adds a high contrast mode for improved readability.
 * Provides a dyslexia-friendly reading mode with an alternate font and slightly adjusted spacing.
 * Offers a reduced motion mode that minimizes motion in the accessibility controls UI and respects system preferences.
+* Adds an accessibility guidance page with a simple checklist to help site owners think about key accessibility topics.
 * Remembers the visitor's choices using local storage so their preferences persist as they browse.
 
 What it does not do:

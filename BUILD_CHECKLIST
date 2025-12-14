@@ -340,4 +340,121 @@ Devllo Accessibility Controls – v0.2.0 Build Checklist
 - [ ] ARIA attributes on new toggles correctly reflect state
 - [ ] Screen reader announces new controls clearly
 
+
+Devllo Accessibility Controls – v0.3.0 Build Checklist
+
+1. Scope for 0.3.0
+
+1.1 Admin guidance focus
+- [ ] Add an accessibility guidance/checklist experience for site owners
+- [ ] Keep it explicitly non-audit, non-compliance, non-legal
+
+1.2 What 0.3.0 should NOT do
+- [ ] No automated “fix all issues” behavior
+- [ ] No numeric compliance scores or badges
+- [ ] No legal or WCAG compliance guarantees
+
+2. Accessibility Guidance Admin Page
+
+2.1 Page registration
+- [ ] Add a new admin page under `Settings`:
+  - [ ] Menu title: “Accessibility Guidance” (or reuse existing settings page with a second tab/section)
+  - [ ] Capability: `manage_options`
+  - [ ] Slug: e.g. `da11y_accessibility_guidance`
+
+2.2 Page structure
+- [ ] On the guidance page, include:
+  - [ ] Intro paragraph clarifying purpose: guidance, not audit or legal advice
+  - [ ] Short disclaimer message:
+    - [ ] “These notes are informational only and do not constitute a compliance audit.”
+  - [ ] Sections for:
+    - [ ] Text & typography
+    - [ ] Color & contrast
+    - [ ] Keyboard & focus
+    - [ ] Images & media
+    - [ ] Motion & animation
+
+2.3 Content for each section
+- [ ] For each section, define 2–4 checklist items:
+  - [ ] Each item has:
+    - [ ] Title (e.g. “Maintain sufficient contrast”)
+    - [ ] Short description explaining why it matters
+    - [ ] Optional WCAG reference (e.g. “WCAG 2.1 – 1.4.3 Contrast (Minimum)”)
+  - [ ] Clear, non-legal wording (no “guarantees”)
+
+3. Checklist Data Model
+
+3.1 Storage option
+- [ ] Create a new option (e.g. `da11y_checklist`) or extend existing settings
+- [ ] Structure:
+  - [ ] Keys: stable identifiers for checklist items (e.g. `contrast`, `focus_visible`)
+  - [ ] Values: status string, one of:
+    - [ ] `reviewed`
+    - [ ] `needs_attention`
+    - [ ] `not_applicable`
+
+3.2 Sanitization
+- [ ] Implement sanitize callback to:
+  - [ ] Ensure only known item keys are stored
+  - [ ] Clamp values to allowed statuses
+
+4. Checklist UI Behavior
+
+4.1 Controls per item
+- [ ] For each item in the admin UI:
+  - [ ] Render title and description
+  - [ ] Render status control:
+    - [ ] A <select> or 3 radio buttons (Reviewed / Needs attention / Not applicable)
+
+4.2 Saving behavior
+- [ ] Integrate with WordPress Settings API:
+  - [ ] `settings_fields()` + `do_settings_sections()` in the guidance page form
+  - [ ] Save checklist statuses alongside other plugin settings
+
+4.3 Visual cues
+- [ ] Optionally add minimal visual cues:
+  - [ ] Different text or subtle color for each status (e.g. neutral vs needs-attention)
+  - [ ] Keep contrast and readability high
+
+5. Optional “Basic Checks” (Informational Only)
+
+5.1 Basic checks section
+- [ ] Add an “Informational checks” area on the guidance page with clear disclaimer:
+  - [ ] “These checks are partial and informational. They are not a full audit.”
+
+5.2 Safe checks to implement
+- [ ] Consider adding 1–3 very limited checks, such as:
+  - [ ] Detect if a skip link is present in the theme output
+  - [ ] Detect CSS rules that remove focus outlines (e.g. `outline: none` without replacement)
+  - [ ] Approximate base font size check (warn if very small)
+
+5.3 Output format
+- [ ] For each check, display:
+  - [ ] Simple message (e.g. “A skip link was not detected on the homepage.”)
+  - [ ] Clear note that this is a heuristic, not a definitive assessment
+
+6. Documentation & Positioning
+
+6.1 Readme updates
+- [ ] Update `readme.txt`:
+  - [ ] Add a short section describing the admin accessibility guidance/checklist
+  - [ ] Emphasize that it is an awareness tool, not a scanner or report
+
+6.2 In-plugin messaging
+- [ ] At the top of the guidance page, clearly state:
+  - [ ] “This page provides guidance and a checklist to help you think about accessibility.”
+  - [ ] “It is not a compliance audit or legal advice.”
+
+7. Tests for v0.3.0
+
+7.1 Admin behavior
+- [ ] Guidance page appears under Settings for users with `manage_options`
+- [ ] Checklist statuses can be changed and persist correctly
+- [ ] Optional basic checks display messages without causing errors
+
+7.2 Content & accessibility
+- [ ] Guidance text is clear and avoids over-claiming
+- [ ] All controls on the guidance page are keyboard accessible
+- [ ] Headings and structure are logical for screen readers
+
 4.4 Update Readme
