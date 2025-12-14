@@ -221,3 +221,123 @@ Devllo Accessibility Controls – v0.1.0 Build Checklist
 - [ ] All interactive elements reachable via keyboard
 - [ ] Visible focus indicator on trigger and all dialog controls
 - [ ] Dialog announced correctly by at least one screen reader (later)
+
+
+Devllo Accessibility Controls – v0.2.0 Build Checklist
+
+1. Scope for 0.2.0
+
+1.1 New frontend features
+- [ ] Dyslexia-friendly reading mode (font + spacing)
+- [ ] Reduced motion mode (CSS + prefers-reduced-motion + override)
+
+1.2 Admin options
+- [ ] Add feature toggles for dyslexia mode and reduced motion
+- [ ] Hide/show corresponding controls in the dialog based on settings
+
+1.3 Documentation
+- [ ] Update `readme.txt` features to include dyslexia font and reduced motion
+- [ ] Clarify that these are user-controlled enhancements (not compliance features)
+
+2. Dyslexia-Friendly Reading Mode
+
+2.1 UI: dialog markup
+- [ ] Add a new section to the dialog in `includes/class-devllo-accessibility-controls.php`:
+  - [ ] Heading: “Reading mode” or “Dyslexia-friendly reading”
+  - [ ] Toggle button or checkbox: “Dyslexia-friendly font”
+- [ ] Wrap labels in translation functions with text domain `devllo-accessibility-controls`
+
+2.2 CSS: font + spacing
+- [ ] Add font files or font loading (e.g. in `assets/fonts/` or via a safe system stack)
+- [ ] In `assets/css/frontend.css`:
+  - [ ] Define `.da11y-dyslexia-on` (applied to `html`) that:
+    - [ ] Sets a dyslexia-friendly font-family
+    - [ ] Slightly increases line-height and letter-spacing for readability
+  - [ ] Ensure styles are minimal and do not break layouts
+
+2.3 JS: state + persistence
+- [ ] In `assets/js/frontend.js`:
+  - [ ] Extend `state` to include `dyslexia` (boolean, default `false`)
+  - [ ] Extend `loadConfigDefaults()` and `loadStoredPreferences()` to handle `dyslexia`
+  - [ ] Extend `applyStateToDOM()` to:
+    - [ ] Add `.da11y-dyslexia-on` to `<html>` when enabled
+    - [ ] Remove it when disabled
+  - [ ] Cache the dyslexia toggle element in `cacheElements()`
+  - [ ] Add a `bindEvents()` listener for the dyslexia toggle that:
+    - [ ] Flips `state.dyslexia`
+    - [ ] Updates DOM and calls `savePreferences()`
+    - [ ] Optionally syncs `aria-pressed` or `aria-checked`
+
+2.4 Settings integration
+- [ ] In `includes/class-settings.php`:
+  - [ ] Add `dyslexia_enabled` default (`true`)
+  - [ ] Add a checkbox field “Enable dyslexia-friendly mode”
+  - [ ] Update `sanitize()` to handle `dyslexia_enabled`
+- [ ] In `DA11Y\Accessibility_Controls`:
+  - [ ] Only render dyslexia controls if `dyslexia_enabled` is true
+- [ ] In `DA11Y\Assets`:
+  - [ ] Pass `dyslexia_enabled` into the localized config if needed
+
+3. Reduced Motion Mode
+
+3.1 UI: dialog markup
+- [ ] Add a new section to the dialog:
+  - [ ] Heading: “Motion” or “Reduced motion”
+  - [ ] Toggle button or checkbox: “Reduce motion”
+
+3.2 CSS: motion reductions
+- [ ] In `assets/css/frontend.css`:
+  - [ ] Define `.da11y-reduced-motion-on` for `<html>` that:
+    - [ ] Sets `animation-duration` and `transition-duration` to `0s` or very small values for plugin UI
+    - [ ] Avoids aggressive global overrides that could break themes
+  - [ ] Ensure plugin UI itself does not introduce unnecessary motion
+
+3.3 JS: state + prefers-reduced-motion
+- [ ] In `assets/js/frontend.js`:
+  - [ ] Extend `state` with `reducedMotion` (boolean)
+  - [ ] On init:
+    - [ ] Check `window.matchMedia('(prefers-reduced-motion: reduce)')`
+    - [ ] If user has not chosen yet, use system preference as default
+  - [ ] Extend `loadConfigDefaults()` / `loadStoredPreferences()` accordingly
+  - [ ] Extend `applyStateToDOM()` to:
+    - [ ] Add `.da11y-reduced-motion-on` to `<html>` when enabled
+    - [ ] Remove when disabled
+  - [ ] Cache the reduced motion toggle element in `cacheElements()`
+  - [ ] Add a `bindEvents()` listener for the reduced motion toggle that:
+    - [ ] Flips `state.reducedMotion`
+    - [ ] Updates DOM and calls `savePreferences()`
+    - [ ] Optionally syncs `aria-pressed` or `aria-checked`
+
+3.4 Settings integration
+- [ ] In `includes/class-settings.php`:
+  - [ ] Add `reduced_motion_enabled` default (`true`)
+  - [ ] Add a checkbox field “Enable reduced motion mode”
+  - [ ] Update `sanitize()` to handle `reduced_motion_enabled`
+- [ ] In `DA11Y\Accessibility_Controls`:
+  - [ ] Only render reduced motion controls if `reduced_motion_enabled` is true
+- [ ] In `DA11Y\Assets`:
+  - [ ] Pass `reduced_motion_enabled` into the localized config if needed
+
+4. Tests for v0.2.0
+
+4.1 Frontend behavior
+- [ ] Dyslexia toggle:
+  - [ ] Applies dyslexia font and spacing
+  - [ ] Persists across page loads
+  - [ ] Can be turned off to restore original styles
+- [ ] Reduced motion toggle:
+  - [ ] Reduces/removes plugin UI motion when on
+  - [ ] Respects `prefers-reduced-motion` when user has no explicit preference
+
+4.2 Admin behavior
+- [ ] “Enable dyslexia-friendly mode” toggle:
+  - [ ] Hides/shows dyslexia controls in the dialog
+- [ ] “Enable reduced motion mode” toggle:
+  - [ ] Hides/shows reduced motion controls in the dialog
+
+4.3 Accessibility checks
+- [ ] New controls are keyboard reachable and focusable
+- [ ] ARIA attributes on new toggles correctly reflect state
+- [ ] Screen reader announces new controls clearly
+
+4.4 Update Readme

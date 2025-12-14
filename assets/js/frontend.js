@@ -9,6 +9,8 @@
         state: {
             textSize: 0,
             contrast: false,
+            dyslexia: false,
+            reducedMotion: false,
         },
 
         init() {
@@ -29,6 +31,14 @@
             if (typeof defaults.contrast === 'boolean') {
                 this.state.contrast = defaults.contrast;
             }
+
+            if (typeof defaults.dyslexia === 'boolean') {
+                this.state.dyslexia = defaults.dyslexia;
+            }
+
+            if (typeof defaults.reducedMotion === 'boolean') {
+                this.state.reducedMotion = defaults.reducedMotion;
+            }
         },
 
         loadStoredPreferences() {
@@ -48,9 +58,32 @@
                     if (typeof stored.contrast === 'boolean') {
                         this.state.contrast = stored.contrast;
                     }
+
+                    if (typeof stored.dyslexia === 'boolean') {
+                        this.state.dyslexia = stored.dyslexia;
+                    }
+
+                    if (typeof stored.reducedMotion === 'boolean') {
+                        this.state.reducedMotion = stored.reducedMotion;
+                    }
                 }
             } catch (e) {
                 // Fail silently if storage is unavailable or JSON is invalid.
+            }
+
+            // If user has not stored a preference, respect system prefers-reduced-motion.
+            if (typeof this.state.reducedMotion !== 'boolean') {
+                this.state.reducedMotion = false;
+            }
+
+            try {
+                const mql = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+                if (mql && mql.matches && !('reducedMotion' in (this.config.defaults || {}))) {
+                    // Only use system preference when there is no explicit default from PHP.
+                    this.state.reducedMotion = true;
+                }
+            } catch (e) {
+                // Ignore matchMedia failures.
             }
         },
 
@@ -81,7 +114,9 @@
             this.$textSmaller    = document.querySelector('.da11y-text-smaller');
             this.$textLarger     = document.querySelector('.da11y-text-larger');
             this.$textReset      = document.querySelector('.da11y-text-reset');
-            this.$contrastToggle = document.querySelector('.da11y-contrast-toggle');
+            this.$contrastToggle      = document.querySelector('.da11y-contrast-toggle');
+            this.$dyslexiaToggle      = document.querySelector('.da11y-dyslexia-toggle');
+            this.$reducedMotionToggle = document.querySelector('.da11y-reduced-motion-toggle');
             this.$resetAll       = document.querySelector('.da11y-reset-all');
 
             // Selector for focusable elements inside the dialog.
@@ -120,6 +155,37 @@
                     'aria-pressed',
                     this.state.contrast ? 'true' : 'false'
                 );
+                this.$contrastToggle.classList.toggle('da11y-toggle-active', !!this.state.contrast);
+            }
+
+            // Dyslexia mode.
+            if (this.state.dyslexia) {
+                root.classList.add('da11y-dyslexia-on');
+            } else {
+                root.classList.remove('da11y-dyslexia-on');
+            }
+
+            if (this.$dyslexiaToggle) {
+                this.$dyslexiaToggle.setAttribute(
+                    'aria-pressed',
+                    this.state.dyslexia ? 'true' : 'false'
+                );
+                this.$dyslexiaToggle.classList.toggle('da11y-toggle-active', !!this.state.dyslexia);
+            }
+
+            // Reduced motion.
+            if (this.state.reducedMotion) {
+                root.classList.add('da11y-reduced-motion-on');
+            } else {
+                root.classList.remove('da11y-reduced-motion-on');
+            }
+
+            if (this.$reducedMotionToggle) {
+                this.$reducedMotionToggle.setAttribute(
+                    'aria-pressed',
+                    this.state.reducedMotion ? 'true' : 'false'
+                );
+                this.$reducedMotionToggle.classList.toggle('da11y-toggle-active', !!this.state.reducedMotion);
             }
         },
 
@@ -175,6 +241,20 @@
             if (this.$resetAll) {
                 this.$resetAll.addEventListener('click', () => {
                     this.resetAll();
+                });
+            }
+
+            // Dyslexia toggle.
+            if (this.$dyslexiaToggle) {
+                this.$dyslexiaToggle.addEventListener('click', () => {
+                    this.toggleDyslexia();
+                });
+            }
+
+            // Reduced motion toggle.
+            if (this.$reducedMotionToggle) {
+                this.$reducedMotionToggle.addEventListener('click', () => {
+                    this.toggleReducedMotion();
                 });
             }
         },
@@ -280,9 +360,25 @@
             this.savePreferences();
         },
 
+        toggleDyslexia() {
+            this.state.dyslexia = !this.state.dyslexia;
+
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        toggleReducedMotion() {
+            this.state.reducedMotion = !this.state.reducedMotion;
+
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
         resetAll() {
             this.state.textSize = 0;
             this.state.contrast = false;
+            this.state.dyslexia = false;
+            this.state.reducedMotion = false;
 
             this.applyStateToDOM();
             this.clearPreferences();

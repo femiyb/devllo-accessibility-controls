@@ -36,12 +36,15 @@ class Accessibility_Controls {
      * @return void
      */
     public function render() {
-        $settings = Settings::get();
+        $settings         = Settings::get();
 
         // Do not output the UI if the widget is disabled.
         if ( empty( $settings['enabled'] ) ) {
             return;
         }
+
+        $dyslexia_enabled        = ! empty( $settings['dyslexia_enabled'] );
+        $reduced_motion_enabled  = ! empty( $settings['reduced_motion_enabled'] );
 
         // Map stored position to a CSS class.
         $position        = isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right';
@@ -117,6 +120,46 @@ class Accessibility_Controls {
                         </button>
                     </div>
                 </section>
+
+                <?php
+                // Section: Dyslexia-friendly reading mode (if enabled).
+                if ( $dyslexia_enabled ) :
+                    ?>
+                    <section class="da11y-section da11y-section-dyslexia">
+                        <h3>
+                            <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
+                        </h3>
+                        <div class="da11y-controls-row">
+                            <button
+                                type="button"
+                                class="da11y-dyslexia-toggle"
+                                aria-pressed="false"
+                            >
+                                <?php echo esc_html__( 'Dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
+                            </button>
+                        </div>
+                    </section>
+                <?php endif; ?>
+
+                <?php
+                // Section: Reduced motion (if enabled).
+                if ( $reduced_motion_enabled ) :
+                    ?>
+                    <section class="da11y-section da11y-section-motion">
+                        <h3>
+                            <?php echo esc_html__( 'Motion', 'devllo-accessibility-controls' ); ?>
+                        </h3>
+                        <div class="da11y-controls-row">
+                            <button
+                                type="button"
+                                class="da11y-reduced-motion-toggle"
+                                aria-pressed="false"
+                            >
+                                <?php echo esc_html__( 'Reduce motion', 'devllo-accessibility-controls' ); ?>
+                            </button>
+                        </div>
+                    </section>
+                <?php endif; ?>
 
                 <?php
                 // Section: High contrast mode.

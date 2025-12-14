@@ -70,6 +70,24 @@ class Settings {
             'da11y_main_section'
         );
 
+        // Field: Enable Dyslexia-friendly mode.
+        add_settings_field(
+            'da11y_dyslexia_enabled',
+            __( 'Enable dyslexia-friendly mode', 'devllo-accessibility-controls' ),
+            [ $this, 'render_dyslexia_enabled_field' ],
+            'da11y_settings_page',
+            'da11y_main_section'
+        );
+
+        // Field: Enable reduced motion mode.
+        add_settings_field(
+            'da11y_reduced_motion_enabled',
+            __( 'Enable reduced motion mode', 'devllo-accessibility-controls' ),
+            [ $this, 'render_reduced_motion_enabled_field' ],
+            'da11y_settings_page',
+            'da11y_main_section'
+        );
+
         // Field: Button position.
         add_settings_field(
             'da11y_button_position',
@@ -109,6 +127,12 @@ class Settings {
         // Enabled: treat missing checkbox as false (unchecked).
         $enabled = ! empty( $input['enabled'] );
 
+        // Dyslexia feature toggle.
+        $dyslexia_enabled = ! empty( $input['dyslexia_enabled'] );
+
+        // Reduced motion feature toggle.
+        $reduced_motion_enabled = ! empty( $input['reduced_motion_enabled'] );
+
         // Button position: sanitize and fallback to default if invalid.
         $allowed_positions = [ 'bottom_right', 'bottom_left', 'top_right', 'top_left' ];
         $position          = isset( $input['button_position'] )
@@ -120,8 +144,10 @@ class Settings {
         }
 
         return [
-            'enabled'         => $enabled,
-            'button_position' => $position,
+            'enabled'                => $enabled,
+            'button_position'        => $position,
+            'dyslexia_enabled'       => $dyslexia_enabled,
+            'reduced_motion_enabled' => $reduced_motion_enabled,
         ];
     }
 
@@ -133,7 +159,9 @@ class Settings {
     public static function get_defaults() {
         return [
             'enabled'         => true,
-            'button_position' => 'bottom_right',
+            'button_position'     => 'bottom_right',
+            'dyslexia_enabled'    => true,
+            'reduced_motion_enabled' => true,
         ];
     }
 
@@ -193,6 +221,46 @@ class Settings {
                 <?php checked( ! empty( $settings['enabled'] ) ); ?>
             />
             <?php esc_html_e( 'Show the accessibility widget on the frontend.', 'devllo-accessibility-controls' ); ?>
+        </label>
+        <?php
+    }
+
+    /**
+     * Render the "Enable dyslexia-friendly mode" checkbox.
+     *
+     * @return void
+     */
+    public function render_dyslexia_enabled_field() {
+        $settings = self::get();
+        ?>
+        <label>
+            <input
+                type="checkbox"
+                name="<?php echo esc_attr( self::OPTION_NAME ); ?>[dyslexia_enabled]"
+                value="1"
+                <?php checked( ! empty( $settings['dyslexia_enabled'] ) ); ?>
+            />
+            <?php esc_html_e( 'Allow visitors to toggle a dyslexia-friendly reading mode.', 'devllo-accessibility-controls' ); ?>
+        </label>
+        <?php
+    }
+
+    /**
+     * Render the "Enable reduced motion mode" checkbox.
+     *
+     * @return void
+     */
+    public function render_reduced_motion_enabled_field() {
+        $settings = self::get();
+        ?>
+        <label>
+            <input
+                type="checkbox"
+                name="<?php echo esc_attr( self::OPTION_NAME ); ?>[reduced_motion_enabled]"
+                value="1"
+                <?php checked( ! empty( $settings['reduced_motion_enabled'] ) ); ?>
+            />
+            <?php esc_html_e( 'Allow visitors to reduce motion in the accessibility controls UI.', 'devllo-accessibility-controls' ); ?>
         </label>
         <?php
     }

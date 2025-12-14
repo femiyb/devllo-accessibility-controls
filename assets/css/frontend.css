@@ -14,6 +14,12 @@
     cursor: pointer;
 }
 
+/* Generic active state for toggle buttons */
+.da11y-toggle-active {
+    background-color: #005fcc;
+    color: #fff;
+}
+
 /* Trigger positioning */
 .da11y-position-bottom-right {
     position: fixed;
@@ -87,4 +93,20 @@
 
 .da11y-contrast-on a {
     color: #ffea00 !important;
+}
+
+/* Dyslexia-friendly reading mode (applied to html) */
+.da11y-dyslexia-on {
+    /* Use a dyslexia-friendly font if available; fallback to a readable system stack. */
+    font-family: "OpenDyslexic", "Atkinson Hyperlegible", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* Reduced motion mode (applied to html, but scoped to plugin UI) */
+.da11y-reduced-motion-on .da11y-dialog,
+.da11y-reduced-motion-on .da11y-trigger {
+    animation: none !important;
+    transition: none !important;
 }

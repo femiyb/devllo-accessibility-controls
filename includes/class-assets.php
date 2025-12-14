@@ -55,12 +55,16 @@ final class Assets {
                 'contrast' => true,
             ],
             'defaults' => [
-                'textSize' => 0,
-                'contrast' => false,
+                'textSize'      => 0,
+                'contrast'      => false,
+                'dyslexia'      => false,
+                'reducedMotion' => false,
             ],
             'settings' => [
-                'enabled'        => ! empty( $settings['enabled'] ),
-                'buttonPosition' => isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right',
+                'enabled'                => ! empty( $settings['enabled'] ),
+                'buttonPosition'         => isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right',
+                'dyslexiaEnabled'        => ! empty( $settings['dyslexia_enabled'] ),
+                'reducedMotionEnabled'   => ! empty( $settings['reduced_motion_enabled'] ),
             ],
         ];
 

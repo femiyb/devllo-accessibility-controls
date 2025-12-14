@@ -4,7 +4,7 @@ Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,8 @@ What it does in this version:
 
 * Lets visitors increase or decrease text size, or reset back to your theme's baseline.
 * Adds a high contrast mode for improved readability.
+* Provides a dyslexia-friendly reading mode with an alternate font and slightly adjusted spacing.
+* Offers a reduced motion mode that minimizes motion in the accessibility controls UI and respects system preferences.
 * Remembers the visitor's choices using local storage so their preferences persist as they browse.
 
 What it does not do:
@@ -45,16 +47,23 @@ No. This plugin helps visitors adjust how they view your site and supports acces
 
 = Does this plugin run a full accessibility audit? =
 
-No. This version focuses on user-facing controls (text size and contrast) and preference persistence, not on site-wide auditing.
+No. This version focuses on user-facing controls (text size, contrast, dyslexia-friendly reading mode, and reduced motion) and preference persistence, not on site-wide auditing.
 
 == Features ==
 
 * **Text size controls** – increase, decrease, and reset text size.
 * **High contrast mode** – toggle a high contrast color scheme for better readability.
+* **Dyslexia-friendly reading mode** – optional font and spacing adjustments to improve readability for some readers.
+* **Reduced motion mode** – minimize motion in the accessibility controls UI and respect system reduced-motion preferences.
 * **Preference persistence** – store user settings in the browser so they persist across page loads.
 * **Keyboard accessible UI** – the widget and dialog are designed to be usable from the keyboard.
 
 == Changelog ==
+
+= 0.2.0 =
+* Added dyslexia-friendly reading mode (toggle in the accessibility panel).
+* Added reduced motion mode for the accessibility controls UI, respecting system prefers-reduced-motion.
+* Updated settings to allow enabling/disabling dyslexia and reduced motion features.
 
 = 0.1.0 =
 * Initial prototype release with:
