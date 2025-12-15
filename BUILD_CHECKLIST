@@ -842,3 +842,226 @@ Devllo Accessibility Controls – v0.6.3 Build Checklist (Richer Frontend Contro
 5.2 Tests
 - [ ] Verify new controls are keyboard accessible and screen-reader friendly
 - [ ] Confirm layouts remain usable across a variety of themes
+
+
+Devllo Accessibility Controls – v0.6.4 Build Checklist (Frontend Quick Check for Admins)
+
+1. Scope for 0.6.4
+
+1.1 Admin-only quick checks on the frontend
+- [ ] Add a way for admins to run basic accessibility checks on the current frontend page
+- [ ] Reuse existing heuristic checks (skip link, headings, alt usage, form labels) where possible
+- [ ] Keep results clearly partial and informational
+
+2. Trigger & Visibility
+
+2.1 Trigger location
+- [ ] Add a “Run accessibility check” entry in the WordPress admin bar on the frontend
+  - [ ] Only visible to users with `manage_options`
+
+2.2 Permissions & safety
+- [ ] Ensure the quick check can only be run by logged-in admins
+- [ ] Use nonces for any AJAX or query-based triggers
+
+3. Implementation Strategy
+
+3.1 Reuse backend checks
+- [ ] Create a reusable method or service to run existing checks (skip link, headings, image alt usage, form labels) against an arbitrary URL or current page content
+- [ ] Ensure logic is shared between backend Guidance page and frontend quick check
+
+3.2 Request handling
+- [ ] Decide on mechanism:
+  - [ ] Either use AJAX to call a PHP handler that returns check results as JSON
+  - [ ] Or reload the page with a query flag that triggers checks and then shows results
+
+4. Results Display (Frontend)
+
+4.1 UI container
+- [ ] Add a small, dismissible results panel for admins on the frontend:
+  - [ ] Positioned in a non-intrusive corner (e.g. bottom-right)
+  - [ ] Styled similarly to the accessibility widget, but admin-only
+
+4.2 Messages
+- [ ] List the results from the checks:
+  - [ ] Use short, clear messages (e.g. “Skip link not detected on this page.”)
+  - [ ] Group by check (skip link, headings, images, forms)
+- [ ] Include a brief disclaimer at the top:
+  - [ ] “These checks are partial and informational; they are not a full audit.”
+
+4.3 Interaction
+- [ ] Allow admins to dismiss the results panel without reloading the page
+- [ ] Optionally provide a “Re-run checks” button within the panel
+
+5. Integration with Existing Data
+
+5.1 Optional logging
+- [ ] Consider whether to store the last frontend check results or just show them transiently
+- [ ] If stored, make it clear in the Guidance page which page was checked and when
+
+6. Documentation
+
+6.1 Readme updates
+- [ ] Update `readme.txt` to mention:
+  - [ ] Frontend “Quick accessibility check” for admins
+  - [ ] Emphasize that it is partial and advisory only
+
+6.2 In-plugin messaging
+- [ ] Add a short explanation in the admin bar item or results panel tooltip:
+  - [ ] “Quickly run the same basic checks used in the Accessibility Guidance page on this page.”
+
+7. Tests for v0.6.4
+
+7.1 Admin behavior
+- [ ] Confirm the admin bar item appears only for users with `manage_options` on the frontend
+- [ ] Verify that running the check shows results without breaking the page
+
+7.2 Safety and robustness
+- [ ] Ensure network or parsing failures result in friendly messages, not errors
+- [ ] Verify the quick check does not run for non-admin users or when JS is disabled
+
+
+Devllo Accessibility Controls – v0.6.5 Build Checklist (Calm Mode, Focus & Media Checks)
+
+1. Scope for 0.6.5
+
+1.1 Frontend neurodivergent-friendly controls
+- [ ] Add a “Calm mode” toggle that reduces visual noise
+- [ ] Add a “High visibility focus” toggle
+- [ ] Add a “Larger click targets” toggle
+- [ ] Extend reduced motion behavior to more animations
+
+1.2 Additional automated checks
+- [ ] Enhance backend and frontend quick checks for:
+  - [ ] Captions/transcripts for media
+  - [ ] Auto-playing audio
+  - [ ] Flashing or heavy animation
+  - [ ] Positive tabindex & potential keyboard traps
+  - [ ] Table semantics and link text quality
+
+1.3 Editor-time hints
+- [ ] Improve block editor hints for:
+  - [ ] Overall paragraph length / reading comfort
+  - [ ] Basic jargon/plain-language suggestions (advisory only)
+
+2. Calm Mode (Distraction Reduction)
+
+2.1 UI
+- [ ] Add a “Calm mode” toggle to the frontend dialog (e.g. under a new “Calm” or “Focus” section)
+- [ ] Label it clearly (e.g. “Reduce distractions”) with a short description in the tooltip or nearby text
+
+2.2 Behavior
+- [ ] In CSS/JS, define safe selectors for non-essential UI:
+  - [ ] Common sidebars (`.sidebar`, `.widget-area`)
+  - [ ] Sticky bars / notification bars (where reasonably detectable)
+  - [ ] Auto-rotating hero sections where possible
+- [ ] When calm mode is ON:
+  - [ ] Hide or visually de-emphasize these areas via CSS classes on `<html>`/`<body>`
+- [ ] Persist the calm mode state in the same preferences object as other controls
+
+3. High Visibility Focus Toggle
+
+3.1 UI
+- [ ] Add a “High visibility focus” toggle in the dialog
+
+3.2 CSS
+- [ ] Create a class (e.g. `.da11y-focus-strong`) that:
+  - [ ] Applies thicker, high-contrast outlines to focusable elements (links, buttons, inputs)
+  - [ ] Avoids relying solely on color changes
+
+3.3 JS
+- [ ] Add `focusStrong` (boolean) to the frontend state and persistence
+- [ ] Toggle the `.da11y-focus-strong` class on `<html>`/`<body>` based on the toggle
+
+4. Larger Click Targets Toggle
+
+4.1 UI
+- [ ] Add a “Larger click targets” toggle
+
+4.2 CSS
+- [ ] Define a class (e.g. `.da11y-targets-large`) that:
+  - [ ] Increases padding on buttons and links within reasonable limits
+  - [ ] Does not break layouts (avoid large shifts or wrapping)
+
+4.3 JS
+- [ ] Add `largeTargets` (boolean) to state and persistence
+- [ ] Toggle the `.da11y-targets-large` class based on the toggle
+
+5. Extended Reduced Motion Behavior
+
+5.1 CSS
+- [ ] Extend `.da11y-reduced-motion-on` to also:
+  - [ ] Reduce/disable CSS-based hover animations and transitions where possible (e.g. on buttons and links)
+
+5.2 JS
+- [ ] Where practical, attempt to pause:
+  - [ ] Auto-rotating carousels with common class patterns (documented heuristics)
+- [ ] Keep behavior conservative to avoid breaking core functionality
+
+6. Additional Automated Checks (Backend + Frontend)
+
+6.1 Media captions/transcripts
+- [ ] Extend backend checks and frontend quick checks to:
+  - [ ] Detect `<video>` elements without `<track>` captions
+  - [ ] Detect audio content (`<audio>` or embedded players) without obvious transcript references
+- [ ] Output hints such as:
+  - [ ] “Videos: some videos do not appear to have captions.”
+  - [ ] “Audio: audio-only content detected; consider providing transcripts.”
+
+6.2 Auto-playing audio
+- [ ] Refine detection in quick checks for:
+  - [ ] `<audio autoplay>`
+  - [ ] Embedded players with auto-play data attributes (best-effort)
+- [ ] Surface a dedicated “Auto-playing audio” hint
+
+6.3 Flashing content heuristic
+- [ ] Look for CSS animations and keyframes that:
+  - [ ] Rapidly change opacity or visibility
+  - [ ] Use very short durations (e.g. < 0.3s) with infinite loops
+- [ ] Warn admins: “Potential flashing content detected; verify it does not exceed safe thresholds.”
+
+6.4 Positive tabindex / keyboard traps
+- [ ] Already detect positive tabindex in quick checks; refine messaging
+- [ ] Optionally:
+  - [ ] Detect `keydown` handlers that call `preventDefault()` on Tab and hint about possible keyboard traps
+
+6.5 Table semantics & link text quality
+- [ ] Reuse and refine existing table checks:
+  - [ ] Tables with no `<th>`
+  - [ ] Nested tables
+- [ ] Bubble link text quality checks (empty links, raw URL text) into the frontend quick check panel
+
+7. Editor-Time Hints (Block Editor)
+
+7.1 Reading comfort metric
+- [ ] Extend the existing long-paragraph hint to:
+  - [ ] Show a summary like “Several paragraphs are quite long; consider breaking up text for easier reading.”
+
+7.2 Jargon/plain-language hints
+- [ ] Maintain a small, configurable word list of common jargon terms
+- [ ] Flag paragraphs that contain these terms with a gentle hint, e.g.:
+  - [ ] “This paragraph contains technical terms; consider explaining them in simpler language.”
+- [ ] Keep these hints advisory and non-blocking
+
+8. Documentation & Messaging
+
+8.1 Readme updates
+- [ ] Update Features section to mention:
+  - [ ] Calm mode
+  - [ ] High visibility focus
+  - [ ] Larger click targets
+  - [ ] Extended media and motion checks
+
+8.2 In-plugin messaging
+- [ ] In the dialog, add short descriptions for new toggles
+- [ ] In quick check panels, ensure new hints clearly state they are heuristics and partial
+
+9. Tests for v0.6.5
+
+9.1 Frontend behavior
+- [ ] Calm mode hides/de-emphasizes non-essential UI without breaking layouts
+- [ ] High visibility focus and larger targets improve usability with keyboard/mouse
+- [ ] Reduced motion + calm mode together do not conflict with existing settings
+
+9.2 Checks and hints
+- [ ] New media and motion checks appear correctly in both backend and frontend quick check panels
+- [ ] Editor hints update reactively as content changes

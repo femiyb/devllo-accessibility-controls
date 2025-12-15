@@ -52,6 +52,12 @@ class Settings {
             add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
             add_action( 'admin_menu', [ $this, 'add_guidance_page' ] );
         }
+
+        // Frontend admin-only integrations.
+        if ( ! is_admin() ) {
+            add_action( 'admin_bar_menu', [ $this, 'add_frontend_quick_check_item' ], 100 );
+            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_frontend_quick_check_assets' ] );
+        }
     }
 
     /**
@@ -185,6 +191,59 @@ class Settings {
             'manage_options',
             'da11y_accessibility_guidance',
             [ $this, 'render_guidance_page' ]
+        );
+    }
+
+    /**
+     * Add a "Quick accessibility check" item to the frontend admin bar for admins.
+     *
+     * @param \WP_Admin_Bar $admin_bar Admin bar instance.
+     * @return void
+     */
+    public function add_frontend_quick_check_item( $admin_bar ) {
+        if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        if ( is_admin() ) {
+            return;
+        }
+
+        $admin_bar->add_node(
+            [
+                'id'    => 'da11y-quick-check',
+                'title' => __( 'Accessibility quick check', 'devllo-accessibility-controls' ),
+                'href'  => '#',
+                'meta'  => [
+                    'class' => 'da11y-quick-check-menu-item',
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Enqueue frontend assets for the quick accessibility check panel (admins only).
+     *
+     * @return void
+     */
+    public function enqueue_frontend_quick_check_assets() {
+        if ( is_admin() || ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'da11y-frontend-quick-check',
+            DA11Y_PLUGIN_URL . 'assets/css/frontend-quick-check.css',
+            [],
+            DA11Y_PLUGIN_VERSION
+        );
+
+        wp_enqueue_script(
+            'da11y-frontend-quick-check',
+            DA11Y_PLUGIN_URL . 'assets/js/frontend-quick-check.js',
+            [ 'jquery' ],
+            DA11Y_PLUGIN_VERSION,
+            true
         );
     }
 
@@ -356,6 +415,7 @@ class Settings {
             ],
         ];
     }
+
 
     /**
      * Run a small set of basic automated accessibility checks.
