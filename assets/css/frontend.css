@@ -3,15 +3,23 @@
 /* Trigger button */
 .da11y-trigger {
     z-index: 9999;
-
     padding: 0.75rem 1rem;
     border-radius: 0.25rem;
     border: none;
-
     background-color: #111;
     color: #fff;
     font-size: 0.875rem;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.da11y-trigger-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 /* Generic active state for toggle buttons */
@@ -43,6 +51,10 @@
     position: fixed;
     left: 1rem;
     top: 1rem;
+}
+
+div#da11y-quick-check-panel h3 {
+    color: #fff;
 }
 
 /* Dialog overlay + panel */

@@ -45,7 +45,7 @@
         const h1Count = headings.filter((block) => block.attributes.level === 1).length;
         const h2Count = headings.filter((block) => block.attributes.level === 2).length;
 
-        if (h1Count > 1) {
+        if (h1Count) {
             hints.push({
                 id: 'multiple-h1',
                 type: 'warning',
@@ -53,20 +53,25 @@
             });
         }
 
-        if (h1Count === 0 && headings.length > 0) {
-            hints.push({
-                id: 'no-h1',
-                type: 'info',
-                message: __('No H1 heading was detected in this content. Ensure there is a clear main heading on the page (often provided by the theme).', 'devllo-accessibility-controls'),
-            });
+        // Check for heading level skips — e.g. H2 to H4, or H3 to H1.
+        const headingLevels = headings.map((block) => block.attributes.level);
+        let hasLevelSkip = false;
+
+        for (let i = 1; i < headingLevels.length; i++) {
+            const prev = headingLevels[i - 1];
+            const curr = headingLevels[i];
+            // Flag if heading jumps more than one level down (e.g. H2 to H4).
+            if (curr > prev + 1) {
+                hasLevelSkip = true;
+                break;
+            }
         }
 
-        const deeperHeadings = headings.filter((block) => block.attributes.level > 2);
-        if (deeperHeadings.length > 0 && h2Count === 0) {
+        if (hasLevelSkip) {
             hints.push({
                 id: 'heading-structure',
-                type: 'info',
-                message: __('Heading structure may skip levels (e.g. H1 directly to H3+). Review heading levels for a logical outline.', 'devllo-accessibility-controls'),
+                type: 'warning',
+                message: __('Heading levels skip — for example H2 followed by H4. Headings should increase by one level at a time for a logical document outline.', 'devllo-accessibility-controls'),
             });
         }
 
@@ -87,28 +92,39 @@
                 !!block.attributes.mediaUrl
         );
 
+        const imagesWithMissingAlt = imageBlocks.filter(
+            (block) => !block.attributes || block.attributes.alt === undefined || block.attributes.alt === null
+        );
         const imagesWithEmptyAlt = imageBlocks.filter(
-            (block) => !block.attributes || !block.attributes.alt
+            (block) => block.attributes && block.attributes.alt === ''
         );
-        const coversWithEmptyAlt = coverBlocks.filter(
-            (block) => !block.attributes || !block.attributes.alt
+        const coversWithMissingAlt = coverBlocks.filter(
+            (block) => !block.attributes || block.attributes.alt === undefined || block.attributes.alt === null
         );
-        const mediaWithEmptyAlt = mediaBlocks.filter(
-            (block) => !block.attributes || !block.attributes.mediaAlt
+        const mediaWithMissingAlt = mediaBlocks.filter(
+            (block) => !block.attributes || block.attributes.mediaAlt === undefined || block.attributes.mediaAlt === null
         );
 
-        if (imagesWithEmptyAlt.length > 0 || coversWithEmptyAlt.length > 0 || mediaWithEmptyAlt.length > 0) {
+        if (imagesWithMissingAlt.length > 0 || coversWithMissingAlt.length > 0 || mediaWithMissingAlt.length > 0) {
             hints.push({
-                id: 'image-alt',
+                id: 'image-alt-missing',
                 type: 'warning',
-                message: __('Some images have empty or missing alternative text. Ensure informative images have meaningful alt text.', 'devllo-accessibility-controls'),
+                message: __('Some images are missing an alt attribute entirely. Add meaningful alt text or mark decorative images with an empty alt attribute.', 'devllo-accessibility-controls'),
+            });
+        }
+
+        if (imagesWithEmptyAlt.length > 0) {
+            hints.push({
+                id: 'image-alt-empty',
+                type: 'info',
+                message: __('Some images have an empty alt attribute. This is correct for decorative images — ensure these images are truly decorative and not informative.', 'devllo-accessibility-controls'),
             });
         }
 
         // Generic link text heuristic (very simple).
         const problematicPhrases = ['click here', 'read more', 'learn more'];
         const textBlocks = blocks.filter((block) =>
-            ['core/paragraph', 'core/button'].includes(block.name)
+            ['core/paragraph', 'core/button', 'core/list', 'core/list-item'].includes(block.name)
         );
         const genericLinksFound = textBlocks.some((block) => {
             const content = (block.attributes.content || block.attributes.text || '').toString().toLowerCase();
@@ -209,6 +225,68 @@
             });
         }
 
+        // Images without captions.
+        const imagesWithoutCaption = imageBlocks.filter((block) => {
+            const caption = (block.attributes.caption || '').toString().replace(/<[^>]+>/g, '').trim();
+            return caption.length === 0;
+        });
+
+        if (imagesWithoutCaption.length > 0) {
+            hints.push({
+                id: 'image-no-caption',
+                type: 'info',
+                message: __('Some images have no caption. Captions are not always required but can aid understanding — consider adding one where helpful.', 'devllo-accessibility-controls'),
+            });
+        }
+
+        // Links opening in new tab.
+        const newTabLinkFound = textBlocks.some((block) => {
+            const content = (block.attributes.content || block.attributes.text || '').toString();
+            return /target=["\']_blank["\']/i.test(content);
+        });
+
+        if (newTabLinkFound) {
+            hints.push({
+                id: 'new-tab-links',
+                type: 'info',
+                message: __('Some links open in a new tab. Warn users before opening new tabs — consider adding "(opens in new tab)" to the link text or using an icon with an accessible label.', 'devllo-accessibility-controls'),
+            });
+        }
+
+        // Emoji-only content.
+        const emojiOnlyRegex = /^[\p{Emoji}\s]+$/u;
+        const emojiOnlyFound = blocks.some((block) => {
+            if (!['core/paragraph', 'core/heading'].includes(block.name)) {
+                return false;
+            }
+            const content = (block.attributes.content || '').toString().replace(/<[^>]+>/g, '').trim();
+            return content.length > 0 && emojiOnlyRegex.test(content);
+        });
+
+        if (emojiOnlyFound) {
+            hints.push({
+                id: 'emoji-only',
+                type: 'info',
+                message: __('Some blocks appear to contain only emoji. Screen readers announce emoji verbosely — consider adding descriptive text alongside them.', 'devllo-accessibility-controls'),
+            });
+        }
+
+        // Empty buttons.
+        const buttonBlocks = blocks.filter((block) => block.name === 'core/button');
+        const emptyButtons = buttonBlocks.filter((block) => {
+            const text = (block.attributes.text || '').toString().replace(/<[^>]+>/g, '').trim();
+            const hasAriaLabel = block.attributes.metadata && block.attributes.metadata.ariaLabel;
+            return text.length === 0 && !hasAriaLabel;
+        });
+
+        if (emptyButtons.length > 0) {
+            hints.push({
+                id: 'empty-buttons',
+                type: 'warning',
+                message: __('Some buttons have no visible text. Ensure all buttons have a descriptive label so screen reader users know their purpose.', 'devllo-accessibility-controls'),
+            });
+        }
+
         return hints;
     };
 
@@ -278,16 +356,15 @@
                           __('No specific hints at the moment. This does not mean the content is fully accessible.', 'devllo-accessibility-controls')
                       )
                     : hints.map((hint) =>
-                          el(
-                              Notice,
-                              {
-                                  key: hint.id,
-                                  status: hint.type === 'warning' ? 'warning' : 'info',
-                                  isDismissible: false,
-                              },
-                              hint.message
-                          )
-                      )
+                        el(
+                            'div',
+                            {
+                                key: hint.id,
+                                className: hint.type === 'warning' ? 'da11y-hint-warning' : 'da11y-hint-info',
+                            },
+                            el( 'p', { style: { margin: 0, fontSize: '13px' } }, hint.message )
+                        )
+                    )
             )
         );
     };

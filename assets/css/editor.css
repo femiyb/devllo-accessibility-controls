@@ -22,3 +22,16 @@
     text-align: center;
     box-sizing: border-box;
 }
+
+
+.da11y-hint-warning {
+    border-left: 4px solid #d63638;
+    padding-left: 8px;
+    margin-bottom: 8px;
+}
+
+.da11y-hint-info {
+    border-left: 4px solid #007cba;
+    padding-left: 8px;
+    margin-bottom: 8px;
+}

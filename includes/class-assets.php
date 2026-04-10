@@ -81,12 +81,31 @@ final class Assets {
 
             ],
             'settings' => [
-                'enabled'                => ! empty( $settings['enabled'] ),
-                'buttonPosition'         => isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right',
-                'dyslexiaEnabled'        => ! empty( $settings['dyslexia_enabled'] ),
-                'reducedMotionEnabled'   => ! empty( $settings['reduced_motion_enabled'] ),
+                'enabled'        => ! empty( $settings['enabled'] ),
+                'buttonPosition' => isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right',
             ],
-        ];
+            'features' => [
+                'contrast'         => ! empty( $settings['feature_contrast'] ),
+                'darkMode'         => ! empty( $settings['feature_dark_mode'] ),
+                'grayscale'        => ! empty( $settings['feature_grayscale'] ),
+                'brightness'       => ! empty( $settings['feature_brightness'] ),
+                'textSize'         => ! empty( $settings['feature_text_size'] ),
+                'letterSpacing'    => ! empty( $settings['feature_letter_spacing'] ),
+                'lineSpacing'      => ! empty( $settings['feature_line_spacing'] ),
+                'wordSpacing'      => ! empty( $settings['feature_word_spacing'] ),
+                'dyslexia'         => ! empty( $settings['feature_dyslexia'] ),
+                'alignLeft'        => ! empty( $settings['feature_align_left'] ),
+                'readingMode'      => ! empty( $settings['feature_reading_mode'] ),
+                'readingGuide'     => ! empty( $settings['feature_reading_guide'] ),
+                'readingMask'      => ! empty( $settings['feature_reading_mask'] ),
+                'bigCursor'        => ! empty( $settings['feature_big_cursor'] ),
+                'highlightLinks'   => ! empty( $settings['feature_highlight_links'] ),
+                'focusEnhanced'    => ! empty( $settings['feature_focus_enhanced'] ),
+                'reducedMotion'    => ! empty( $settings['feature_reduced_motion'] ),
+                'hideImages'       => ! empty( $settings['feature_hide_images'] ),
+                'keyboardShortcut' => ! empty( $settings['feature_keyboard_shortcut'] ),
+            ],
+                    ];
 
         /**
          * Filter the frontend configuration passed to JavaScript.

@@ -556,6 +556,7 @@
                 });
 
                 // Global key handling for Escape and Tab trapping when dialog is open.
+                if (this.config.features && this.config.features.keyboardShortcut) {
                 document.addEventListener('keydown', (event) => {
                     this.handleKeydown(event);
 
@@ -568,6 +569,7 @@
                     }
                 }
                 });
+            }
             }
 
             // Close button inside dialog.
