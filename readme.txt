@@ -1,10 +1,10 @@
 === Devllo Accessibility Controls ===
-Contributors: your-name
+Contributors: devlloplugins, femiyb
 Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
-Tested up to: 6.6
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.6.3
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,20 +12,42 @@ Visitor-controlled accessibility enhancements: text size, high contrast, and sav
 
 == Description ==
 
-Devllo Accessibility Controls adds a small, accessible widget to your site that lets visitors adjust how they experience your content.
+Devllo Accessibility Controls adds a fully featured, accessible widget to your site that lets visitors adjust how they experience your content.
 
 This plugin focuses on **user-controlled adjustments** and **admin guidance**, not on automated "fix everything" promises or legal guarantees. It is designed to complement good accessible design, not replace it.
 
-What it does in this version:
+What visitors can control:
 
-* Lets visitors increase or decrease text size, or reset back to your theme's baseline.
-* Adds a high contrast mode for improved readability.
-* Provides a dyslexia-friendly reading mode with an alternate font and slightly adjusted spacing.
-* Offers a reduced motion mode that minimizes motion in the accessibility controls UI and respects system preferences.
-* Adds an accessibility guidance page with a simple checklist to help site owners think about key accessibility topics.
-* Remembers the visitor's choices using local storage so their preferences persist as they browse.
+* Text size — increase, decrease, or reset.
+* Line spacing, letter spacing, and word spacing.
+* Text alignment — force left alignment for easier reading.
+* Dyslexia-friendly font (OpenDyslexic).
+* High contrast mode.
+* Grayscale mode.
+* Dark mode.
+* Brightness adjustment.
+* Reading mode — narrows content width for focused reading.
+* Reading guide — a horizontal line that follows the cursor.
+* Reading mask — dims content above and below the current line.
+* Big cursor — enlarges the mouse cursor.
+* Link highlighting — visually emphasises all links.
+* Focus outline enhancement — makes keyboard focus rings more visible.
+* Reduced motion — minimises animations site-wide.
+* Hide images — removes images to reduce visual clutter.
+* All preferences saved to localStorage and restored on return visits.
 
-What it does not do:
+What admins get:
+
+* Categorised settings page — enable or disable individual features per category.
+* Widget customisation — label, colours, size, and icon/text style.
+* Accessibility guidance page with a 25-item WCAG 2.1 checklist.
+* Automated accessibility checks — skip link, focus outline, font size, headings, image alt, form labels, lang attribute, viewport meta, link text, empty buttons, tables, PDF links, and autoplay media.
+* Block editor hints panel — live post-specific accessibility hints with colour-coded warnings.
+* Frontend quick check — admin bar tool that runs 15+ live checks on any page.
+* Accessibility statement generator — creates a draft statement page and links it in the widget.
+* Keyboard shortcut (Alt+A) to open the accessibility panel.
+
+What this plugin does not do:
 
 * It does **not** run a full accessibility audit.
 * It does **not** guarantee ADA or WCAG compliance.
@@ -52,14 +74,53 @@ No. This version focuses on user-facing controls (text size, contrast, dyslexia-
 
 == Features ==
 
-* **Text size controls** – increase, decrease, and reset text size.
-* **High contrast mode** – toggle a high contrast color scheme for better readability.
-* **Dyslexia-friendly reading mode** – optional font and spacing adjustments to improve readability for some readers.
-* **Reduced motion mode** – minimize motion in the accessibility controls UI and respect system reduced-motion preferences.
-* **Spacing and reading mode** – adjust line spacing and enable a focused reading mode for longer content.
-* **Color themes** – choose between default and optional dark mode color themes (dark mode is experimental and may require theme-specific tuning).
-* **Preference persistence** – store user settings in the browser so they persist across page loads.
-* **Keyboard accessible UI** – the widget and dialog are designed to be usable from the keyboard.
+**Visitor-facing widget**
+
+* Text size controls — smaller, larger, reset (5 levels).
+* Line spacing, letter spacing, and word spacing controls.
+* Text align left toggle.
+* Dyslexia-friendly font (OpenDyslexic, bundled locally).
+* High contrast mode.
+* Grayscale mode.
+* Dark mode.
+* Brightness control.
+* Reading mode — narrows content for focused reading.
+* Reading guide — horizontal line follows the cursor.
+* Reading mask — dims content above and below the reading line.
+* Big cursor toggle.
+* Link highlighting toggle.
+* Focus outline enhancement toggle.
+* Reduced motion toggle — site-wide animation suppression.
+* Hide images toggle.
+* Reset all preferences.
+* Accessibility statement link in the widget footer.
+* Keyboard shortcut (Alt+A) to open/close the panel.
+* All preferences persisted in localStorage.
+
+**Admin settings**
+
+* Enable or disable the widget entirely.
+* Button position — 4 corner options.
+* Per-feature toggles — categorised by Visual, Text, Reading, and Navigation.
+* Widget customisation — label, background colour, text colour, size, and icon style.
+* Accessibility statement generator and page selector.
+
+**Accessibility guidance page**
+
+* 25-item WCAG 2.1 AA checklist with status tracking (Reviewed, Needs attention, Not applicable).
+* Automated checks — 13 checks run against the homepage including skip link, focus outline, font size, heading structure, image alt, form labels, lang attribute, viewport meta, generic link text, empty buttons, table headers, PDF links, and autoplay media.
+* Colour-coded results — green, amber, and red indicators.
+
+**Block editor**
+
+* Live accessibility hints panel with colour-coded warnings.
+* Checks for multiple H1s, heading level skips, missing image alt, generic link text, long paragraphs, ALL CAPS, tables without headers, video/audio content, raw URL links, new tab links, emoji-only content, and empty buttons.
+* Hint count badge on the editor toolbar icon.
+
+**Frontend quick check**
+
+* Admin bar trigger runs 15+ live checks on the current page.
+* Checks skip link, headings, images, forms, links, tables, media, tabindex, lang attribute, page title, and more.
 
 == Developer Notes ==
 
@@ -74,6 +135,28 @@ Actions:
 * `da11y_before_dialog` / `da11y_after_dialog` – run before/after the accessibility dialog markup.
 
 == Changelog ==
+
+= 0.7.0 =
+* Added grayscale mode, letter spacing, word spacing, text align left, reading guide, reading mask, big cursor, link highlighting, focus outline enhancement, hide images, and brightness controls to the visitor widget.
+* Added keyboard shortcut (Alt+A) to open/close the accessibility panel.
+* Grouped widget controls into collapsible accordion sections (Text, Reading, Visual, Navigation).
+* Added per-feature admin toggles categorised by Visual, Text, Reading, and Navigation.
+* Added widget customisation — button label, colours, size, and icon/text style options.
+* Added accessibility statement generator — creates a draft WordPress page and links it in the widget.
+* Expanded accessibility checklist from 5 to 25 WCAG 2.1 AA items.
+* Added 7 new automated checks — lang attribute, viewport meta, generic link text, empty buttons, table headers, PDF links, and autoplay media.
+* Improved existing automated checks — focus outline now detects replacement styles, font size check now reads theme.json.
+* Improved block editor hints — colour-coded warnings, heading level skip detection, image alt false positive fix, new tab links, emoji-only content, empty buttons, and missing captions.
+* Bundled OpenDyslexic font locally — removed external CDN dependency.
+* Fixed dialog position to follow button position setting.
+* Fixed reduced motion to apply site-wide using WCAG-recommended pattern.
+* Fixed dark mode using CSS invert approach for broad theme compatibility.
+* Fixed high contrast mode specificity.
+* Fixed spacing classes for block themes.
+* Removed jQuery dependency from frontend quick check script.
+* Added uninstall.php to clean up database options on plugin deletion.
+* Added categorised, modern admin settings page with toggle switches.
+* Added colour-coded automated check results on the guidance page.
 
 = 0.6.3 =
 * Added spacing controls to increase or reset line spacing for improved readability.

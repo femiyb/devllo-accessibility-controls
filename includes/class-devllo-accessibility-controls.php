@@ -164,362 +164,446 @@ class Accessibility_Controls {
                     <?php echo esc_html__( 'Adjust text size and contrast to improve readability.', 'devllo-accessibility-controls' ); ?>
                 </p>
 
-                <?php
-                // Section: Text size controls.
-                if ( $f_text_size ) : ?>
-                <section class="da11y-section da11y-section-text-size">
-                    <h3>
-                        <?php echo esc_html__( 'Text size', 'devllo-accessibility-controls' ); ?>
-                    </h3>
-                    <div class="da11y-controls-row">
+                <div class="da11y-accordion">
+                    <section class="da11y-accordion-group">
                         <button
                             type="button"
-                            class="da11y-text-smaller"
+                            class="da11y-accordion-toggle"
+                            aria-expanded="true"
+                            aria-controls="da11y-group-text"
                         >
-                            <?php echo esc_html__( 'Smaller', 'devllo-accessibility-controls' ); ?>
+                            <span class="da11y-accordion-title">
+                                <?php echo esc_html__( 'Text', 'devllo-accessibility-controls' ); ?>
+                            </span>
+                            <span class="da11y-accordion-indicator" aria-hidden="true"></span>
                         </button>
+                        <div
+                            id="da11y-group-text"
+                            class="da11y-accordion-panel"
+                        >
+                            <?php
+                            // Section: Text size controls.
+                            if ( $f_text_size ) :
+                            ?>
+                                <section class="da11y-section da11y-section-text-size">
+                                    <h3>
+                                        <?php echo esc_html__( 'Text size', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-text-smaller"
+                                        >
+                                            <?php echo esc_html__( 'Smaller', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-text-larger"
+                                        >
+                                            <?php echo esc_html__( 'Larger', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-text-reset"
+                                        >
+                                            <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php
+                            // Section: Spacing controls (line height and paragraph spacing).
+                            if ( $f_line_spacing ) :
+                            ?>
+                                <section class="da11y-section da11y-section-spacing">
+                                    <h3>
+                                        <?php echo esc_html__( 'Line Spacing', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-spacing-more"
+                                        >
+                                            <?php echo esc_html__( 'Increase spacing', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-spacing-reset"
+                                        >
+                                            <?php echo esc_html__( 'Reset spacing', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_letter_spacing ) : ?>
+                                <section class="da11y-section da11y-section-letter-spacing">
+                                    <h3>
+                                        <?php echo esc_html__( 'Letter spacing', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-letter-spacing-more"
+                                        >
+                                            <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-letter-spacing-reset"
+                                        >
+                                            <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_word_spacing ) : ?>
+                                <section class="da11y-section da11y-section-word-spacing">
+                                    <h3>
+                                        <?php echo esc_html__( 'Word spacing', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-word-spacing-more"
+                                        >
+                                            <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-word-spacing-reset"
+                                        >
+                                            <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_align_left ) : ?>
+                                <section class="da11y-section da11y-section-align-left">
+                                    <h3>
+                                        <?php echo esc_html__( 'Text alignment', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-align-left-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Align text left', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php
+                            // Section: Dyslexia-friendly reading mode (if enabled).
+                            if ( $f_dyslexia ) :
+                            ?>
+                                <section class="da11y-section da11y-section-dyslexia">
+                                    <h3>
+                                        <?php echo esc_html__( 'Dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-dyslexia-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+                        </div>
+                    </section>
+
+                    <section class="da11y-accordion-group">
                         <button
                             type="button"
-                            class="da11y-text-larger"
+                            class="da11y-accordion-toggle"
+                            aria-expanded="false"
+                            aria-controls="da11y-group-reading"
                         >
-                            <?php echo esc_html__( 'Larger', 'devllo-accessibility-controls' ); ?>
+                            <span class="da11y-accordion-title">
+                                <?php echo esc_html__( 'Reading', 'devllo-accessibility-controls' ); ?>
+                            </span>
+                            <span class="da11y-accordion-indicator" aria-hidden="true"></span>
                         </button>
+                        <div
+                            id="da11y-group-reading"
+                            class="da11y-accordion-panel"
+                            hidden
+                        >
+                            <?php if ( $f_reading_mode ) : ?>
+                                <section class="da11y-section da11y-section-reading-mode">
+                                    <h3>
+                                        <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-reading-mode-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle reading mode', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_reading_guide ) : ?>
+                                <section class="da11y-section da11y-section-reading-guide">
+                                    <h3>
+                                        <?php echo esc_html__( 'Reading guide', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-reading-guide-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle reading guide', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_reading_mask ) : ?>
+                                <section class="da11y-section da11y-section-reading-mask">
+                                    <h3>
+                                        <?php echo esc_html__( 'Reading mask', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-reading-mask-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle reading mask', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+                        </div>
+                    </section>
+
+                    <section class="da11y-accordion-group">
                         <button
                             type="button"
-                            class="da11y-text-reset"
+                            class="da11y-accordion-toggle"
+                            aria-expanded="false"
+                            aria-controls="da11y-group-visual"
                         >
-                            <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
+                            <span class="da11y-accordion-title">
+                                <?php echo esc_html__( 'Visual', 'devllo-accessibility-controls' ); ?>
+                            </span>
+                            <span class="da11y-accordion-indicator" aria-hidden="true"></span>
                         </button>
-                    </div>
-                </section>
-                <?php endif; ?>
+                        <div
+                            id="da11y-group-visual"
+                            class="da11y-accordion-panel"
+                            hidden
+                        >
+                            <?php
+                            // High contrast mode (implemented via contrast toggle inside themes).
+                            if ( $f_contrast ) :
+                            ?>
+                                <section class="da11y-section da11y-section-contrast">
+                                    <h3>
+                                        <?php echo esc_html__( 'High contrast', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-contrast-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle high contrast', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
 
-                <?php
-                // Section: Spacing controls (line height and paragraph spacing).
-                    if ( $f_line_spacing ):
-                        ?>
-                
-                <section class="da11y-section da11y-section-spacing">
-                    <h3>
-                        <?php echo esc_html__( 'Line Spacing', 'devllo-accessibility-controls' ); ?>
-                    </h3>
-                    <div class="da11y-controls-row">
+                            <?php if ( $f_grayscale ) : ?>
+                                <section class="da11y-section da11y-section-grayscale">
+                                    <h3>
+                                        <?php echo esc_html__( 'Grayscale', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-grayscale-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Toggle grayscale', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_dark_mode ) : ?>
+                                <section class="da11y-section da11y-section-themes">
+                                    <h3>
+                                        <?php echo esc_html__( 'Colour themes', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-theme-button"
+                                            data-da11y-theme="default"
+                                            aria-pressed="true"
+                                        >
+                                            <?php echo esc_html__( 'Default', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-theme-button"
+                                            data-da11y-theme="dark-mode"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Dark mode (beta)', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_brightness ) : ?>
+                                <section class="da11y-section da11y-section-brightness">
+                                    <h3>
+                                        <?php echo esc_html__( 'Brightness', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-brightness-down"
+                                        >
+                                            <?php echo esc_html__( 'Dimmer', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-brightness-up"
+                                        >
+                                            <?php echo esc_html__( 'Brighter', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="da11y-brightness-reset"
+                                        >
+                                            <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+                        </div>
+                    </section>
+
+                    <section class="da11y-accordion-group">
                         <button
                             type="button"
-                            class="da11y-spacing-more"
+                            class="da11y-accordion-toggle"
+                            aria-expanded="false"
+                            aria-controls="da11y-group-navigation"
                         >
-                            <?php echo esc_html__( 'Increase spacing', 'devllo-accessibility-controls' ); ?>
+                            <span class="da11y-accordion-title">
+                                <?php echo esc_html__( 'Navigation', 'devllo-accessibility-controls' ); ?>
+                            </span>
+                            <span class="da11y-accordion-indicator" aria-hidden="true"></span>
                         </button>
-                        <button
-                            type="button"
-                            class="da11y-spacing-reset"
+                        <div
+                            id="da11y-group-navigation"
+                            class="da11y-accordion-panel"
+                            hidden
                         >
-                            <?php echo esc_html__( 'Reset spacing', 'devllo-accessibility-controls' ); ?>
-                        </button>
-                    </div>
-                </section>
-                    <?php
-                    endif; ?>
+                            <?php if ( $f_big_cursor ) : ?>
+                                <section class="da11y-section da11y-section-big-cursor">
+                                    <h3>
+                                        <?php echo esc_html__( 'Cursor', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-big-cursor-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Large cursor', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
 
-                <?php if ( $f_letter_spacing ) : ?>
-                    <section class="da11y-section da11y-section-letter-spacing">
-                        <h3>
-                            <?php echo esc_html__( 'Letter spacing', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-letter-spacing-more"
-                            >
-                                <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                            <button
-                                type="button"
-                                class="da11y-letter-spacing-reset"
-                            >
-                                <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
-                            </button>
+                            <?php if ( $f_highlight_links ) : ?>
+                                <section class="da11y-section da11y-section-highlight-links">
+                                    <h3>
+                                        <?php echo esc_html__( 'Links', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-highlight-links-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Highlight links', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_focus_enhanced ) : ?>
+                                <section class="da11y-section da11y-section-focus">
+                                    <h3>
+                                        <?php echo esc_html__( 'Focus outlines', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-focus-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Enhance focus outlines', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_hide_images ) : ?>
+                                <section class="da11y-section da11y-section-hide-images">
+                                    <h3>
+                                        <?php echo esc_html__( 'Images', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-hide-images-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Hide images', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $reduced_motion_enabled && $f_reduced_motion ) : ?>
+                                <section class="da11y-section da11y-section-motion">
+                                    <h3>
+                                        <?php echo esc_html__( 'Reduce motion', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-reduced-motion-toggle"
+                                            aria-pressed="false"
+                                        >
+                                            <?php echo esc_html__( 'Reduce animations site-wide', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
                         </div>
                     </section>
-                <?php endif; ?>
-
-                <?php if ( $f_word_spacing ) : ?>
-                    <section class="da11y-section da11y-section-word-spacing">
-                        <h3>
-                            <?php echo esc_html__( 'Word spacing', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-word-spacing-more"
-                            >
-                                <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                            <button
-                                type="button"
-                                class="da11y-word-spacing-reset"
-                            >
-                                <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_align_left ) : ?>
-                    <section class="da11y-section da11y-section-align-left">
-                        <h3>
-                            <?php echo esc_html__( 'Text alignment', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-align-left-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Align text left', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php
-                // Section: Dyslexia-friendly reading mode (if enabled).
-                if ( $dyslexia_enabled && $f_dyslexia ) :
-                    ?>
-                    <section class="da11y-section da11y-section-dyslexia">
-                        <h3>
-                            <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-dyslexia-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php
-                // Section: Reduced motion (if enabled).
-                if ( $reduced_motion_enabled && $f_reduced_motion ) :
-                    ?>
-                    <section class="da11y-section da11y-section-motion">
-                        <h3>
-                            <?php echo esc_html__( 'Reduce Motion', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-reduced-motion-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Reduce animations site-wide', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php
-                // Section: High contrast mode.
-                ?>
-                <?php if ( $f_grayscale ) : ?>
-                    <section class="da11y-section da11y-section-grayscale">
-                        <h3>
-                            <?php echo esc_html__( 'Grayscale', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-grayscale-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Toggle grayscale', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php
-                // Section: Color themes.
-                ?>
-                <?php if ( $f_dark_mode ) : ?>
-                    <section class="da11y-section da11y-section-themes">
-                        <h3>
-                            <?php echo esc_html__( 'Color themes', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-theme-button"
-                                data-da11y-theme="default"
-                                aria-pressed="true"
-                            >
-                                <?php echo esc_html__( 'Default', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                            <button
-                                type="button"
-                                class="da11y-theme-button"
-                                data-da11y-theme="dark-mode"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Dark mode (beta)', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php
-                // Section: Reading mode.
-                ?>
-                <?php if ( $f_reading_mode ) : ?>
-                    <section class="da11y-section da11y-section-reading-mode">
-                        <h3>
-                            <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-reading-mode-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Toggle reading mode', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_reading_guide ) : ?>
-                    <section class="da11y-section da11y-section-reading-guide">
-                        <h3>
-                            <?php echo esc_html__( 'Reading guide', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-reading-guide-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Toggle reading guide', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_reading_mask ) : ?>
-                    <section class="da11y-section da11y-section-reading-mask">
-                        <h3>
-                            <?php echo esc_html__( 'Reading mask', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-reading-mask-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Toggle reading mask', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_big_cursor ) : ?>
-                    <section class="da11y-section da11y-section-big-cursor">
-                        <h3>
-                            <?php echo esc_html__( 'Cursor', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-big-cursor-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Large cursor', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_hide_images ) : ?>
-                    <section class="da11y-section da11y-section-hide-images">
-                        <h3>
-                            <?php echo esc_html__( 'Images', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-hide-images-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Hide images', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_highlight_links ) : ?>
-                    <section class="da11y-section da11y-section-highlight-links">
-                        <h3>
-                            <?php echo esc_html__( 'Links', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-highlight-links-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Highlight links', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_focus_enhanced ) : ?>
-                    <section class="da11y-section da11y-section-focus">
-                        <h3>
-                            <?php echo esc_html__( 'Focus', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-focus-toggle"
-                                aria-pressed="false"
-                            >
-                                <?php echo esc_html__( 'Enhance focus outlines', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
-
-                <?php if ( $f_brightness ) : ?>
-                    <section class="da11y-section da11y-section-brightness">
-                        <h3>
-                            <?php echo esc_html__( 'Brightness', 'devllo-accessibility-controls' ); ?>
-                        </h3>
-                        <div class="da11y-controls-row">
-                            <button
-                                type="button"
-                                class="da11y-brightness-down"
-                            >
-                                <?php echo esc_html__( 'Dimmer', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                            <button
-                                type="button"
-                                class="da11y-brightness-up"
-                            >
-                                <?php echo esc_html__( 'Brighter', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                            <button
-                                type="button"
-                                class="da11y-brightness-reset"
-                            >
-                                <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
-                            </button>
-                        </div>
-                    </section>
-                <?php endif; ?>
+                </div>
 
                 <div class="da11y-section da11y-section-reset">
                     <button

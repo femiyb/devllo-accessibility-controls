@@ -1,4 +1,11 @@
 /* Root scope: all plugin UI uses .da11y- prefix */
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url( '../fonts/OpenDyslexic-Regular.woff2' ) format( 'woff2' );
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* Trigger button */
 .da11y-trigger {
@@ -25,7 +32,7 @@
 /* Generic active state for toggle buttons */
 .da11y-toggle-active {
     background-color: #005fcc;
-    color: #fff;
+    color: #000 !important;
 }
 
 /* Trigger positioning */
@@ -67,15 +74,15 @@ div#da11y-quick-check-panel h3 {
 
 .da11y-dialog {
     position: fixed;
-    max-width: 20rem;
+    max-width: 22rem;
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
-    padding: 1rem;
-    border-radius: 0.25rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    border-radius: 0.5rem;
     background: #fff;
     color: #111;
     z-index: 10001;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     font-size: 0.875rem;
 }
 
@@ -125,6 +132,90 @@ div#da11y-quick-check-panel h3 {
     outline-offset: 2px;
 }
 
+/* Dialog sections & accordion */
+.da11y-accordion {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.da11y-accordion-group {
+    border-radius: 0.5rem;
+    background: #f5f5f7;
+    border: 1px solid #e0e0e5;
+    overflow: hidden;
+}
+
+.da11y-accordion-toggle {
+    width: 100%;
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.da11y-accordion-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.da11y-accordion-indicator {
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+}
+
+.da11y-accordion-indicator::before {
+    content: "+";
+}
+
+.da11y-accordion-toggle[aria-expanded="true"] .da11y-accordion-indicator::before {
+    content: "−";
+}
+
+.da11y-accordion-panel {
+    padding: 0 0.75rem 0.75rem;
+}
+
+.da11y-section {
+    margin-top: 0.75rem;
+}
+
+.da11y-section h3 {
+    margin: 0 0 0.4rem;
+    font-size: 0.85rem;
+}
+
+.da11y-controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.da11y-controls-row button {
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #d0d0d5;
+    background: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.da11y-section-reset,
+.da11y-section-statement {
+    margin-top: 1rem;
+}
+
 /* Text size scaling (applied to html/body) */
 .da11y-text-scale--1 {
     font-size: 90%;
@@ -162,10 +253,11 @@ div#da11y-quick-check-panel h3 {
 }
 
 /* Dyslexia-friendly reading mode (applied to html) */
-.da11y-dyslexia-on {
-    /* Use a dyslexia-friendly font if available; fallback to a readable system stack. */
+.da11y-dyslexia-on,
+.da11y-dyslexia-on body,
+.da11y-dyslexia-on body * {
     font-family: "OpenDyslexic", "Atkinson Hyperlegible", system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+        "Segoe UI", sans-serif !important;
     line-height: 1.6;
     letter-spacing: 0.02em;
 }

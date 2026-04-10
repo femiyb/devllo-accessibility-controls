@@ -274,6 +274,7 @@
             this.$readingMaskToggle  = document.querySelector('.da11y-reading-mask-toggle');
             this.$readingMaskTop     = document.querySelector('.da11y-reading-mask-top');
             this.$readingMaskBottom  = document.querySelector('.da11y-reading-mask-bottom');
+            this.$accordionToggles   = document.querySelectorAll('.da11y-accordion-toggle');
             this.$hideImagesToggle = document.querySelector('.da11y-hide-images-toggle');
 
             // Selector for focusable elements inside the dialog.
@@ -754,6 +755,27 @@
             if (this.$readingMode) {
                 this.$readingMode.addEventListener('click', () => {
                     this.toggleReadingMode();
+                });
+            }
+
+            // Accordion groups (dialog sections).
+            if (this.$accordionToggles && this.$accordionToggles.length) {
+                this.$accordionToggles.forEach((toggle) => {
+                    const panelId = toggle.getAttribute('aria-controls');
+                    const panel = panelId ? document.getElementById(panelId) : null;
+
+                    toggle.addEventListener('click', () => {
+                        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                        toggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+                        if (panel) {
+                            if (isExpanded) {
+                                panel.setAttribute('hidden', '');
+                            } else {
+                                panel.removeAttribute('hidden');
+                            }
+                        }
+                    });
                 });
             }
         },

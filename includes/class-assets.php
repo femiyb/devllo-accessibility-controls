@@ -36,14 +36,6 @@ final class Assets {
             DA11Y_PLUGIN_VERSION
         );
 
-        // Load OpenDyslexic font for dyslexia-friendly mode.
-        wp_enqueue_style(
-                'da11y-opendyslexic',
-                'https://cdn.jsdelivr.net/npm/@fontsource/opendyslexic@latest/400.css',
-                [],
-                null
-            );
-
         // JS.
         wp_enqueue_script(
             'da11y-frontend',

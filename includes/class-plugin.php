@@ -32,7 +32,6 @@ final class Plugin {
      * @return void
      */
     private function init() {
-        $this->load_textdomain();
         $this->includes();
         $this->setup_components();
     }
@@ -42,13 +41,6 @@ final class Plugin {
      * 
      * @return void
      */
-    private function load_textdomain() {
-        load_plugin_textdomain(
-            'devllo-accessibility-controls',
-            false,
-            basename( DA11Y_PLUGIN_PATH ) . '/languages/'
-        );
-    }
 
     /**
      * Include required files.

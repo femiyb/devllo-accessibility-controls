@@ -1494,7 +1494,7 @@ class Settings {
         $generic_count   = 0;
 
         foreach ( $matches[1] as $link_text ) {
-            $text = strtolower( trim( strip_tags( $link_text ) ) );
+            $text = strtolower( trim( wp_strip_all_tags( $link_text ) ) );
             if ( in_array( $text, $generic_phrases, true ) ) {
                 $generic_count++;
             }
@@ -1547,7 +1547,7 @@ class Settings {
             $attrs = $matches[1][ $index ] ?? '';
             $inner = $matches[2][ $index ] ?? '';
 
-            $text        = trim( strip_tags( $inner ) );
+            $text        = trim( wp_strip_all_tags( $inner ) );
             $has_aria    = preg_match( '/aria-label=["\'][^"\']+["\']/i', $attrs );
             $has_title   = preg_match( '/title=["\'][^"\']+["\']/i', $attrs );
 
@@ -2200,8 +2200,8 @@ class Settings {
 
         wp_dropdown_pages( [
             'name'              => esc_attr( self::OPTION_NAME ) . '[accessibility_statement_page_id]',
-            'selected'          => $page_id,
-            'show_option_none'  => __( '— Select a page —', 'devllo-accessibility-controls' ),
+            'selected'          => absint( $page_id ),
+            'show_option_none'  => esc_html__( '— Select a page —', 'devllo-accessibility-controls' ),
             'option_none_value' => 0,
         ] );
 

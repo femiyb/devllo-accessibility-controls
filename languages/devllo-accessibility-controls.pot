@@ -1,0 +1,1075 @@
+# Copyright (C) 2026 Devllo Plugins
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Devllo Accessibility Controls 0.6.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/devllo-accessibility-controls\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-10T14:18:02+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: devllo-accessibility-controls\n"
+
+#. Plugin Name of the plugin
+#: devllo-accessibility-controls.php
+msgid "Devllo Accessibility Controls"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: devllo-accessibility-controls.php
+msgid "https://devllo.com/plugins/accessibility-controls"
+msgstr ""
+
+#. Description of the plugin
+#: devllo-accessibility-controls.php
+msgid "Visitor-controlled accessibility enhancements for WordPress websites."
+msgstr ""
+
+#. Author of the plugin
+#: devllo-accessibility-controls.php
+msgid "Devllo Plugins"
+msgstr ""
+
+#. Author URI of the plugin
+#: devllo-accessibility-controls.php
+msgid "https://devllo.com"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:86
+#: includes/class-settings.php:2054
+msgid "Accessibility Options"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:110
+#: includes/class-settings.php:419
+#: includes/class-settings.php:420
+#: includes/class-settings.php:1740
+msgid "Accessibility Controls"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:156
+msgid "Close accessibility settings"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:161
+msgid "Accessibility Settings"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:164
+msgid "Adjust text size and contrast to improve readability."
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:176
+#: includes/class-settings.php:132
+msgid "Text"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:190
+#: includes/class-settings.php:138
+msgid "Text size"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:197
+msgid "Smaller"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:203
+msgid "Larger"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:209
+#: includes/class-devllo-accessibility-controls.php:256
+#: includes/class-devllo-accessibility-controls.php:278
+#: includes/class-devllo-accessibility-controls.php:495
+msgid "Reset"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:221
+msgid "Line Spacing"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:228
+msgid "Increase spacing"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:234
+msgid "Reset spacing"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:243
+#: includes/class-settings.php:139
+msgid "Letter spacing"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:250
+#: includes/class-devllo-accessibility-controls.php:272
+msgid "Increase"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:265
+#: includes/class-settings.php:141
+msgid "Word spacing"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:287
+msgid "Text alignment"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:295
+msgid "Align text left"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:307
+#: includes/class-settings.php:162
+msgid "Dyslexia-friendly font"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:315
+msgid "Toggle dyslexia-friendly font"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:331
+#: includes/class-settings.php:156
+msgid "Reading"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:343
+#: includes/class-settings.php:164
+msgid "Reading mode"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:351
+msgid "Toggle reading mode"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:360
+#: includes/class-settings.php:165
+msgid "Reading guide"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:368
+msgid "Toggle reading guide"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:377
+#: includes/class-settings.php:166
+msgid "Reading mask"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:385
+msgid "Toggle reading mask"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:401
+#: includes/class-settings.php:108
+msgid "Visual"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:416
+#: includes/class-settings.php:114
+msgid "High contrast"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:424
+msgid "Toggle high contrast"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:433
+#: includes/class-settings.php:116
+msgid "Grayscale"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:441
+msgid "Toggle grayscale"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:450
+msgid "Colour themes"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:459
+msgid "Default"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:467
+msgid "Dark mode (beta)"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:476
+msgid "Brightness"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:483
+msgid "Dimmer"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:489
+msgid "Brighter"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:511
+#: includes/class-settings.php:181
+msgid "Navigation"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:523
+msgid "Cursor"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:531
+msgid "Large cursor"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:540
+msgid "Links"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:548
+msgid "Highlight links"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:557
+msgid "Focus outlines"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:565
+msgid "Enhance focus outlines"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:574
+msgid "Images"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:582
+#: includes/class-settings.php:191
+msgid "Hide images"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:591
+msgid "Reduce motion"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:599
+msgid "Reduce animations site-wide"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:613
+msgid "Reset all settings"
+msgstr ""
+
+#: includes/class-devllo-accessibility-controls.php:627
+#: includes/class-settings.php:255
+msgid "Accessibility statement"
+msgstr ""
+
+#: includes/class-settings.php:84
+msgid "General"
+msgstr ""
+
+#: includes/class-settings.php:91
+msgid "Enable Accessibility Controls"
+msgstr ""
+
+#: includes/class-settings.php:99
+msgid "Button position"
+msgstr ""
+
+#: includes/class-settings.php:115
+msgid "Dark mode"
+msgstr ""
+
+#: includes/class-settings.php:117
+msgid "Brightness control"
+msgstr ""
+
+#: includes/class-settings.php:140
+msgid "Line spacing"
+msgstr ""
+
+#: includes/class-settings.php:163
+msgid "Text align left"
+msgstr ""
+
+#: includes/class-settings.php:187
+msgid "Big cursor"
+msgstr ""
+
+#: includes/class-settings.php:188
+msgid "Link highlighting"
+msgstr ""
+
+#: includes/class-settings.php:189
+msgid "Focus outline enhancement"
+msgstr ""
+
+#: includes/class-settings.php:190
+msgid "Reduce animations"
+msgstr ""
+
+#: includes/class-settings.php:192
+msgid "Keyboard shortcut (Alt+A)"
+msgstr ""
+
+#: includes/class-settings.php:207
+msgid "Widget customisation"
+msgstr ""
+
+#: includes/class-settings.php:214
+msgid "Button label"
+msgstr ""
+
+#: includes/class-settings.php:222
+msgid "Button background colour"
+msgstr ""
+
+#: includes/class-settings.php:230
+msgid "Button text colour"
+msgstr ""
+
+#: includes/class-settings.php:238
+msgid "Button size"
+msgstr ""
+
+#: includes/class-settings.php:246
+msgid "Button style"
+msgstr ""
+
+#: includes/class-settings.php:262
+msgid "Statement page"
+msgstr ""
+
+#: includes/class-settings.php:331
+msgid "Accessibility Statement"
+msgstr ""
+
+#: includes/class-settings.php:458
+#: includes/class-settings.php:459
+#: includes/class-settings.php:1883
+msgid "Accessibility Guidance"
+msgstr ""
+
+#: includes/class-settings.php:484
+msgid "Accessibility quick check"
+msgstr ""
+
+#: includes/class-settings.php:761
+msgid "Text is resizable"
+msgstr ""
+
+#: includes/class-settings.php:762
+msgid "Check that text can be resized up to 200% without loss of content or functionality."
+msgstr ""
+
+#: includes/class-settings.php:766
+msgid "Sufficient colour contrast"
+msgstr ""
+
+#: includes/class-settings.php:767
+msgid "Verify that text and essential UI elements meet at least WCAG AA contrast ratios (4.5:1 for normal text, 3:1 for large text)."
+msgstr ""
+
+#: includes/class-settings.php:771
+msgid "Colour is not the only visual means of conveying information"
+msgstr ""
+
+#: includes/class-settings.php:772
+msgid "Ensure information is not conveyed by colour alone — use labels, patterns, or icons alongside colour."
+msgstr ""
+
+#: includes/class-settings.php:776
+msgid "Images have meaningful alternatives"
+msgstr ""
+
+#: includes/class-settings.php:777
+msgid "Check that informative images have appropriate alternative text and decorative images are marked accordingly."
+msgstr ""
+
+#: includes/class-settings.php:781
+msgid "Videos have captions"
+msgstr ""
+
+#: includes/class-settings.php:782
+msgid "Ensure all pre-recorded video content has accurate captions for users who are deaf or hard of hearing."
+msgstr ""
+
+#: includes/class-settings.php:786
+msgid "Audio content has transcripts or descriptions"
+msgstr ""
+
+#: includes/class-settings.php:787
+msgid "Provide transcripts for audio-only content and audio descriptions for video content where visual information is not conveyed in the audio."
+msgstr ""
+
+#: includes/class-settings.php:791
+msgid "Content reflows at 400% zoom"
+msgstr ""
+
+#: includes/class-settings.php:792
+msgid "Check that content can be viewed at 400% zoom on a 1280px wide screen without requiring horizontal scrolling."
+msgstr ""
+
+#: includes/class-settings.php:798
+msgid "All functionality is keyboard accessible"
+msgstr ""
+
+#: includes/class-settings.php:799
+msgid "Verify that all interactive elements — menus, forms, modals, carousels — can be operated using only a keyboard."
+msgstr ""
+
+#: includes/class-settings.php:803
+msgid "No keyboard traps"
+msgstr ""
+
+#: includes/class-settings.php:804
+msgid "Ensure keyboard focus is never trapped in a component — users can always navigate away using the keyboard."
+msgstr ""
+
+#: includes/class-settings.php:808
+msgid "Skip navigation links are present"
+msgstr ""
+
+#: includes/class-settings.php:809
+msgid "Provide a skip link at the top of each page so keyboard users can bypass repeated navigation and jump to main content."
+msgstr ""
+
+#: includes/class-settings.php:813
+msgid "Pages have descriptive titles"
+msgstr ""
+
+#: includes/class-settings.php:814
+msgid "Ensure every page has a unique, descriptive title that identifies its topic or purpose."
+msgstr ""
+
+#: includes/class-settings.php:818
+msgid "Visible keyboard focus"
+msgstr ""
+
+#: includes/class-settings.php:819
+msgid "Ensure keyboard focus is always visible and not removed by custom styles."
+msgstr ""
+
+#: includes/class-settings.php:823
+msgid "Focus order is logical"
+msgstr ""
+
+#: includes/class-settings.php:824
+msgid "Verify that the keyboard tab order follows a logical sequence that matches the visual layout of the page."
+msgstr ""
+
+#: includes/class-settings.php:828
+msgid "Link purpose is clear"
+msgstr ""
+
+#: includes/class-settings.php:829
+msgid "Ensure link text clearly describes the destination or purpose. Avoid generic text like \"click here\" or \"read more\"."
+msgstr ""
+
+#: includes/class-settings.php:833
+msgid "No content flashes more than 3 times per second"
+msgstr ""
+
+#: includes/class-settings.php:834
+msgid "Ensure no content flashes or strobes more than three times per second to avoid triggering seizures."
+msgstr ""
+
+#: includes/class-settings.php:838
+msgid "Motion is optional and not overwhelming"
+msgstr ""
+
+#: includes/class-settings.php:839
+msgid "Ensure motion, animations, and auto-playing content are limited, optional, and respect reduced-motion preferences."
+msgstr ""
+
+#: includes/class-settings.php:845
+msgid "Page language is set"
+msgstr ""
+
+#: includes/class-settings.php:846
+msgid "Ensure the primary language of each page is identified using the lang attribute on the html element."
+msgstr ""
+
+#: includes/class-settings.php:850
+msgid "Navigation is consistent across pages"
+msgstr ""
+
+#: includes/class-settings.php:851
+msgid "Verify that navigation menus, headers, and footers appear in the same location and order across all pages."
+msgstr ""
+
+#: includes/class-settings.php:855
+msgid "Error messages are descriptive"
+msgstr ""
+
+#: includes/class-settings.php:856
+msgid "Ensure form errors clearly identify which field has an error and describe what the user needs to do to fix it."
+msgstr ""
+
+#: includes/class-settings.php:860
+msgid "All form inputs have labels"
+msgstr ""
+
+#: includes/class-settings.php:861
+msgid "Verify that every form input has a visible label or accessible name so users know what information is required."
+msgstr ""
+
+#: includes/class-settings.php:865
+msgid "Error prevention for important submissions"
+msgstr ""
+
+#: includes/class-settings.php:866
+msgid "For forms that submit important data (purchases, legal agreements), provide a way to review, correct, or confirm before final submission."
+msgstr ""
+
+#: includes/class-settings.php:872
+msgid "HTML markup is valid"
+msgstr ""
+
+#: includes/class-settings.php:873
+msgid "Check that pages use valid, well-formed HTML with no duplicate IDs or improperly nested elements."
+msgstr ""
+
+#: includes/class-settings.php:877
+msgid "ARIA is used correctly"
+msgstr ""
+
+#: includes/class-settings.php:878
+msgid "Ensure ARIA roles, states, and properties are used correctly and only where native HTML cannot provide the same semantics."
+msgstr ""
+
+#: includes/class-settings.php:882
+msgid "Status messages are programmatically determined"
+msgstr ""
+
+#: includes/class-settings.php:883
+msgid "Ensure status messages (success, error, loading) are conveyed to assistive technologies without requiring focus, using aria-live regions."
+msgstr ""
+
+#: includes/class-settings.php:887
+msgid "Interactive elements have accessible names"
+msgstr ""
+
+#: includes/class-settings.php:888
+msgid "Verify that all buttons, links, and form controls have accessible names that clearly describe their purpose to assistive technologies."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-settings.php:942
+#, php-format
+msgid "Skip link check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:953
+msgid "Skip link check: the homepage response was empty."
+msgstr ""
+
+#: includes/class-settings.php:963
+msgid "Skip link check: a skip link appears to be present on the homepage."
+msgstr ""
+
+#: includes/class-settings.php:969
+msgid "Skip link check: no skip link was detected on the homepage; consider adding one to improve keyboard navigation."
+msgstr ""
+
+#: includes/class-settings.php:1013
+msgid "Focus outline check: CSS that removes focus outlines was detected in the active theme with no apparent replacement focus style. Ensure a visible focus style is provided."
+msgstr ""
+
+#: includes/class-settings.php:1020
+msgid "Focus outline check: CSS that removes focus outlines was detected but a replacement focus style also appears to be present. Verify it is visible enough."
+msgstr ""
+
+#: includes/class-settings.php:1026
+msgid "Focus outline check: no focus-outline removal was detected in the main theme stylesheets."
+msgstr ""
+
+#: includes/class-settings.php:1052
+msgid "Font size check: theme.json detected. Base font size setting found. Verify that your base font size is comfortably readable (16px or larger recommended)."
+msgstr ""
+
+#: includes/class-settings.php:1065
+msgid "Font size check: could not find a readable theme stylesheet. Verify that your base font size is 16px or larger."
+msgstr ""
+
+#: includes/class-settings.php:1074
+msgid "Font size check: could not read the theme stylesheet. Verify that your base font size is 16px or larger."
+msgstr ""
+
+#. translators: %s: detected base font size in pixels.
+#: includes/class-settings.php:1086
+#, php-format
+msgid "Font size check: base font size appears to be approximately %spx. This may be small for some users."
+msgstr ""
+
+#. translators: %s: detected base font size in pixels.
+#: includes/class-settings.php:1096
+#, php-format
+msgid "Font size check: base font size appears to be approximately %spx."
+msgstr ""
+
+#: includes/class-settings.php:1104
+msgid "Font size check: could not automatically determine a base font size. Verify manually that text is comfortably readable at 16px or larger."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-settings.php:1127
+#, php-format
+msgid "Heading check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1138
+msgid "Heading check: the homepage response was empty."
+msgstr ""
+
+#: includes/class-settings.php:1147
+msgid "Heading check: no headings were detected on the homepage. Ensure there is a clear heading structure."
+msgstr ""
+
+#: includes/class-settings.php:1169
+msgid "Heading check: no H1 heading was detected on the homepage. Ensure there is a clear main heading."
+msgstr ""
+
+#: includes/class-settings.php:1176
+msgid "Heading check: multiple H1 headings were detected on the homepage; review heading structure for clarity."
+msgstr ""
+
+#: includes/class-settings.php:1183
+msgid "Heading check: heading levels on the homepage may skip levels (e.g. H1 to H3); review for a logical outline."
+msgstr ""
+
+#: includes/class-settings.php:1189
+msgid "Heading check: no obvious heading structure issues were detected on the homepage."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-settings.php:1212
+#, php-format
+msgid "Image alt check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1223
+msgid "Image alt check: the homepage response was empty."
+msgstr ""
+
+#: includes/class-settings.php:1233
+msgid "Image alt check: no images were detected on the homepage."
+msgstr ""
+
+#. translators: 1: total images sampled, 2: with alt, 3: decorative (empty alt), 4: missing alt
+#: includes/class-settings.php:1265
+#, php-format
+msgid "Image alt check: sampled %1$d images on the homepage – %2$d with alt text, %3$d decorative (empty alt), %4$d with missing alt attributes."
+msgstr ""
+
+#. translators: %s: error message
+#: includes/class-settings.php:1302
+#, php-format
+msgid "Form label check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1313
+msgid "Form label check: the homepage response was empty."
+msgstr ""
+
+#: includes/class-settings.php:1332
+msgid "Form label check: no form controls were detected on the homepage."
+msgstr ""
+
+#: includes/class-settings.php:1368
+msgid "Form label check: no visible form controls were detected on the homepage."
+msgstr ""
+
+#. translators: 1: total controls, 2: likely labeled, 3: unlabeled
+#: includes/class-settings.php:1374
+#, php-format
+msgid "Form label check: sampled %1$d form controls on the homepage – %2$d appear to have labels or accessible names, %3$d appear unlabeled."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1405
+#, php-format
+msgid "Language check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1416
+msgid "Language check: a lang attribute was detected on the html element."
+msgstr ""
+
+#: includes/class-settings.php:1422
+msgid "Language check: no lang attribute was detected on the html element. Add a lang attribute to help screen readers use the correct language."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1440
+#, php-format
+msgid "Viewport check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1452
+msgid "Viewport check: user-scalable=no was detected in the viewport meta tag. This prevents users from zooming and fails WCAG 1.4.4."
+msgstr ""
+
+#: includes/class-settings.php:1459
+msgid "Viewport check: maximum-scale=1 was detected in the viewport meta tag. This may prevent users from zooming on some devices."
+msgstr ""
+
+#: includes/class-settings.php:1465
+msgid "Viewport check: no zoom-blocking viewport settings were detected."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1483
+#, php-format
+msgid "Link text check: could not fetch the homepage (%s)."
+msgstr ""
+
+#. translators: %d: number of links with generic link text.
+#: includes/class-settings.php:1508
+#, php-format
+msgid "Link text check: %d link(s) with generic text (e.g. \"click here\", \"read more\") were detected on the homepage. Use descriptive link text instead."
+msgstr ""
+
+#: includes/class-settings.php:1516
+msgid "Link text check: no obviously generic link text was detected on the homepage."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1534
+#, php-format
+msgid "Button check: could not fetch the homepage (%s)."
+msgstr ""
+
+#. translators: %d: number of empty or unlabeled buttons.
+#: includes/class-settings.php:1564
+#, php-format
+msgid "Button check: %d button(s) with no visible text or accessible name were detected. Ensure all buttons have a descriptive label."
+msgstr ""
+
+#: includes/class-settings.php:1572
+msgid "Button check: no obviously unlabeled buttons were detected on the homepage."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1590
+#, php-format
+msgid "Table check: could not fetch the homepage (%s)."
+msgstr ""
+
+#: includes/class-settings.php:1603
+msgid "Table check: no tables were detected on the homepage."
+msgstr ""
+
+#. translators: %d: number of tables without header cells.
+#: includes/class-settings.php:1620
+#, php-format
+msgid "Table check: %d table(s) without header cells were detected. Ensure data tables have proper th elements."
+msgstr ""
+
+#: includes/class-settings.php:1628
+msgid "Table check: all detected tables appear to have header cells."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1646
+#, php-format
+msgid "PDF link check: could not fetch the homepage (%s)."
+msgstr ""
+
+#. translators: %d: number of links to PDF files.
+#: includes/class-settings.php:1663
+#, php-format
+msgid "PDF link check: %d link(s) to PDF files were detected. Ensure PDF documents are accessible or provide an accessible HTML alternative."
+msgstr ""
+
+#: includes/class-settings.php:1671
+msgid "PDF link check: no links to PDF files were detected on the homepage."
+msgstr ""
+
+#. translators: %s: error message when fetching the homepage.
+#: includes/class-settings.php:1689
+#, php-format
+msgid "Autoplay check: could not fetch the homepage (%s)."
+msgstr ""
+
+#. translators: %d: number of auto-playing media elements.
+#: includes/class-settings.php:1707
+#, php-format
+msgid "Autoplay check: %d auto-playing media element(s) were detected. Auto-playing media can be disorienting — ensure users can pause or stop it."
+msgstr ""
+
+#: includes/class-settings.php:1715
+msgid "Autoplay check: no auto-playing media was detected on the homepage."
+msgstr ""
+
+#: includes/class-settings.php:1804
+msgid "Plugin information"
+msgstr ""
+
+#: includes/class-settings.php:1810
+msgid "Version:"
+msgstr ""
+
+#: includes/class-settings.php:1816
+msgid "Visit Devllo website"
+msgstr ""
+
+#: includes/class-settings.php:1820
+msgid "Devllo Accessibility Controls helps make your site more inclusive for all visitors."
+msgstr ""
+
+#: includes/class-settings.php:1824
+msgid "Need a full accessibility audit?"
+msgstr ""
+
+#: includes/class-settings.php:1827
+msgid "Work with our team for an in-depth review of your site's accessibility."
+msgstr ""
+
+#: includes/class-settings.php:1831
+msgid "Learn more about accessibility audits"
+msgstr ""
+
+#: includes/class-settings.php:1836
+msgid "Useful links"
+msgstr ""
+
+#: includes/class-settings.php:1841
+msgid "WordPress.org plugin page"
+msgstr ""
+
+#: includes/class-settings.php:1846
+msgid "Report an issue or get support"
+msgstr ""
+
+#: includes/class-settings.php:1876
+msgid "Reviewed"
+msgstr ""
+
+#: includes/class-settings.php:1877
+msgid "Needs attention"
+msgstr ""
+
+#: includes/class-settings.php:1878
+msgid "Not applicable"
+msgstr ""
+
+#: includes/class-settings.php:1886
+msgid "This page provides guidance and a checklist to help you think about accessibility on your site. It is not a compliance audit or legal advice."
+msgstr ""
+
+#: includes/class-settings.php:1890
+msgid "Important:"
+msgstr ""
+
+#: includes/class-settings.php:1891
+msgid "These notes are informational only and do not guarantee ADA, WCAG, or any legal compliance."
+msgstr ""
+
+#: includes/class-settings.php:1897
+msgid "Basic automated checks"
+msgstr ""
+
+#: includes/class-settings.php:1901
+msgid "These checks are limited and informational. They are not a full audit and do not guarantee compliance."
+msgstr ""
+
+#: includes/class-settings.php:1916
+msgid "Run basic accessibility checks"
+msgstr ""
+
+#. translators: %s: human-readable datetime
+#: includes/class-settings.php:1925
+#, php-format
+msgid "Last run: %s"
+msgstr ""
+
+#: includes/class-settings.php:1948
+msgid "No basic checks have been run yet."
+msgstr ""
+
+#: includes/class-settings.php:1958
+msgid "Accessibility Checklist"
+msgstr ""
+
+#: includes/class-settings.php:2058
+msgid "Leave blank to use the default label."
+msgstr ""
+
+#: includes/class-settings.php:2103
+msgid "Small"
+msgstr ""
+
+#: includes/class-settings.php:2104
+msgid "Medium"
+msgstr ""
+
+#: includes/class-settings.php:2105
+msgid "Large"
+msgstr ""
+
+#: includes/class-settings.php:2129
+msgid "Text only"
+msgstr ""
+
+#: includes/class-settings.php:2130
+msgid "Icon only"
+msgstr ""
+
+#: includes/class-settings.php:2131
+msgid "Icon and text"
+msgstr ""
+
+#: includes/class-settings.php:2155
+msgid "An accessibility statement is a public declaration of your commitment to accessibility. It tells visitors what you have done to make your site accessible and how to contact you if they encounter barriers."
+msgstr ""
+
+#: includes/class-settings.php:2167
+msgid "A statement page has been generated."
+msgstr ""
+
+#: includes/class-settings.php:2168
+msgid "Edit page"
+msgstr ""
+
+#: includes/class-settings.php:2170
+msgid "Preview"
+msgstr ""
+
+#: includes/class-settings.php:2186
+msgid "Generate accessibility statement page"
+msgstr ""
+
+#: includes/class-settings.php:2204
+msgid "— Select a page —"
+msgstr ""
+
+#: includes/class-settings.php:2212
+msgid "This page is currently a draft. Publish it before linking to it from the widget."
+msgstr ""
+
+#: includes/class-settings.php:2239
+msgid "Show the accessibility widget on the frontend."
+msgstr ""
+
+#: includes/class-settings.php:2266
+msgid "Allow visitors to toggle a dyslexia-friendly reading mode."
+msgstr ""
+
+#: includes/class-settings.php:2293
+msgid "Allow visitors to reduce motion in the accessibility controls UI."
+msgstr ""
+
+#: includes/class-settings.php:2308
+msgid "Bottom right"
+msgstr ""
+
+#: includes/class-settings.php:2309
+msgid "Bottom left"
+msgstr ""
+
+#: includes/class-settings.php:2310
+msgid "Top right"
+msgstr ""
+
+#: includes/class-settings.php:2311
+msgid "Top left"
+msgstr ""
+
+#: includes/class-settings.php:2327
+msgid "Choose where the accessibility button appears on the screen."
+msgstr ""
+
+#: assets/js/editor.js:52
+msgid "More than one H1 heading detected. Consider using a single main heading per page."
+msgstr ""
+
+#: assets/js/editor.js:74
+msgid "Heading levels skip — for example H2 followed by H4. Headings should increase by one level at a time for a logical document outline."
+msgstr ""
+
+#: assets/js/editor.js:112
+msgid "Some images are missing an alt attribute entirely. Add meaningful alt text or mark decorative images with an empty alt attribute."
+msgstr ""
+
+#: assets/js/editor.js:120
+msgid "Some images have an empty alt attribute. This is correct for decorative images — ensure these images are truly decorative and not informative."
+msgstr ""
+
+#: assets/js/editor.js:138
+msgid "Some link text looks generic (e.g. “click here”). Consider using more descriptive link text."
+msgstr ""
+
+#: assets/js/editor.js:153
+msgid "Some paragraphs are very long. Consider splitting long paragraphs to improve readability."
+msgstr ""
+
+#: assets/js/editor.js:175
+msgid "Some text appears in ALL CAPS, which can be harder to read. Consider using normal capitalization."
+msgstr ""
+
+#: assets/js/editor.js:190
+msgid "Some tables may not have clear header cells. Ensure data tables have header rows or cells defined."
+msgstr ""
+
+#: assets/js/editor.js:200
+msgid "Video content is present. Consider providing captions or transcripts for videos."
+msgstr ""
+
+#: assets/js/editor.js:209
+msgid "Audio content is present. Consider providing transcripts for audio-only content."
+msgstr ""
+
+#: assets/js/editor.js:224
+msgid "Some links use raw URLs as link text. Consider using descriptive link text instead of the bare URL."
+msgstr ""
+
+#: assets/js/editor.js:238
+msgid "Some images have no caption. Captions are not always required but can aid understanding — consider adding one where helpful."
+msgstr ""
+
+#: assets/js/editor.js:252
+msgid "Some links open in a new tab. Warn users before opening new tabs — consider adding \"(opens in new tab)\" to the link text or using an icon with an accessible label."
+msgstr ""
+
+#: assets/js/editor.js:270
+msgid "Some blocks appear to contain only emoji. Screen readers announce emoji verbosely — consider adding descriptive text alongside them."
+msgstr ""
+
+#: assets/js/editor.js:286
+msgid "Some buttons have no visible text. Ensure all buttons have a descriptive label so screen reader users know their purpose."
+msgstr ""
+
+#: assets/js/editor.js:318
+msgid "Accessibility hints"
+msgstr ""
+
+#: assets/js/editor.js:323
+msgid "Overview"
+msgstr ""
+
+#: assets/js/editor.js:327
+msgid "These hints are partial and do not replace a full accessibility review."
+msgstr ""
+
+#: assets/js/editor.js:335
+msgid "Use clear, structured headings (H1–H2–H3…)."
+msgstr ""
+
+#: assets/js/editor.js:340
+msgid "Provide meaningful alt text or mark decorative images appropriately."
+msgstr ""
+
+#: assets/js/editor.js:345
+msgid "Use descriptive link text (avoid “click here”)."
+msgstr ""
+
+#: assets/js/editor.js:351
+msgid "Post-specific hints"
+msgstr ""
+
+#: assets/js/editor.js:356
+msgid "No specific hints at the moment. This does not mean the content is fully accessible."
+msgstr ""
