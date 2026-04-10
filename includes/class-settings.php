@@ -52,6 +52,7 @@ class Settings {
             add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
             add_action( 'admin_menu', [ $this, 'add_guidance_page' ] );
             add_action( 'admin_init', [ $this, 'maybe_generate_statement_page' ] );
+            add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
         }
 
         // Frontend admin-only integrations.
@@ -420,6 +421,30 @@ class Settings {
             'manage_options',
             'da11y_settings_page',
             [ $this, 'render_settings_page' ]
+        );
+    }
+
+    /**
+     * Enqueue admin-specific assets for the settings page.
+     *
+     * @param string $hook Current admin page hook.
+     * @return void
+     */
+    public function enqueue_admin_assets( $hook ) {
+        $allowed_hooks = [
+            'settings_page_da11y_settings_page',
+            'settings_page_da11y_accessibility_guidance',
+        ];
+
+        if ( ! in_array( $hook, $allowed_hooks, true ) ) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'da11y-admin',
+            DA11Y_PLUGIN_URL . 'assets/css/admin.css',
+            [],
+            DA11Y_PLUGIN_VERSION
         );
     }
 
@@ -1050,13 +1075,14 @@ class Settings {
             ];
         }
 
-        if ( preg_match( '/(html|body)\s*{[^}]*font-size\s*:\s*([\d.]+)px/i', $contents, $matches ) ) {
-            $size = (float) $matches[2];
+	        if ( preg_match( '/(html|body)\s*{[^}]*font-size\s*:\s*([\d.]+)px/i', $contents, $matches ) ) {
+	            $size = (float) $matches[2];
 
             if ( $size < 16 ) {
                 return [
                     'status'  => 'warn',
                     'message' => sprintf(
+                        /* translators: %s: detected base font size in pixels. */
                         __( 'Font size check: base font size appears to be approximately %spx. This may be small for some users.', 'devllo-accessibility-controls' ),
                         $size
                     ),
@@ -1066,6 +1092,7 @@ class Settings {
             return [
                 'status'  => 'ok',
                 'message' => sprintf(
+                    /* translators: %s: detected base font size in pixels. */
                     __( 'Font size check: base font size appears to be approximately %spx.', 'devllo-accessibility-controls' ),
                     $size
                 ),
@@ -1374,6 +1401,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Language check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1408,6 +1436,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Viewport check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1450,6 +1479,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Link text check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1474,6 +1504,7 @@ class Settings {
             return [
                 'status'  => 'warn',
                 'message' => sprintf(
+                    /* translators: %d: number of links with generic link text. */
                     __( 'Link text check: %d link(s) with generic text (e.g. "click here", "read more") were detected on the homepage. Use descriptive link text instead.', 'devllo-accessibility-controls' ),
                     $generic_count
                 ),
@@ -1499,6 +1530,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Button check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1528,6 +1560,7 @@ class Settings {
             return [
                 'status'  => 'warn',
                 'message' => sprintf(
+                    /* translators: %d: number of empty or unlabeled buttons. */
                     __( 'Button check: %d button(s) with no visible text or accessible name were detected. Ensure all buttons have a descriptive label.', 'devllo-accessibility-controls' ),
                     $empty_count
                 ),
@@ -1553,6 +1586,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Table check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1582,6 +1616,7 @@ class Settings {
             return [
                 'status'  => 'warn',
                 'message' => sprintf(
+                    /* translators: %d: number of tables without header cells. */
                     __( 'Table check: %d table(s) without header cells were detected. Ensure data tables have proper th elements.', 'devllo-accessibility-controls' ),
                     $tables_without_headers
                 ),
@@ -1607,6 +1642,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'PDF link check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1623,6 +1659,7 @@ class Settings {
             return [
                 'status'  => 'info',
                 'message' => sprintf(
+                    /* translators: %d: number of links to PDF files. */
                     __( 'PDF link check: %d link(s) to PDF files were detected. Ensure PDF documents are accessible or provide an accessible HTML alternative.', 'devllo-accessibility-controls' ),
                     $pdf_count
                 ),
@@ -1648,6 +1685,7 @@ class Settings {
             return [
                 'status'  => 'error',
                 'message' => sprintf(
+                    /* translators: %s: error message when fetching the homepage. */
                     __( 'Autoplay check: could not fetch the homepage (%s).', 'devllo-accessibility-controls' ),
                     $response->get_error_message()
                 ),
@@ -1665,6 +1703,7 @@ class Settings {
             return [
                 'status'  => 'warn',
                 'message' => sprintf(
+                    /* translators: %d: number of auto-playing media elements. */
                     __( 'Autoplay check: %d auto-playing media element(s) were detected. Auto-playing media can be disorienting — ensure users can pause or stop it.', 'devllo-accessibility-controls' ),
                     $autoplay_count
                 ),
@@ -1687,21 +1726,131 @@ class Settings {
             return;
         }
 
+        $plugin_data = get_file_data(
+            DA11Y_PLUGIN_PATH . 'devllo-accessibility-controls.php',
+            [
+                'Version' => 'Version',
+            ],
+            'plugin'
+        );
+        $version = isset( $plugin_data['Version'] ) ? $plugin_data['Version'] : '';
+
         ?>
         <div class="wrap">
             <h1><?php esc_html_e( 'Accessibility Controls', 'devllo-accessibility-controls' ); ?></h1>
-            <div class="notice notice-info inline">
-                <p>
-                    <?php esc_html_e( 'Dark mode is available to visitors but is experimental. It uses a CSS invert approach that works on most themes but may produce unexpected results on some designs. Consider testing it on your theme before promoting it to visitors.', 'devllo-accessibility-controls' ); ?>
-                </p>
+
+            <div class="da11y-admin">
+                <div class="da11y-admin-main">
+                    <form action="options.php" method="post">
+                        <?php settings_fields( 'da11y_settings_group' ); ?>
+
+                        <div class="da11y-settings-sections">
+                            <?php
+                            global $wp_settings_sections, $wp_settings_fields;
+
+                            $page          = 'da11y_settings_page';
+                            $section_order = [
+                                'da11y_main_section'       => [ 'slug' => 'general',      'icon' => 'admin-generic' ],
+                                'da11y_visual_section'     => [ 'slug' => 'visual',       'icon' => 'visibility' ],
+                                'da11y_text_section'       => [ 'slug' => 'text',         'icon' => 'editor-textcolor' ],
+                                'da11y_reading_section'    => [ 'slug' => 'reading',      'icon' => 'book' ],
+                                'da11y_navigation_section' => [ 'slug' => 'navigation',   'icon' => 'admin-links' ],
+                                'da11y_widget_section'     => [ 'slug' => 'widget',       'icon' => 'layout' ],
+                                'da11y_statement_section'  => [ 'slug' => 'statement',    'icon' => 'shield' ],
+                            ];
+
+                            foreach ( $section_order as $section_id => $meta ) {
+                                if ( empty( $wp_settings_sections[ $page ][ $section_id ] ) ) {
+                                    continue;
+                                }
+
+                                $section = $wp_settings_sections[ $page ][ $section_id ];
+                                $slug    = $meta['slug'];
+                                $icon    = $meta['icon'];
+                                ?>
+                                <h2 class="da11y-section-heading da11y-section-heading--<?php echo esc_attr( $slug ); ?>">
+                                    <span class="dashicons dashicons-<?php echo esc_attr( $icon ); ?> da11y-section-icon" aria-hidden="true"></span>
+                                    <span class="da11y-section-title-text">
+                                        <?php echo esc_html( $section['title'] ); ?>
+                                    </span>
+                                </h2>
+                                <?php
+                                if ( ! empty( $section['callback'] ) ) {
+                                    call_user_func( $section['callback'], $section );
+                                }
+
+                                if ( ! empty( $wp_settings_fields[ $page ][ $section_id ] ) ) {
+                                    ?>
+                                    <table class="form-table" role="presentation">
+                                        <tbody>
+                                        <?php do_settings_fields( $page, $section_id ); ?>
+                                        </tbody>
+                                    </table>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+
+                        <?php submit_button( null, 'primary da11y-save-button' ); ?>
+                    </form>
+                </div>
+
+                <aside class="da11y-admin-sidebar">
+                    <div class="da11y-card">
+                        <div class="da11y-card-header">
+                            <span class="da11y-card-icon" aria-hidden="true">i</span>
+                            <h2 class="da11y-card-title">
+                                <?php esc_html_e( 'Plugin information', 'devllo-accessibility-controls' ); ?>
+                            </h2>
+                        </div>
+                        <div class="da11y-card-body">
+                            <?php if ( $version ) : ?>
+                                <p>
+                                    <strong><?php esc_html_e( 'Version:', 'devllo-accessibility-controls' ); ?></strong>
+                                    <?php echo esc_html( $version ); ?>
+                                </p>
+                            <?php endif; ?>
+                            <p>
+                                <a href="https://devllo.com" target="_blank" rel="noopener noreferrer">
+                                    <?php esc_html_e( 'Visit Devllo website', 'devllo-accessibility-controls' ); ?>
+                                </a>
+                            </p>
+                            <p>
+                                <?php esc_html_e( 'Devllo Accessibility Controls helps make your site more inclusive for all visitors.', 'devllo-accessibility-controls' ); ?>
+                            </p>
+
+                            <h3 class="da11y-sidebar-subtitle">
+                                <?php esc_html_e( 'Need a full accessibility audit?', 'devllo-accessibility-controls' ); ?>
+                            </h3>
+                            <p>
+                                <?php esc_html_e( 'Work with our team for an in-depth review of your site\'s accessibility.', 'devllo-accessibility-controls' ); ?>
+                            </p>
+                            <p>
+                                <a href="https://devllo.com/accessibility" target="_blank" rel="noopener noreferrer">
+                                    <?php esc_html_e( 'Learn more about accessibility audits', 'devllo-accessibility-controls' ); ?>
+                                </a>
+                            </p>
+
+                            <h3 class="da11y-sidebar-subtitle">
+                                <?php esc_html_e( 'Useful links', 'devllo-accessibility-controls' ); ?>
+                            </h3>
+                            <ul class="da11y-sidebar-links">
+                                <li>
+                                    <a href="https://wordpress.org/plugins/devllo-accessibility-controls/" target="_blank" rel="noopener noreferrer">
+                                        <?php esc_html_e( 'WordPress.org plugin page', 'devllo-accessibility-controls' ); ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://devllo.com/support/" target="_blank" rel="noopener noreferrer">
+                                        <?php esc_html_e( 'Report an issue or get support', 'devllo-accessibility-controls' ); ?>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
             </div>
-            <form action="options.php" method="post">
-                <?php
-                settings_fields( 'da11y_settings_group' );
-                do_settings_sections( 'da11y_settings_page' );
-                submit_button();
-                ?>
-            </form>
         </div>
         <?php
     }
@@ -1742,7 +1891,12 @@ class Settings {
                 <?php esc_html_e( 'These notes are informational only and do not guarantee ADA, WCAG, or any legal compliance.', 'devllo-accessibility-controls' ); ?>
             </p>
 
-            <h2><?php esc_html_e( 'Basic automated checks', 'devllo-accessibility-controls' ); ?></h2>
+            <h2 class="da11y-guidance-heading">
+                <span class="dashicons dashicons-analytics da11y-section-icon" aria-hidden="true"></span>
+                <span class="da11y-section-title-text">
+                    <?php esc_html_e( 'Basic automated checks', 'devllo-accessibility-controls' ); ?>
+                </span>
+            </h2>
             <p class="description">
                 <?php esc_html_e( 'These checks are limited and informational. They are not a full audit and do not guarantee compliance.', 'devllo-accessibility-controls' ); ?>
             </p>
@@ -1758,7 +1912,7 @@ class Settings {
             );
             ?>
             <p>
-                <a href="<?php echo esc_url( $run_url ); ?>" class="button button-secondary">
+                <a href="<?php echo esc_url( $run_url ); ?>" class="button button-primary da11y-run-checks-button">
                     <?php esc_html_e( 'Run basic accessibility checks', 'devllo-accessibility-controls' ); ?>
                 </a>
             </p>
@@ -1774,10 +1928,17 @@ class Settings {
                     ?>
                 </p>
                 <?php if ( ! empty( $check_msgs ) ) : ?>
-                    <ul>
+                    <ul class="da11y-check-results">
                         <?php foreach ( $check_msgs as $check_id => $check ) : ?>
-                            <li>
-                                <?php echo esc_html( $check['message'] ?? '' ); ?>
+                            <?php
+                            $status = isset( $check['status'] ) ? $check['status'] : 'info';
+                            $message = isset( $check['message'] ) ? $check['message'] : '';
+                            ?>
+                            <li class="da11y-check-result da11y-check-result--<?php echo esc_attr( $status ); ?>">
+                                <span class="da11y-check-result-dot" aria-hidden="true"></span>
+                                <span class="da11y-check-result-text">
+                                    <?php echo esc_html( $message ); ?>
+                                </span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -1791,26 +1952,40 @@ class Settings {
             <form action="options.php" method="post">
                 <?php settings_fields( 'da11y_checklist_group' ); ?>
 
-                <h2><?php esc_html_e( 'Accessibility Checklist', 'devllo-accessibility-controls' ); ?></h2>
+                <h2 class="da11y-guidance-heading">
+                    <span class="dashicons dashicons-list-view da11y-section-icon" aria-hidden="true"></span>
+                    <span class="da11y-section-title-text">
+                        <?php esc_html_e( 'Accessibility Checklist', 'devllo-accessibility-controls' ); ?>
+                    </span>
+                </h2>
 
-                <table class="form-table" role="presentation">
+                <table class="form-table da11y-checklist-table" role="presentation">
                     <tbody>
                     <?php foreach ( $items as $id => $item ) : ?>
                         <tr>
                             <th scope="row">
-                                <label for="da11y-checklist-<?php echo esc_attr( $id ); ?>">
+                                <strong class="da11y-checklist-title">
                                     <?php echo esc_html( $item['title'] ); ?>
-                                </label>
+                                </strong>
                                 <?php if ( ! empty( $item['wcag'] ) ) : ?>
-                                    <p class="description"><?php echo esc_html( $item['wcag'] ); ?></p>
+                                    <p class="da11y-checklist-wcag">
+                                        <?php echo esc_html( $item['wcag'] ); ?>
+                                    </p>
                                 <?php endif; ?>
                             </th>
                             <td>
-                                <p><?php echo esc_html( $item['description'] ); ?></p>
+                                <p class="da11y-checklist-description">
+                                    <?php echo esc_html( $item['description'] ); ?>
+                                </p>
+
+                                <?php
+                                $current_status = isset( $statuses[ $id ] ) ? $statuses[ $id ] : 'needs_attention';
+                                ?>
 
                                 <select
                                     id="da11y-checklist-<?php echo esc_attr( $id ); ?>"
                                     name="<?php echo esc_attr( self::CHECKLIST_OPTION_NAME ); ?>[<?php echo esc_attr( $id ); ?>]"
+                                    class="da11y-checklist-status da11y-checklist-status--<?php echo esc_attr( $current_status ); ?>"
                                 >
                                     <?php foreach ( $status_labels as $value => $label ) : ?>
                                         <option
@@ -1844,15 +2019,22 @@ class Settings {
         $key      = $args['key'];
         $label    = $args['label'];
         $checked  = ! empty( $settings[ $key ] );
+        $id       = self::OPTION_NAME . '_' . $key;
         ?>
-        <label>
+        <label class="da11y-toggle" for="<?php echo esc_attr( $id ); ?>">
             <input
                 type="checkbox"
+                id="<?php echo esc_attr( $id ); ?>"
                 name="<?php echo esc_attr( self::OPTION_NAME ); ?>[<?php echo esc_attr( $key ); ?>]"
                 value="1"
                 <?php checked( $checked ); ?>
             />
-            <?php echo esc_html( $label ); ?>
+            <span class="da11y-toggle-switch" aria-hidden="true">
+                <span class="da11y-toggle-thumb"></span>
+            </span>
+            <span class="screen-reader-text">
+                <?php echo esc_html( $label ); ?>
+            </span>
         </label>
         <?php
     }
@@ -2040,15 +2222,22 @@ class Settings {
      */
     public function render_enabled_field() {
         $settings = self::get();
+        $id = self::OPTION_NAME . '_enabled';
         ?>
-        <label>
+        <label class="da11y-toggle" for="<?php echo esc_attr( $id ); ?>">
             <input
                 type="checkbox"
+                id="<?php echo esc_attr( $id ); ?>"
                 name="<?php echo esc_attr( self::OPTION_NAME ); ?>[enabled]"
                 value="1"
                 <?php checked( ! empty( $settings['enabled'] ) ); ?>
             />
-            <?php esc_html_e( 'Show the accessibility widget on the frontend.', 'devllo-accessibility-controls' ); ?>
+            <span class="da11y-toggle-switch" aria-hidden="true">
+                <span class="da11y-toggle-thumb"></span>
+            </span>
+            <span class="screen-reader-text">
+                <?php esc_html_e( 'Show the accessibility widget on the frontend.', 'devllo-accessibility-controls' ); ?>
+            </span>
         </label>
         <?php
     }
@@ -2060,15 +2249,22 @@ class Settings {
      */
     public function render_dyslexia_enabled_field() {
         $settings = self::get();
+        $id = self::OPTION_NAME . '_dyslexia_enabled';
         ?>
-        <label>
+        <label class="da11y-toggle" for="<?php echo esc_attr( $id ); ?>">
             <input
                 type="checkbox"
+                id="<?php echo esc_attr( $id ); ?>"
                 name="<?php echo esc_attr( self::OPTION_NAME ); ?>[dyslexia_enabled]"
                 value="1"
                 <?php checked( ! empty( $settings['dyslexia_enabled'] ) ); ?>
             />
-            <?php esc_html_e( 'Allow visitors to toggle a dyslexia-friendly reading mode.', 'devllo-accessibility-controls' ); ?>
+            <span class="da11y-toggle-switch" aria-hidden="true">
+                <span class="da11y-toggle-thumb"></span>
+            </span>
+            <span class="screen-reader-text">
+                <?php esc_html_e( 'Allow visitors to toggle a dyslexia-friendly reading mode.', 'devllo-accessibility-controls' ); ?>
+            </span>
         </label>
         <?php
     }
@@ -2080,15 +2276,22 @@ class Settings {
      */
     public function render_reduced_motion_enabled_field() {
         $settings = self::get();
+        $id = self::OPTION_NAME . '_reduced_motion_enabled';
         ?>
-        <label>
+        <label class="da11y-toggle" for="<?php echo esc_attr( $id ); ?>">
             <input
                 type="checkbox"
+                id="<?php echo esc_attr( $id ); ?>"
                 name="<?php echo esc_attr( self::OPTION_NAME ); ?>[reduced_motion_enabled]"
                 value="1"
                 <?php checked( ! empty( $settings['reduced_motion_enabled'] ) ); ?>
             />
-            <?php esc_html_e( 'Allow visitors to reduce motion in the accessibility controls UI.', 'devllo-accessibility-controls' ); ?>
+            <span class="da11y-toggle-switch" aria-hidden="true">
+                <span class="da11y-toggle-thumb"></span>
+            </span>
+            <span class="screen-reader-text">
+                <?php esc_html_e( 'Allow visitors to reduce motion in the accessibility controls UI.', 'devllo-accessibility-controls' ); ?>
+            </span>
         </label>
         <?php
     }
