@@ -55,8 +55,6 @@
 
 .da11y-dialog {
     position: fixed;
-    right: 1rem;
-    bottom: 4rem;
     max-width: 20rem;
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
@@ -67,6 +65,26 @@
     z-index: 10001;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-size: 0.875rem;
+}
+
+.da11y-position-bottom-right .da11y-dialog {
+    right: 1rem;
+    bottom: 4rem;
+}
+
+.da11y-position-bottom-left .da11y-dialog {
+    left: 1rem;
+    bottom: 4rem;
+}
+
+.da11y-position-top-right .da11y-dialog {
+    right: 1rem;
+    top: 4rem;
+}
+
+.da11y-position-top-left .da11y-dialog {
+    left: 1rem;
+    top: 4rem;
 }
 
 /* Dialog close button */
@@ -96,6 +114,10 @@
 }
 
 /* Text size scaling (applied to html/body) */
+.da11y-text-scale--1 {
+    font-size: 90%;
+}
+
 .da11y-text-scale-1 {
     font-size: 110%;
 }
@@ -104,14 +126,27 @@
     font-size: 120%;
 }
 
-/* High contrast mode (applied to html/body) */
-.da11y-contrast-on {
-    background-color: #000 !important;
-    color: #fff !important;
+.da11y-text-scale-3 {
+    font-size: 130%;
 }
 
-.da11y-contrast-on a {
-    color: #ffea00 !important;
+/* High contrast mode */
+.da11y-contrast-on {
+    filter: contrast(1.5) saturate(0);
+}
+
+/* Re-invert images to keep them visible */
+.da11y-contrast-on img,
+.da11y-contrast-on video,
+.da11y-contrast-on iframe,
+.da11y-contrast-on canvas {
+    filter: contrast(1.2);
+}
+
+/* Keep focus indicators visible and distinct */
+.da11y-contrast-on :focus {
+    outline: 3px solid #ffea00 !important;
+    outline-offset: 2px !important;
 }
 
 /* Dyslexia-friendly reading mode (applied to html) */
@@ -123,103 +158,79 @@
     letter-spacing: 0.02em;
 }
 
-/* Reduced motion mode (applied to html, but scoped to plugin UI) */
-.da11y-reduced-motion-on .da11y-dialog,
-.da11y-reduced-motion-on .da11y-trigger {
-    animation: none !important;
-    transition: none !important;
+/* Reduced motion mode — applied site-wide */
+.da11y-reduced-motion-on *,
+.da11y-reduced-motion-on *::before,
+.da11y-reduced-motion-on *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
 }
 
 /* Spacing controls (applied to html/body) */
 .da11y-spacing-1 body,
 .da11y-spacing-1 .site,
-.da11y-spacing-1 .entry-content {
+.da11y-spacing-1 .entry-content,
+.da11y-spacing-1 .wp-block-post-content {
     line-height: 1.6;
 }
 
 .da11y-spacing-1 .entry-content p,
-.da11y-spacing-1 .entry-content li {
+.da11y-spacing-1 .entry-content li,
+.da11y-spacing-1 .wp-block-post-content p,
+.da11y-spacing-1 .wp-block-post-content li {
     margin-bottom: 1.25em;
 }
 
 .da11y-spacing-2 body,
 .da11y-spacing-2 .site,
-.da11y-spacing-2 .entry-content {
+.da11y-spacing-2 .entry-content,
+.da11y-spacing-2 .wp-block-post-content {
     line-height: 1.8;
 }
 
 .da11y-spacing-2 .entry-content p,
-.da11y-spacing-2 .entry-content li {
+.da11y-spacing-2 .entry-content li,
+.da11y-spacing-2 .wp-block-post-content p,
+.da11y-spacing-2 .wp-block-post-content li {
     margin-bottom: 1.5em;
 }
 
-/* Dark mode (applied more broadly for readability) */
-.da11y-theme-dark-mode body {
-    background-color: #121212 !important;
-    color: #e0e0e0 !important;
+/* Dark mode */
+.da11y-theme-dark-mode {
+    filter: invert(1) hue-rotate(180deg);
 }
 
-/* Common text elements: ensure light text in dark mode */
-.da11y-theme-dark-mode body p,
-.da11y-theme-dark-mode body li,
-.da11y-theme-dark-mode body span,
-.da11y-theme-dark-mode body div,
-.da11y-theme-dark-mode body td,
-.da11y-theme-dark-mode body th {
-    color: #e0e0e0 !important;
+/* Re-invert cover block text in dark mode */
+.da11y-theme-dark-mode .wp-block-cover__inner-container {
+    filter: invert(1) hue-rotate(180deg);
 }
 
-/* Header / footer / nav backgrounds in dark mode */
-.da11y-theme-dark-mode header,
-.da11y-theme-dark-mode .site-header,
-.da11y-theme-dark-mode footer,
-.da11y-theme-dark-mode .site-footer,
-.da11y-theme-dark-mode nav {
-    background-color: #121212 !important;
+/* Re-invert media so they look natural */
+.da11y-theme-dark-mode img,
+.da11y-theme-dark-mode video,
+.da11y-theme-dark-mode iframe,
+.da11y-theme-dark-mode canvas {
+    filter: invert(1) hue-rotate(180deg);
 }
 
-.da11y-theme-dark-mode body a {
-    color: #80b3ff !important;
-}
-
-.da11y-theme-dark-mode body h1,
-.da11y-theme-dark-mode body h2,
-.da11y-theme-dark-mode body h3,
-.da11y-theme-dark-mode body h4,
-.da11y-theme-dark-mode body h5,
-.da11y-theme-dark-mode body h6 {
-    color: #ffffff !important;
-}
-
-.da11y-theme-dark-mode body input,
-.da11y-theme-dark-mode body textarea,
-.da11y-theme-dark-mode body select {
-    background-color: #1e1e1e !important;
-    color: #e0e0e0 !important;
-    border-color: #444444 !important;
-}
-
-/* In blocks explicitly marked as light, keep text dark on light backgrounds */
-.da11y-theme-dark-mode .is-light,
-.da11y-theme-dark-mode .is-light * {
-    color: #111111 !important;
-}
-
-/* Keep accessibility trigger readable and distinct in dark mode */
-.da11y-theme-dark-mode .da11y-trigger {
-    background-color: #005fcc !important;
-    color: #ffffff !important;
-}
-
-/* Reading mode (applied to html) */
-.da11y-reading-mode-on body {
+/* Reading mode: narrows common content wrapper elements.
+   This is a best-effort approach and may need theme-specific tuning. */
+.da11y-reading-mode-on .entry-content,
+.da11y-reading-mode-on .post-content,
+.da11y-reading-mode-on .page-content,
+.da11y-reading-mode-on article {
     max-width: 48rem;
     margin-left: auto;
     margin-right: auto;
 }
 
 @media (max-width: 782px) {
-    .da11y-reading-mode-on body {
+    .da11y-reading-mode-on .entry-content,
+    .da11y-reading-mode-on .post-content,
+    .da11y-reading-mode-on .page-content,
+    .da11y-reading-mode-on article {
         max-width: 100%;
         margin-left: 0;
         margin-right: 0;
@@ -233,4 +244,118 @@
         bottom: 1rem;
         max-width: none;
     }
+}
+
+/* Grayscale mode */
+.da11y-grayscale-on {
+    filter: grayscale(100%);
+}
+
+/* Letter spacing */
+.da11y-letter-spacing-1 {
+    letter-spacing: 0.05em;
+}
+
+.da11y-letter-spacing-2 {
+    letter-spacing: 0.1em;
+}
+
+/* Reading guide */
+.da11y-reading-guide-line {
+    display: none;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f00;
+    pointer-events: none;
+    z-index: 99998;
+    opacity: 0.5;
+}
+
+.da11y-reading-guide-on .da11y-reading-guide-line {
+    display: block;
+}
+
+/* Big cursor */
+.da11y-big-cursor-on *,
+.da11y-big-cursor-on {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M6 2 L6 42 L16 32 L26 46 L30 44 L20 30 L34 30 Z' fill='black' stroke='white' stroke-width='2'/%3E%3C/svg%3E") 0 0, auto !important;
+}
+
+/* Link highlighting */
+.da11y-highlight-links-on a,
+.da11y-highlight-links-on body a {
+    background-color: #ffea00 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+    outline: 2px solid #000 !important;
+}
+
+/* Focus outline enhancement */
+.da11y-focus-on *:focus,
+.da11y-focus-on *:focus-visible {
+    outline: 3px solid #005fcc !important;
+    outline-offset: 3px !important;
+}
+
+/* Brightness control */
+.da11y-brightness-1 {
+    filter: brightness(0.8);
+}
+
+.da11y-brightness-2 {
+    filter: brightness(0.6);
+}
+
+.da11y-brightness-3 {
+    filter: brightness(1.2);
+}
+
+.da11y-brightness-4 {
+    filter: brightness(1.4);
+}
+
+/* Word spacing */
+.da11y-word-spacing-1 body,
+.da11y-word-spacing-1 body * {
+    word-spacing: 0.1em !important;
+}
+
+.da11y-word-spacing-2 body,
+.da11y-word-spacing-2 body * {
+    word-spacing: 0.2em !important;
+}
+
+/* Text align left */
+.da11y-align-left-on body,
+.da11y-align-left-on body * {
+    text-align: left !important;
+}
+
+/* Reading mask */
+.da11y-reading-mask-top,
+.da11y-reading-mask-bottom {
+    display: none;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 99997;
+}
+
+.da11y-reading-mask-on .da11y-reading-mask-top,
+.da11y-reading-mask-on .da11y-reading-mask-bottom {
+    display: block;
+}
+
+/* Hide images */
+.da11y-hide-images-on img,
+.da11y-hide-images-on figure,
+.da11y-hide-images-on .wp-block-image,
+.da11y-hide-images-on .wp-block-cover,
+.da11y-hide-images-on [style*="background-image"] {
+    display: none !important;
 }

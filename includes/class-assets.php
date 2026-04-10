@@ -21,9 +21,6 @@ final class Assets {
      * @return void
      */
     public function enqueue_frontend_assets() {
-        if ( is_admin() ) {
-            return;
-        }
 
         // Respect plugin settings; do not enqueue if disabled.
         $settings = Settings::get();
@@ -38,6 +35,14 @@ final class Assets {
             [],
             DA11Y_PLUGIN_VERSION
         );
+
+        // Load OpenDyslexic font for dyslexia-friendly mode.
+        wp_enqueue_style(
+                'da11y-opendyslexic',
+                'https://cdn.jsdelivr.net/npm/@fontsource/opendyslexic@latest/400.css',
+                [],
+                null
+            );
 
         // JS.
         wp_enqueue_script(
@@ -62,6 +67,18 @@ final class Assets {
                 'spacing'       => 0,
                 'theme'         => 'default',
                 'readingMode'   => false,
+                'grayscale'     => false,
+                'letterSpacing' => 0,
+                'readingGuide'  => false,
+                'bigCursor'     => false,
+                'highlightLinks' => false,
+                'focusEnhanced' => false,
+                'brightness'    => 0,
+                'wordSpacing'   => 0,
+                'alignLeft'     => false,
+                'readingMask'     => false,
+                'hideImages'      => false,
+
             ],
             'settings' => [
                 'enabled'                => ! empty( $settings['enabled'] ),

@@ -213,7 +213,10 @@
     };
 
     const AccessibilitySidebar = () => {
-        const hints = useSelect(() => getHints(), []);
+        const hints = useSelect((select) => {
+            select('core/block-editor').getBlocks();
+            return getHints();
+        });
 
         const hintCount = hints.length;
 

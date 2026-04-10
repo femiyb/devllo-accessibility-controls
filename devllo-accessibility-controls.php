@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: Devllo Accessibility Controls
- * Plugin URI: https://example.com
+ * Plugin URI: https://devllo.com/plugins/accessibility-controls
  * Description: Visitor-controlled accessibility enhancements for WordPress websites.
  * Version: 0.6.3
- * Author: Your Name
- * Author URI: https://example.com
+ * Author: Devllo Plugins
+ * Author URI: https://devllo.com
  * Text Domain: devllo-accessibility-controls
  * Domain Path: /languages
  * Requires at least: 6.0
- * Tested up to: 6.6
+ * Tested up to: 6.9
  * Requires PHP: 7.4
  */
 

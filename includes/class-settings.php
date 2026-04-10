@@ -241,7 +241,7 @@ class Settings {
         wp_enqueue_script(
             'da11y-frontend-quick-check',
             DA11Y_PLUGIN_URL . 'assets/js/frontend-quick-check.js',
-            [ 'jquery' ],
+            [],
             DA11Y_PLUGIN_VERSION,
             true
         );
@@ -885,6 +885,11 @@ class Settings {
         ?>
         <div class="wrap">
             <h1><?php esc_html_e( 'Accessibility Controls', 'devllo-accessibility-controls' ); ?></h1>
+            <div class="notice notice-info inline">
+                <p>
+                    <?php esc_html_e( 'Dark mode is available to visitors but is experimental. It uses a CSS invert approach that works on most themes but may produce unexpected results on some designs. Consider testing it on your theme before promoting it to visitors.', 'devllo-accessibility-controls' ); ?>
+                </p>
+            </div>
             <form action="options.php" method="post">
                 <?php
                 settings_fields( 'da11y_settings_group' );
