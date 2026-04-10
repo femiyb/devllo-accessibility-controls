@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Devllo Accessibility Controls
- * Plugin URI: https://devllo.com/plugins/accessibility-controls
+ * Plugin URI: https://devlloplugins.com/product/devllo-accessibility-controls/
  * Description: Visitor-controlled accessibility enhancements for WordPress websites.
  * Version: 0.7.0
  * Author: Devllo Plugins
- * Author URI: https://devllo.com
+ * Author URI: https://devlloplugins.com/
  * Text Domain: devllo-accessibility-controls
  * Domain Path: /languages
  * Requires at least: 6.0
