@@ -1,5 +1,5 @@
 === Devllo Accessibility Controls ===
-Contributors: devlloplugins, femiyb
+Contributors: devllo, devlloplugins
 Tags: accessibility, contrast, font-size, a11y
 Requires at least: 6.0
 Tested up to: 6.9
