@@ -3,7 +3,7 @@
  * Plugin Name: Devllo Accessibility Controls
  * Plugin URI: https://devllo.com/product/devllo-accessibility-controls/
  * Description: Visitor-controlled accessibility enhancements for WordPress websites.
- * Version: 0.7.0
+ * Version: 0.7.1
  * Author: Devllo Plugins
  * Author URI: https://devllo.com/
  * Text Domain: devllo-accessibility-controls
@@ -19,7 +19,7 @@
 // safety check and constant definitions
 defined( 'ABSPATH' ) || exit;
 
-define( 'DA11Y_PLUGIN_VERSION', '0.7.0' );
+define( 'DA11Y_PLUGIN_VERSION', '0.7.1' );
 define( 'DA11Y_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DA11Y_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
