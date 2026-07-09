@@ -2053,9 +2053,10 @@ class Settings {
             value="<?php echo esc_attr( $settings['button_label'] ); ?>"
             placeholder="<?php echo esc_attr__( 'Accessibility Options', 'devllo-accessibility-controls' ); ?>"
             class="regular-text"
+            aria-label="<?php esc_attr_e( 'Accessibility button label text', 'devllo-accessibility-controls' ); ?>"
         />
         <p class="description">
-            <?php esc_html_e( 'Leave blank to use the default label.', 'devllo-accessibility-controls' ); ?>
+            <?php esc_html_e( 'Custom text shown on the accessibility button. Leave blank to use the default label "Accessibility Options".', 'devllo-accessibility-controls' ); ?>
         </p>
         <?php
     }
@@ -2072,7 +2073,11 @@ class Settings {
             type="color"
             name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_bg_color]"
             value="<?php echo esc_attr( $settings['button_bg_color'] ); ?>"
+            aria-label="<?php esc_attr_e( 'Accessibility button background colour', 'devllo-accessibility-controls' ); ?>"
         />
+        <p class="description">
+            <?php esc_html_e( 'Background colour of the accessibility button.', 'devllo-accessibility-controls' ); ?>
+        </p>
         <?php
     }
 
@@ -2088,7 +2093,11 @@ class Settings {
             type="color"
             name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_text_color]"
             value="<?php echo esc_attr( $settings['button_text_color'] ); ?>"
+            aria-label="<?php esc_attr_e( 'Accessibility button text colour', 'devllo-accessibility-controls' ); ?>"
         />
+        <p class="description">
+            <?php esc_html_e( 'Text colour of the accessibility button.', 'devllo-accessibility-controls' ); ?>
+        </p>
         <?php
     }
 
@@ -2105,7 +2114,7 @@ class Settings {
             'large'  => __( 'Large', 'devllo-accessibility-controls' ),
         ];
         ?>
-        <select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_size]">
+        <select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_size]" aria-label="<?php esc_attr_e( 'Accessibility button size', 'devllo-accessibility-controls' ); ?>">
             <?php foreach ( $sizes as $value => $label ) : ?>
                 <option
                     value="<?php echo esc_attr( $value ); ?>"
@@ -2115,6 +2124,9 @@ class Settings {
                 </option>
             <?php endforeach; ?>
         </select>
+        <p class="description">
+            <?php esc_html_e( 'Size of the accessibility button on screen.', 'devllo-accessibility-controls' ); ?>
+        </p>
         <?php
     }
 
@@ -2131,7 +2143,7 @@ class Settings {
             'icon_and_text'=> __( 'Icon and text', 'devllo-accessibility-controls' ),
         ];
         ?>
-        <select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_icon]">
+        <select name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_icon]" aria-label="<?php esc_attr_e( 'Accessibility button style (text, icon, or both)', 'devllo-accessibility-controls' ); ?>">
             <?php foreach ( $styles as $value => $label ) : ?>
                 <option
                     value="<?php echo esc_attr( $value ); ?>"
@@ -2141,6 +2153,9 @@ class Settings {
                 </option>
             <?php endforeach; ?>
         </select>
+        <p class="description">
+            <?php esc_html_e( 'Choose whether to show text, an icon, or both on the accessibility button.', 'devllo-accessibility-controls' ); ?>
+        </p>
         <?php
     }
 
@@ -2313,6 +2328,7 @@ class Settings {
         ?>
         <select
             name="<?php echo esc_attr( self::OPTION_NAME ); ?>[button_position]"
+            aria-label="<?php esc_attr_e( 'Accessibility button position on screen', 'devllo-accessibility-controls' ); ?>"
         >
             <?php foreach ( $positions as $value => $label ) : ?>
                 <option

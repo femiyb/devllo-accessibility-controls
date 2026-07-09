@@ -181,6 +181,11 @@
     transform: translateX(22px);
 }
 
+.da11y-toggle input[type="checkbox"]:focus + .da11y-toggle-switch {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
 /* Inputs */
 .da11y-card-body input[type="text"],
 .da11y-card-body select {
@@ -315,6 +320,11 @@
     color: #374151;
 }
 
+.da11y-checklist-status:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
 .da11y-guidance-heading {
     display: flex;
     align-items: center;
@@ -336,3 +346,4 @@
 .da11y-sidebar-links li {
     margin-bottom: 4px;
 }
+

@@ -171,8 +171,9 @@ class Accessibility_Controls {
                             class="da11y-accordion-toggle"
                             aria-expanded="true"
                             aria-controls="da11y-group-text"
+                            id="da11y-accordion-text-toggle"
                         >
-                            <span class="da11y-accordion-title">
+                            <span class="da11y-accordion-title" id="da11y-accordion-text-title">
                                 <?php echo esc_html__( 'Text', 'devllo-accessibility-controls' ); ?>
                             </span>
                             <span class="da11y-accordion-indicator" aria-hidden="true"></span>
@@ -180,6 +181,8 @@ class Accessibility_Controls {
                         <div
                             id="da11y-group-text"
                             class="da11y-accordion-panel"
+                            role="region"
+                            aria-labelledby="da11y-accordion-text-title"
                         >
                             <?php
                             // Section: Text size controls.
@@ -326,8 +329,9 @@ class Accessibility_Controls {
                             class="da11y-accordion-toggle"
                             aria-expanded="false"
                             aria-controls="da11y-group-reading"
+                            id="da11y-accordion-reading-toggle"
                         >
-                            <span class="da11y-accordion-title">
+                            <span class="da11y-accordion-title" id="da11y-accordion-reading-title">
                                 <?php echo esc_html__( 'Reading', 'devllo-accessibility-controls' ); ?>
                             </span>
                             <span class="da11y-accordion-indicator" aria-hidden="true"></span>
@@ -335,6 +339,8 @@ class Accessibility_Controls {
                         <div
                             id="da11y-group-reading"
                             class="da11y-accordion-panel"
+                            role="region"
+                            aria-labelledby="da11y-accordion-reading-title"
                             hidden
                         >
                             <?php if ( $f_reading_mode ) : ?>
@@ -396,8 +402,9 @@ class Accessibility_Controls {
                             class="da11y-accordion-toggle"
                             aria-expanded="false"
                             aria-controls="da11y-group-visual"
+                            id="da11y-accordion-visual-toggle"
                         >
-                            <span class="da11y-accordion-title">
+                            <span class="da11y-accordion-title" id="da11y-accordion-visual-title">
                                 <?php echo esc_html__( 'Visual', 'devllo-accessibility-controls' ); ?>
                             </span>
                             <span class="da11y-accordion-indicator" aria-hidden="true"></span>
@@ -405,6 +412,8 @@ class Accessibility_Controls {
                         <div
                             id="da11y-group-visual"
                             class="da11y-accordion-panel"
+                            role="region"
+                            aria-labelledby="da11y-accordion-visual-title"
                             hidden
                         >
                             <?php
@@ -506,8 +515,9 @@ class Accessibility_Controls {
                             class="da11y-accordion-toggle"
                             aria-expanded="false"
                             aria-controls="da11y-group-navigation"
+                            id="da11y-accordion-navigation-toggle"
                         >
-                            <span class="da11y-accordion-title">
+                            <span class="da11y-accordion-title" id="da11y-accordion-navigation-title">
                                 <?php echo esc_html__( 'Navigation', 'devllo-accessibility-controls' ); ?>
                             </span>
                             <span class="da11y-accordion-indicator" aria-hidden="true"></span>
@@ -515,6 +525,8 @@ class Accessibility_Controls {
                         <div
                             id="da11y-group-navigation"
                             class="da11y-accordion-panel"
+                            role="region"
+                            aria-labelledby="da11y-accordion-navigation-title"
                             hidden
                         >
                             <?php if ( $f_big_cursor ) : ?>

@@ -558,19 +558,18 @@
 
                 // Global key handling for Escape and Tab trapping when dialog is open.
                 if (this.config.features && this.config.features.keyboardShortcut) {
-                document.addEventListener('keydown', (event) => {
-                    this.handleKeydown(event);
+                    document.addEventListener('keydown', (event) => {
+                        this.handleKeydown(event);
 
-                    if (event.altKey && (event.key === 'a' || event.key === 'A' || event.key === 'å' || event.key === 'Å')) {
-                    event.preventDefault();
-                    if (this.isOpen) {
-                        this.closeDialog();
-                    } else {
-                        this.openDialog();
-                    }
+                        // Alt+A only closes the dialog when open (WCAG 2.1.1 compliance)
+                        if (event.altKey && (event.key === 'a' || event.key === 'A' || event.key === 'å' || event.key === 'Å')) {
+                            if (this.isOpen) {
+                                event.preventDefault();
+                                this.closeDialog();
+                            }
+                        }
+                    });
                 }
-                });
-            }
             }
 
             // Close button inside dialog.
@@ -771,8 +770,15 @@
                         if (panel) {
                             if (isExpanded) {
                                 panel.setAttribute('hidden', '');
+                                // Return focus to toggle when collapsing
+                                toggle.focus();
                             } else {
                                 panel.removeAttribute('hidden');
+                                // Move focus to first focusable element in panel
+                                const focusables = panel.querySelectorAll(this.focusableSelector);
+                                if (focusables.length > 0) {
+                                    focusables[0].focus();
+                                }
                             }
                         }
                     });
