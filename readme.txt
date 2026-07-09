@@ -136,6 +136,11 @@ Actions:
 
 == Changelog ==
 
+= 0.7.2 =
+* Added visible focus outlines to improve keyboard accessibility and clarity across the plugin UI.
+* Improved aria attributes and accessible labeling for frontend controls.
+* Updated button setting descriptions in the admin settings screen for clearer configuration.
+
 = 0.7.0 =
 * Added grayscale mode, letter spacing, word spacing, text align left, reading guide, reading mask, big cursor, link highlighting, focus outline enhancement, hide images, and brightness controls to the visitor widget.
 * Added keyboard shortcut (Alt+A) to open/close the accessibility panel.
