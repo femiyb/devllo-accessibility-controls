@@ -579,6 +579,15 @@
                 });
             }
 
+            // Click outside dialog to close.
+            if (this.$backdrop) {
+                this.$backdrop.addEventListener('click', (event) => {
+                    if (event.target === this.$backdrop) {
+                        this.closeDialog();
+                    }
+                });
+            }
+
             // Text size controls.
             if (this.$textSmaller) {
                 this.$textSmaller.addEventListener('click', () => {

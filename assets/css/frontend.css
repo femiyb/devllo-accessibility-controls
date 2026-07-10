@@ -72,18 +72,56 @@ div#da11y-quick-check-panel h3 {
     z-index: 10000;
 }
 
-.da11y-dialog {
-    position: fixed;
-    max-width: 22rem;
-    max-height: calc(100vh - 6rem);
-    overflow-y: auto;
-    padding: 1.25rem 1.25rem 1.5rem;
-    border-radius: 0.5rem;
-    background: #fff;
-    color: #111;
-    z-index: 10001;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    font-size: 0.875rem;
+#da11y-accessibility-dialog.da11y-dialog {
+    position: fixed !important;
+    max-width: 22rem !important;
+    max-height: calc(100vh - 6rem) !important;
+    overflow-y: auto !important;
+    padding: 1.25rem 1.25rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    background: #fff !important;
+    color: #111 !important;
+    z-index: 10001 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    font-size: 0.875rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+    line-height: 1.5 !important;
+    text-align: left !important;
+}
+
+/* CSS isolation: Reset theme-inherited styles within dialog */
+#da11y-accessibility-dialog.da11y-dialog,
+#da11y-accessibility-dialog.da11y-dialog * {
+    box-sizing: border-box !important;
+}
+
+#da11y-accessibility-dialog.da11y-dialog h2,
+#da11y-accessibility-dialog.da11y-dialog h3,
+#da11y-accessibility-dialog.da11y-dialog p,
+#da11y-accessibility-dialog.da11y-dialog button,
+#da11y-accessibility-dialog.da11y-dialog span,
+#da11y-accessibility-dialog.da11y-dialog div {
+    font-family: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+}
+
+#da11y-accessibility-dialog.da11y-dialog h2 {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin: 0 0 0.5rem 0 !important;
+    color: #111 !important;
+}
+
+#da11y-accessibility-dialog.da11y-dialog p {
+    font-size: 0.875rem !important;
+    margin: 0 0 1rem 0 !important;
+    color: #111 !important;
+}
+
+#da11y-accessibility-dialog.da11y-dialog button {
+    font-family: inherit !important;
+    line-height: inherit !important;
 }
 
 .da11y-position-bottom-right .da11y-dialog {
@@ -113,9 +151,15 @@ div#da11y-quick-check-panel h3 {
     right: 0.5rem;
     background: transparent;
     border: none;
-    color: inherit;
-    font-size: 1.25rem;
+    color: #111 !important;
+    font-size: 20px !important;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .da11y-dialog-close:focus {
@@ -164,6 +208,7 @@ div#da11y-quick-check-panel h3 {
     cursor: pointer;
     font-weight: 600;
     font-size: 0.9rem;
+    color: #111 !important;
 }
 
 .da11y-accordion-title {
@@ -178,6 +223,7 @@ div#da11y-quick-check-panel h3 {
     text-align: center;
     font-size: 0.9rem;
     transition: transform 0.2s ease;
+    color: #111 !important;
 }
 
 .da11y-accordion-indicator::before {
@@ -199,6 +245,7 @@ div#da11y-quick-check-panel h3 {
 .da11y-section h3 {
     margin: 0 0 0.4rem;
     font-size: 0.85rem;
+    color: #111 !important;
 }
 
 .da11y-controls-row {
@@ -214,6 +261,7 @@ div#da11y-quick-check-panel h3 {
     background: #fff;
     font-size: 0.8rem;
     cursor: pointer;
+    color: #111 !important;
 }
 
 .da11y-section-reset,

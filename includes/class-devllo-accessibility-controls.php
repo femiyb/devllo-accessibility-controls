@@ -141,11 +141,13 @@ class Accessibility_Controls {
             hidden
         >
             <div
+                id="da11y-accessibility-dialog"
                 class="da11y-dialog"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="da11y-dialog-title"
                 aria-describedby="da11y-dialog-description"
+                style="position: fixed; max-width: 22rem; max-height: calc(100vh - 6rem); overflow-y: auto; padding: 1.25rem 1.25rem 1.5rem; border-radius: 0.5rem; background: #fff; color: #111; z-index: 10001; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); font-size: 0.875rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; line-height: 1.5; text-align: left;"
             >
                 <?php
                 // Dialog title and description provide context for screen readers.
@@ -154,13 +156,14 @@ class Accessibility_Controls {
                     type="button"
                     class="da11y-dialog-close"
                     aria-label="<?php echo esc_attr__( 'Close accessibility settings', 'devllo-accessibility-controls' ); ?>"
+                    style="position: absolute; top: 0.5rem; right: 0.5rem; background: transparent; border: none; color: #111; font-size: 20px; line-height: 1; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: inherit;"
                 >
                     &times;
                 </button>
-                <h2 id="da11y-dialog-title">
+                <h2 id="da11y-dialog-title" style="font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #111; font-family: inherit;">
                     <?php echo esc_html__( 'Accessibility Settings', 'devllo-accessibility-controls' ); ?>
                 </h2>
-                <p id="da11y-dialog-description">
+                <p id="da11y-dialog-description" style="font-size: 0.875rem; margin: 0 0 1rem 0; color: #111; font-family: inherit;">
                     <?php echo esc_html__( 'Adjust text size and contrast to improve readability.', 'devllo-accessibility-controls' ); ?>
                 </p>
 
@@ -172,6 +175,7 @@ class Accessibility_Controls {
                             aria-expanded="true"
                             aria-controls="da11y-group-text"
                             id="da11y-accordion-text-toggle"
+                            style="width: 100%; margin: 0; padding: 0.6rem 0.75rem; display: flex; align-items: center; justify-content: space-between; background: transparent; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: #111; font-family: inherit;"
                         >
                             <span class="da11y-accordion-title" id="da11y-accordion-text-title">
                                 <?php echo esc_html__( 'Text', 'devllo-accessibility-controls' ); ?>
@@ -189,25 +193,28 @@ class Accessibility_Controls {
                             if ( $f_text_size ) :
                             ?>
                                 <section class="da11y-section da11y-section-text-size">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Text size', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
                                         <button
                                             type="button"
                                             class="da11y-text-smaller"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Smaller', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-text-larger"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Larger', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-text-reset"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -220,19 +227,21 @@ class Accessibility_Controls {
                             if ( $f_line_spacing ) :
                             ?>
                                 <section class="da11y-section da11y-section-spacing">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Line Spacing', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
                                         <button
                                             type="button"
                                             class="da11y-spacing-more"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Increase spacing', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-spacing-reset"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reset spacing', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -242,19 +251,21 @@ class Accessibility_Controls {
 
                             <?php if ( $f_letter_spacing ) : ?>
                                 <section class="da11y-section da11y-section-letter-spacing">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Letter spacing', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
                                         <button
                                             type="button"
                                             class="da11y-letter-spacing-more"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-letter-spacing-reset"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -264,19 +275,21 @@ class Accessibility_Controls {
 
                             <?php if ( $f_word_spacing ) : ?>
                                 <section class="da11y-section da11y-section-word-spacing">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Word spacing', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
                                         <button
                                             type="button"
                                             class="da11y-word-spacing-more"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Increase', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-word-spacing-reset"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -286,7 +299,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_align_left ) : ?>
                                 <section class="da11y-section da11y-section-align-left">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Text alignment', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -294,6 +307,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-align-left-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Align text left', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -306,7 +320,7 @@ class Accessibility_Controls {
                             if ( $f_dyslexia ) :
                             ?>
                                 <section class="da11y-section da11y-section-dyslexia">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -314,6 +328,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-dyslexia-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle dyslexia-friendly font', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -330,6 +345,7 @@ class Accessibility_Controls {
                             aria-expanded="false"
                             aria-controls="da11y-group-reading"
                             id="da11y-accordion-reading-toggle"
+                            style="width: 100%; margin: 0; padding: 0.6rem 0.75rem; display: flex; align-items: center; justify-content: space-between; background: transparent; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: #111; font-family: inherit;"
                         >
                             <span class="da11y-accordion-title" id="da11y-accordion-reading-title">
                                 <?php echo esc_html__( 'Reading', 'devllo-accessibility-controls' ); ?>
@@ -345,7 +361,7 @@ class Accessibility_Controls {
                         >
                             <?php if ( $f_reading_mode ) : ?>
                                 <section class="da11y-section da11y-section-reading-mode">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Reading mode', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -353,6 +369,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-reading-mode-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle reading mode', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -362,7 +379,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_reading_guide ) : ?>
                                 <section class="da11y-section da11y-section-reading-guide">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Reading guide', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -370,6 +387,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-reading-guide-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle reading guide', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -379,7 +397,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_reading_mask ) : ?>
                                 <section class="da11y-section da11y-section-reading-mask">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Reading mask', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -387,6 +405,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-reading-mask-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle reading mask', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -403,6 +422,7 @@ class Accessibility_Controls {
                             aria-expanded="false"
                             aria-controls="da11y-group-visual"
                             id="da11y-accordion-visual-toggle"
+                            style="width: 100%; margin: 0; padding: 0.6rem 0.75rem; display: flex; align-items: center; justify-content: space-between; background: transparent; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: #111; font-family: inherit;"
                         >
                             <span class="da11y-accordion-title" id="da11y-accordion-visual-title">
                                 <?php echo esc_html__( 'Visual', 'devllo-accessibility-controls' ); ?>
@@ -421,7 +441,7 @@ class Accessibility_Controls {
                             if ( $f_contrast ) :
                             ?>
                                 <section class="da11y-section da11y-section-contrast">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'High contrast', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -429,6 +449,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-contrast-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle high contrast', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -438,7 +459,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_grayscale ) : ?>
                                 <section class="da11y-section da11y-section-grayscale">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Grayscale', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -446,6 +467,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-grayscale-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Toggle grayscale', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -455,7 +477,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_dark_mode ) : ?>
                                 <section class="da11y-section da11y-section-themes">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Colour themes', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -464,6 +486,7 @@ class Accessibility_Controls {
                                             class="da11y-theme-button"
                                             data-da11y-theme="default"
                                             aria-pressed="true"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Default', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -472,6 +495,7 @@ class Accessibility_Controls {
                                             class="da11y-theme-button"
                                             data-da11y-theme="dark-mode"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Dark mode (beta)', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -481,25 +505,28 @@ class Accessibility_Controls {
 
                             <?php if ( $f_brightness ) : ?>
                                 <section class="da11y-section da11y-section-brightness">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Brightness', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
                                         <button
                                             type="button"
                                             class="da11y-brightness-down"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Dimmer', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-brightness-up"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Brighter', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                         <button
                                             type="button"
                                             class="da11y-brightness-reset"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reset', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -516,6 +543,7 @@ class Accessibility_Controls {
                             aria-expanded="false"
                             aria-controls="da11y-group-navigation"
                             id="da11y-accordion-navigation-toggle"
+                            style="width: 100%; margin: 0; padding: 0.6rem 0.75rem; display: flex; align-items: center; justify-content: space-between; background: transparent; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: #111; font-family: inherit;"
                         >
                             <span class="da11y-accordion-title" id="da11y-accordion-navigation-title">
                                 <?php echo esc_html__( 'Navigation', 'devllo-accessibility-controls' ); ?>
@@ -531,7 +559,7 @@ class Accessibility_Controls {
                         >
                             <?php if ( $f_big_cursor ) : ?>
                                 <section class="da11y-section da11y-section-big-cursor">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Cursor', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -539,6 +567,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-big-cursor-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Large cursor', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -548,7 +577,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_highlight_links ) : ?>
                                 <section class="da11y-section da11y-section-highlight-links">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Links', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -556,6 +585,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-highlight-links-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Highlight links', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -565,7 +595,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_focus_enhanced ) : ?>
                                 <section class="da11y-section da11y-section-focus">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Focus outlines', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -573,6 +603,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-focus-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Enhance focus outlines', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -582,7 +613,7 @@ class Accessibility_Controls {
 
                             <?php if ( $f_hide_images ) : ?>
                                 <section class="da11y-section da11y-section-hide-images">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Images', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -590,6 +621,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-hide-images-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Hide images', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -599,7 +631,7 @@ class Accessibility_Controls {
 
                             <?php if ( $reduced_motion_enabled && $f_reduced_motion ) : ?>
                                 <section class="da11y-section da11y-section-motion">
-                                    <h3>
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Reduce motion', 'devllo-accessibility-controls' ); ?>
                                     </h3>
                                     <div class="da11y-controls-row">
@@ -607,6 +639,7 @@ class Accessibility_Controls {
                                             type="button"
                                             class="da11y-reduced-motion-toggle"
                                             aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Reduce animations site-wide', 'devllo-accessibility-controls' ); ?>
                                         </button>
@@ -621,6 +654,7 @@ class Accessibility_Controls {
                     <button
                         type="button"
                         class="da11y-reset-all"
+                        style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                     >
                         <?php echo esc_html__( 'Reset all settings', 'devllo-accessibility-controls' ); ?>
                     </button>
@@ -631,10 +665,10 @@ class Accessibility_Controls {
                 if ( $statement_url ) :
                 ?>
                 <div class="da11y-section da11y-section-statement">
-                    
-                        <a href="<?php echo esc_url( $statement_url ); ?>"
+                    <a href="<?php echo esc_url( $statement_url ); ?>"
                         target="_blank"
                         rel="noopener noreferrer"
+                        style="color: #005fcc; text-decoration: none; font-family: inherit;"
                     >
                         <?php echo esc_html__( 'Accessibility statement', 'devllo-accessibility-controls' ); ?>
                     </a>
