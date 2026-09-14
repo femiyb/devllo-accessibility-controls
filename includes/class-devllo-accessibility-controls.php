@@ -60,8 +60,11 @@ class Accessibility_Controls {
         $f_big_cursor        = ! empty( $settings['feature_big_cursor'] );
         $f_highlight_links   = ! empty( $settings['feature_highlight_links'] );
         $f_focus_enhanced    = ! empty( $settings['feature_focus_enhanced'] );
+        $f_focus_strong      = ! empty( $settings['feature_focus_strong'] );
+        $f_large_targets     = ! empty( $settings['feature_large_targets'] );
         $f_reduced_motion    = ! empty( $settings['feature_reduced_motion'] );
         $f_hide_images       = ! empty( $settings['feature_hide_images'] );
+        $f_calm_mode         = ! empty( $settings['feature_calm_mode'] );
 
         // Map stored position to a CSS class.
         $position        = isset( $settings['button_position'] ) ? $settings['button_position'] : 'bottom_right';
@@ -533,6 +536,27 @@ class Accessibility_Controls {
                                     </div>
                                 </section>
                             <?php endif; ?>
+
+                            <?php if ( $f_calm_mode ) : ?>
+                                <section class="da11y-section da11y-section-calm-mode">
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
+                                        <?php echo esc_html__( 'Calm mode', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <p style="font-size: 0.75rem; margin: 0 0 0.4rem; color: #444; font-family: inherit;">
+                                        <?php echo esc_html__( 'Reduce distracting sidebars, sticky bars, and auto-rotating content.', 'devllo-accessibility-controls' ); ?>
+                                    </p>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-calm-mode-toggle"
+                                            aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
+                                        >
+                                            <?php echo esc_html__( 'Reduce distractions', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
                         </div>
                     </section>
 
@@ -606,6 +630,42 @@ class Accessibility_Controls {
                                             style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
                                         >
                                             <?php echo esc_html__( 'Enhance focus outlines', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_focus_strong ) : ?>
+                                <section class="da11y-section da11y-section-focus-strong">
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
+                                        <?php echo esc_html__( 'High visibility focus', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-focus-strong-toggle"
+                                            aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
+                                        >
+                                            <?php echo esc_html__( 'Thicker, high-contrast focus outlines', 'devllo-accessibility-controls' ); ?>
+                                        </button>
+                                    </div>
+                                </section>
+                            <?php endif; ?>
+
+                            <?php if ( $f_large_targets ) : ?>
+                                <section class="da11y-section da11y-section-large-targets">
+                                    <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
+                                        <?php echo esc_html__( 'Click targets', 'devllo-accessibility-controls' ); ?>
+                                    </h3>
+                                    <div class="da11y-controls-row">
+                                        <button
+                                            type="button"
+                                            class="da11y-large-targets-toggle"
+                                            aria-pressed="false"
+                                            style="padding: 0.35rem 0.6rem; border-radius: 999px; border: 1px solid #d0d0d5; background: #fff; font-size: 0.8rem; cursor: pointer; color: #111; font-family: inherit;"
+                                        >
+                                            <?php echo esc_html__( 'Larger click targets', 'devllo-accessibility-controls' ); ?>
                                         </button>
                                     </div>
                                 </section>

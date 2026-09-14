@@ -115,6 +115,7 @@ class Settings {
             'feature_dark_mode'  => __( 'Dark mode', 'devllo-accessibility-controls' ),
             'feature_grayscale'  => __( 'Grayscale', 'devllo-accessibility-controls' ),
             'feature_brightness' => __( 'Brightness control', 'devllo-accessibility-controls' ),
+            'feature_calm_mode'  => __( 'Calm mode (reduce distractions)', 'devllo-accessibility-controls' ),
         ] as $key => $label ) {
             add_settings_field(
                 'da11y_' . $key,
@@ -187,6 +188,8 @@ class Settings {
             'feature_big_cursor'        => __( 'Big cursor', 'devllo-accessibility-controls' ),
             'feature_highlight_links'   => __( 'Link highlighting', 'devllo-accessibility-controls' ),
             'feature_focus_enhanced'    => __( 'Focus outline enhancement', 'devllo-accessibility-controls' ),
+            'feature_focus_strong'      => __( 'High visibility focus', 'devllo-accessibility-controls' ),
+            'feature_large_targets'     => __( 'Larger click targets', 'devllo-accessibility-controls' ),
             'feature_reduced_motion'    => __( 'Reduce animations', 'devllo-accessibility-controls' ),
             'feature_hide_images'       => __( 'Hide images', 'devllo-accessibility-controls' ),
             'feature_keyboard_shortcut' => __( 'Keyboard shortcut (Alt+A)', 'devllo-accessibility-controls' ),
@@ -545,6 +548,7 @@ class Settings {
             'feature_dark_mode',
             'feature_grayscale',
             'feature_brightness',
+            'feature_calm_mode',
             'feature_text_size',
             'feature_letter_spacing',
             'feature_line_spacing',
@@ -557,6 +561,8 @@ class Settings {
             'feature_big_cursor',
             'feature_highlight_links',
             'feature_focus_enhanced',
+            'feature_focus_strong',
+            'feature_large_targets',
             'feature_reduced_motion',
             'feature_hide_images',
             'feature_keyboard_shortcut',
@@ -639,6 +645,7 @@ class Settings {
             'feature_dark_mode'      => true,
             'feature_grayscale'      => true,
             'feature_brightness'     => false,
+            'feature_calm_mode'      => false,
 
             // Text
             'feature_text_size'      => true,
@@ -657,6 +664,8 @@ class Settings {
             'feature_big_cursor'          => true,
             'feature_highlight_links'     => true,
             'feature_focus_enhanced'      => true,
+            'feature_focus_strong'        => true,
+            'feature_large_targets'       => true,
             'feature_reduced_motion'      => true,
             'feature_hide_images'         => false,
             'feature_keyboard_shortcut'   => true,
