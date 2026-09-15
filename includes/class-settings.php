@@ -449,6 +449,14 @@ class Settings {
             [],
             DA11Y_PLUGIN_VERSION
         );
+
+        wp_enqueue_script(
+            'da11y-admin',
+            DA11Y_PLUGIN_URL . 'assets/js/admin.js',
+            [],
+            DA11Y_PLUGIN_VERSION,
+            true
+        );
     }
 
     /**
@@ -1753,50 +1761,98 @@ class Settings {
                     <form action="options.php" method="post">
                         <?php settings_fields( 'da11y_settings_group' ); ?>
 
-                        <div class="da11y-settings-sections">
-                            <?php
-                            global $wp_settings_sections, $wp_settings_fields;
+                        <?php
+                        global $wp_settings_sections, $wp_settings_fields;
 
-                            $page          = 'da11y_settings_page';
-                            $section_order = [
-                                'da11y_main_section'       => [ 'slug' => 'general',      'icon' => 'admin-generic' ],
-                                'da11y_visual_section'     => [ 'slug' => 'visual',       'icon' => 'visibility' ],
-                                'da11y_text_section'       => [ 'slug' => 'text',         'icon' => 'editor-textcolor' ],
-                                'da11y_reading_section'    => [ 'slug' => 'reading',      'icon' => 'book' ],
-                                'da11y_navigation_section' => [ 'slug' => 'navigation',   'icon' => 'admin-links' ],
-                                'da11y_widget_section'     => [ 'slug' => 'widget',       'icon' => 'layout' ],
-                                'da11y_statement_section'  => [ 'slug' => 'statement',    'icon' => 'shield' ],
-                            ];
+                        $page          = 'da11y_settings_page';
+                        $section_order = [
+                            'da11y_main_section'       => [ 'slug' => 'general',      'icon' => 'admin-generic' ],
+                            'da11y_visual_section'     => [ 'slug' => 'visual',       'icon' => 'visibility' ],
+                            'da11y_text_section'       => [ 'slug' => 'text',         'icon' => 'editor-textcolor' ],
+                            'da11y_reading_section'    => [ 'slug' => 'reading',      'icon' => 'book' ],
+                            'da11y_navigation_section' => [ 'slug' => 'navigation',   'icon' => 'admin-links' ],
+                            'da11y_widget_section'     => [ 'slug' => 'widget',       'icon' => 'layout' ],
+                            'da11y_statement_section'  => [ 'slug' => 'statement',    'icon' => 'shield' ],
+                        ];
 
-                            foreach ( $section_order as $section_id => $meta ) {
-                                if ( empty( $wp_settings_sections[ $page ][ $section_id ] ) ) {
-                                    continue;
+                        // Only sections that actually registered fields/callbacks are shown as tabs.
+                        $active_sections = [];
+                        foreach ( $section_order as $section_id => $meta ) {
+                            if ( ! empty( $wp_settings_sections[ $page ][ $section_id ] ) ) {
+                                $active_sections[ $section_id ] = $meta;
+                            }
+                        }
+                        ?>
+
+                        <div class="da11y-tabs-wrapper">
+                            <div class="da11y-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Accessibility Controls settings sections', 'devllo-accessibility-controls' ); ?>">
+                                <?php
+                                $is_first = true;
+                                foreach ( $active_sections as $section_id => $meta ) {
+                                    $section = $wp_settings_sections[ $page ][ $section_id ];
+                                    $slug    = $meta['slug'];
+                                    $icon    = $meta['icon'];
+                                    ?>
+                                    <button
+                                        type="button"
+                                        role="tab"
+                                        id="da11y-tab-<?php echo esc_attr( $slug ); ?>"
+                                        aria-controls="da11y-tabpanel-<?php echo esc_attr( $slug ); ?>"
+                                        aria-selected="<?php echo $is_first ? 'true' : 'false'; ?>"
+                                        tabindex="<?php echo $is_first ? '0' : '-1'; ?>"
+                                        class="da11y-tab da11y-tab--<?php echo esc_attr( $slug ); ?><?php echo $is_first ? ' da11y-tab-active' : ''; ?>"
+                                        data-tab="<?php echo esc_attr( $slug ); ?>"
+                                    >
+                                        <span class="dashicons dashicons-<?php echo esc_attr( $icon ); ?>" aria-hidden="true"></span>
+                                        <span class="da11y-tab-label"><?php echo esc_html( $section['title'] ); ?></span>
+                                    </button>
+                                    <?php
+                                    $is_first = false;
                                 }
+                                ?>
+                            </div>
+                        </div>
 
+                        <div class="da11y-settings-sections da11y-tab-panels">
+                            <?php
+                            $is_first = true;
+                            foreach ( $active_sections as $section_id => $meta ) {
                                 $section = $wp_settings_sections[ $page ][ $section_id ];
                                 $slug    = $meta['slug'];
                                 $icon    = $meta['icon'];
                                 ?>
-                                <h2 class="da11y-section-heading da11y-section-heading--<?php echo esc_attr( $slug ); ?>">
-                                    <span class="dashicons dashicons-<?php echo esc_attr( $icon ); ?> da11y-section-icon" aria-hidden="true"></span>
-                                    <span class="da11y-section-title-text">
-                                        <?php echo esc_html( $section['title'] ); ?>
-                                    </span>
-                                </h2>
-                                <?php
-                                if ( ! empty( $section['callback'] ) ) {
-                                    call_user_func( $section['callback'], $section );
-                                }
-
-                                if ( ! empty( $wp_settings_fields[ $page ][ $section_id ] ) ) {
-                                    ?>
-                                    <table class="form-table" role="presentation">
-                                        <tbody>
-                                        <?php do_settings_fields( $page, $section_id ); ?>
-                                        </tbody>
-                                    </table>
+                                <div
+                                    id="da11y-tabpanel-<?php echo esc_attr( $slug ); ?>"
+                                    role="tabpanel"
+                                    aria-labelledby="da11y-tab-<?php echo esc_attr( $slug ); ?>"
+                                    class="da11y-tab-panel<?php echo $is_first ? ' da11y-tab-panel-active' : ''; ?>"
+                                    tabindex="0"
+                                    data-tab="<?php echo esc_attr( $slug ); ?>"
+                                >
+                                    <h2 class="da11y-section-heading da11y-section-heading--<?php echo esc_attr( $slug ); ?>">
+                                        <span class="dashicons dashicons-<?php echo esc_attr( $icon ); ?> da11y-section-icon" aria-hidden="true"></span>
+                                        <span class="da11y-section-title-text">
+                                            <?php echo esc_html( $section['title'] ); ?>
+                                        </span>
+                                    </h2>
                                     <?php
-                                }
+                                    if ( ! empty( $section['callback'] ) ) {
+                                        call_user_func( $section['callback'], $section );
+                                    }
+
+                                    if ( ! empty( $wp_settings_fields[ $page ][ $section_id ] ) ) {
+                                        ?>
+                                        <table class="form-table" role="presentation">
+                                            <tbody>
+                                            <?php do_settings_fields( $page, $section_id ); ?>
+                                            </tbody>
+                                        </table>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                                <?php
+                                $is_first = false;
                             }
                             ?>
                         </div>

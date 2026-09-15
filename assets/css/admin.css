@@ -52,7 +52,7 @@
 }
 
 /* Section cards on settings page */
-.da11y-settings-sections > h2 + .form-table {
+.da11y-tab-panel > h2 + .form-table {
     background: #fff;
     border-radius: 8px;
     border: 1px solid #dcdcde;
@@ -136,6 +136,93 @@
 
 .da11y-settings-sections .form-table td {
     padding-bottom: 8px;
+}
+
+/*
+ * Settings tabs.
+ *
+ * Progressive enhancement: the tab bar is hidden and every panel is shown
+ * (stacked, as before) until JS marks the wrapper ready — so settings
+ * remain fully usable with JavaScript disabled.
+ */
+.da11y-tabs-wrapper {
+    display: none;
+}
+
+.da11y-tabs-wrapper.da11y-js-tabs-ready {
+    display: block;
+}
+
+.da11y-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 1px solid #dcdcde;
+    margin-bottom: 16px;
+}
+
+.da11y-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 4px 4px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #50575e;
+    cursor: pointer;
+}
+
+.da11y-tab:hover {
+    background: #f0f0f1;
+    color: #1d2327;
+}
+
+.da11y-tab:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: -2px;
+}
+
+.da11y-tab-active {
+    color: #1d2327;
+    border-bottom-color: #2271b1;
+    background: #f6f7f7;
+}
+
+.da11y-tab--general.da11y-tab-active { border-bottom-color: #6b7280; }
+.da11y-tab--visual.da11y-tab-active { border-bottom-color: #7c3aed; }
+.da11y-tab--text.da11y-tab-active { border-bottom-color: #2563eb; }
+.da11y-tab--reading.da11y-tab-active { border-bottom-color: #059669; }
+.da11y-tab--navigation.da11y-tab-active { border-bottom-color: #d97706; }
+.da11y-tab--widget.da11y-tab-active { border-bottom-color: #db2777; }
+.da11y-tab--statement.da11y-tab-active { border-bottom-color: #0891b2; }
+
+.da11y-tab-panels.da11y-js-tabs .da11y-tab-panel {
+    display: none;
+}
+
+.da11y-tab-panels.da11y-js-tabs .da11y-tab-panel-active {
+    display: block;
+}
+
+.da11y-tab-panel:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+@media (max-width: 782px) {
+    .da11y-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .da11y-tab {
+        flex: 0 0 auto;
+    }
 }
 
 /* Toggle-style checkboxes */
