@@ -772,7 +772,7 @@ class Settings {
      * @return array
      */
     public static function get_checklist_items() {
-        return [
+        $items = [
             // Perceivable
             'text_resize' => [
                 'title'       => __( 'Text is resizable', 'devllo-accessibility-controls' ),
@@ -905,6 +905,71 @@ class Settings {
                 'description' => __( 'Verify that all buttons, links, and form controls have accessible names that clearly describe their purpose to assistive technologies.', 'devllo-accessibility-controls' ),
                 'wcag'        => 'WCAG 2.1 – 4.1.2 Name, Role, Value',
             ],
+        ];
+
+        $item_groups = self::get_checklist_item_groups();
+
+        foreach ( $items as $id => &$item ) {
+            $item['group'] = isset( $item_groups[ $id ] ) ? $item_groups[ $id ] : 'other';
+        }
+        unset( $item );
+
+        return $items;
+    }
+
+    /**
+     * Map each checklist item id to its WCAG principle group.
+     *
+     * @return array
+     */
+    protected static function get_checklist_item_groups() {
+        return [
+            // Perceivable
+            'text_resize'        => 'perceivable',
+            'contrast'           => 'perceivable',
+            'colour_alone'       => 'perceivable',
+            'images_alt'         => 'perceivable',
+            'captions'           => 'perceivable',
+            'audio_description'  => 'perceivable',
+            'reflow'             => 'perceivable',
+
+            // Operable
+            'keyboard'              => 'operable',
+            'keyboard_trap'         => 'operable',
+            'skip_links'            => 'operable',
+            'page_title'            => 'operable',
+            'focus_visible'         => 'operable',
+            'focus_order'           => 'operable',
+            'link_purpose'          => 'operable',
+            'flashing'              => 'operable',
+            'motion'                => 'operable',
+
+            // Understandable
+            'language'               => 'understandable',
+            'consistent_navigation'  => 'understandable',
+            'error_messages'         => 'understandable',
+            'form_labels'            => 'understandable',
+            'error_prevention'       => 'understandable',
+
+            // Robust
+            'valid_html'       => 'robust',
+            'aria'             => 'robust',
+            'status_messages'  => 'robust',
+            'name_role_value'  => 'robust',
+        ];
+    }
+
+    /**
+     * Get the ordered list of WCAG principle groups with their labels.
+     *
+     * @return array
+     */
+    public static function get_checklist_groups() {
+        return [
+            'perceivable'    => __( 'Perceivable', 'devllo-accessibility-controls' ),
+            'operable'       => __( 'Operable', 'devllo-accessibility-controls' ),
+            'understandable' => __( 'Understandable', 'devllo-accessibility-controls' ),
+            'robust'         => __( 'Robust', 'devllo-accessibility-controls' ),
         ];
     }
 
@@ -1933,6 +1998,7 @@ class Settings {
         }
 
         $items       = self::get_checklist_items();
+        $groups      = self::get_checklist_groups();
         $statuses    = self::get_checklist_statuses();
         $results     = get_option( self::CHECK_RESULTS_OPTION_NAME, [] );
 
@@ -1943,6 +2009,42 @@ class Settings {
             'reviewed'       => __( 'Reviewed', 'devllo-accessibility-controls' ),
             'needs_attention'=> __( 'Needs attention', 'devllo-accessibility-controls' ),
             'not_applicable' => __( 'Not applicable', 'devllo-accessibility-controls' ),
+        ];
+
+        // Tally checklist statuses for the summary strip.
+        $status_counts = [
+            'reviewed'        => 0,
+            'needs_attention' => 0,
+            'not_applicable'  => 0,
+        ];
+        foreach ( $items as $id => $item ) {
+            $current = isset( $statuses[ $id ] ) ? $statuses[ $id ] : 'needs_attention';
+            if ( isset( $status_counts[ $current ] ) ) {
+                $status_counts[ $current ]++;
+            }
+        }
+
+        // Group checklist items by WCAG principle, preserving each item's original order.
+        $items_by_group = array_fill_keys( array_keys( $groups ), [] );
+        foreach ( $items as $id => $item ) {
+            $group = isset( $item['group'] ) && isset( $items_by_group[ $item['group'] ] ) ? $item['group'] : 'other';
+            if ( ! isset( $items_by_group[ $group ] ) ) {
+                $items_by_group[ $group ] = [];
+            }
+            $items_by_group[ $group ][ $id ] = $item;
+        }
+
+        // Defensive: if any item ended up outside the known groups, still show it.
+        if ( ! empty( $items_by_group['other'] ) ) {
+            $groups['other'] = __( 'Other', 'devllo-accessibility-controls' );
+        }
+
+        // Status chip metadata for the automated check results.
+        $check_status_meta = [
+            'ok'    => [ 'label' => __( 'OK', 'devllo-accessibility-controls' ), 'icon' => 'yes-alt' ],
+            'warn'  => [ 'label' => __( 'Needs review', 'devllo-accessibility-controls' ), 'icon' => 'warning' ],
+            'error' => [ 'label' => __( 'Error', 'devllo-accessibility-controls' ), 'icon' => 'dismiss' ],
+            'info'  => [ 'label' => __( 'Info', 'devllo-accessibility-controls' ), 'icon' => 'info-outline' ],
         ];
 
         ?>
@@ -1964,57 +2066,64 @@ class Settings {
                     <?php esc_html_e( 'Basic automated checks', 'devllo-accessibility-controls' ); ?>
                 </span>
             </h2>
-            <p class="description">
-                <?php esc_html_e( 'These checks are limited and informational. They are not a full audit and do not guarantee compliance.', 'devllo-accessibility-controls' ); ?>
-            </p>
 
-            <?php
-            $run_url = wp_nonce_url(
-                add_query_arg(
-                    'da11y_run_checks',
-                    1,
-                    admin_url( 'options-general.php?page=da11y_accessibility_guidance' )
-                ),
-                'da11y_run_checks'
-            );
-            ?>
-            <p>
-                <a href="<?php echo esc_url( $run_url ); ?>" class="button button-primary da11y-run-checks-button">
-                    <?php esc_html_e( 'Run basic accessibility checks', 'devllo-accessibility-controls' ); ?>
-                </a>
-            </p>
-
-            <?php if ( $last_run ) : ?>
-                <p>
-                    <?php
-                    printf(
-                        /* translators: %s: human-readable datetime */
-                        esc_html__( 'Last run: %s', 'devllo-accessibility-controls' ),
-                        esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run ) )
-                    );
-                    ?>
-                </p>
-                <?php if ( ! empty( $check_msgs ) ) : ?>
-                    <ul class="da11y-check-results">
-                        <?php foreach ( $check_msgs as $check_id => $check ) : ?>
-                            <?php
-                            $status = isset( $check['status'] ) ? $check['status'] : 'info';
-                            $message = isset( $check['message'] ) ? $check['message'] : '';
-                            ?>
-                            <li class="da11y-check-result da11y-check-result--<?php echo esc_attr( $status ); ?>">
-                                <span class="da11y-check-result-dot" aria-hidden="true"></span>
-                                <span class="da11y-check-result-text">
-                                    <?php echo esc_html( $message ); ?>
-                                </span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            <?php else : ?>
+            <div class="da11y-panel-card da11y-panel-card--checks">
                 <p class="description">
-                    <?php esc_html_e( 'No basic checks have been run yet.', 'devllo-accessibility-controls' ); ?>
+                    <?php esc_html_e( 'These checks are limited and informational. They are not a full audit and do not guarantee compliance.', 'devllo-accessibility-controls' ); ?>
                 </p>
-            <?php endif; ?>
+
+                <?php
+                $run_url = wp_nonce_url(
+                    add_query_arg(
+                        'da11y_run_checks',
+                        1,
+                        admin_url( 'options-general.php?page=da11y_accessibility_guidance' )
+                    ),
+                    'da11y_run_checks'
+                );
+                ?>
+                <p>
+                    <a href="<?php echo esc_url( $run_url ); ?>" class="button button-primary da11y-run-checks-button">
+                        <?php esc_html_e( 'Run basic accessibility checks', 'devllo-accessibility-controls' ); ?>
+                    </a>
+                </p>
+
+                <?php if ( $last_run ) : ?>
+                    <p class="da11y-last-run">
+                        <?php
+                        printf(
+                            /* translators: %s: human-readable datetime */
+                            esc_html__( 'Last run: %s', 'devllo-accessibility-controls' ),
+                            esc_html( wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run ) )
+                        );
+                        ?>
+                    </p>
+                    <?php if ( ! empty( $check_msgs ) ) : ?>
+                        <ul class="da11y-check-results">
+                            <?php foreach ( $check_msgs as $check_id => $check ) : ?>
+                                <?php
+                                $status = isset( $check['status'] ) ? $check['status'] : 'info';
+                                $message = isset( $check['message'] ) ? $check['message'] : '';
+                                $meta    = isset( $check_status_meta[ $status ] ) ? $check_status_meta[ $status ] : $check_status_meta['info'];
+                                ?>
+                                <li class="da11y-check-result da11y-check-result--<?php echo esc_attr( $status ); ?>">
+                                    <span class="da11y-status-chip da11y-status-chip--<?php echo esc_attr( $status ); ?>">
+                                        <span class="dashicons dashicons-<?php echo esc_attr( $meta['icon'] ); ?>" aria-hidden="true"></span>
+                                        <?php echo esc_html( $meta['label'] ); ?>
+                                    </span>
+                                    <span class="da11y-check-result-text">
+                                        <?php echo esc_html( $message ); ?>
+                                    </span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <p class="description">
+                        <?php esc_html_e( 'No basic checks have been run yet.', 'devllo-accessibility-controls' ); ?>
+                    </p>
+                <?php endif; ?>
+            </div>
 
             <form action="options.php" method="post">
                 <?php settings_fields( 'da11y_checklist_group' ); ?>
@@ -2026,48 +2135,80 @@ class Settings {
                     </span>
                 </h2>
 
-                <table class="form-table da11y-checklist-table" role="presentation">
-                    <tbody>
-                    <?php foreach ( $items as $id => $item ) : ?>
-                        <tr>
-                            <th scope="row">
-                                <strong class="da11y-checklist-title">
-                                    <?php echo esc_html( $item['title'] ); ?>
-                                </strong>
-                                <?php if ( ! empty( $item['wcag'] ) ) : ?>
-                                    <p class="da11y-checklist-wcag">
-                                        <?php echo esc_html( $item['wcag'] ); ?>
-                                    </p>
-                                <?php endif; ?>
-                            </th>
-                            <td>
-                                <p class="da11y-checklist-description">
-                                    <?php echo esc_html( $item['description'] ); ?>
-                                </p>
+                <ul class="da11y-checklist-summary">
+                    <li class="da11y-checklist-summary-item da11y-checklist-summary-item--reviewed">
+                        <span class="da11y-checklist-summary-count"><?php echo (int) $status_counts['reviewed']; ?></span>
+                        <span class="da11y-checklist-summary-label"><?php esc_html_e( 'Reviewed', 'devllo-accessibility-controls' ); ?></span>
+                    </li>
+                    <li class="da11y-checklist-summary-item da11y-checklist-summary-item--needs_attention">
+                        <span class="da11y-checklist-summary-count"><?php echo (int) $status_counts['needs_attention']; ?></span>
+                        <span class="da11y-checklist-summary-label"><?php esc_html_e( 'Needs attention', 'devllo-accessibility-controls' ); ?></span>
+                    </li>
+                    <li class="da11y-checklist-summary-item da11y-checklist-summary-item--not_applicable">
+                        <span class="da11y-checklist-summary-count"><?php echo (int) $status_counts['not_applicable']; ?></span>
+                        <span class="da11y-checklist-summary-label"><?php esc_html_e( 'Not applicable', 'devllo-accessibility-controls' ); ?></span>
+                    </li>
+                </ul>
 
-                                <?php
-                                $current_status = isset( $statuses[ $id ] ) ? $statuses[ $id ] : 'needs_attention';
-                                ?>
+                <?php foreach ( $groups as $group_key => $group_label ) : ?>
+                    <?php
+                    $group_items = isset( $items_by_group[ $group_key ] ) ? $items_by_group[ $group_key ] : [];
+                    if ( empty( $group_items ) ) {
+                        continue;
+                    }
+                    ?>
+                    <h3 class="da11y-checklist-group-heading">
+                        <?php echo esc_html( $group_label ); ?>
+                        <span class="da11y-checklist-group-count">
+                            <?php echo count( $group_items ); ?>
+                        </span>
+                    </h3>
 
-                                <select
-                                    id="da11y-checklist-<?php echo esc_attr( $id ); ?>"
-                                    name="<?php echo esc_attr( self::CHECKLIST_OPTION_NAME ); ?>[<?php echo esc_attr( $id ); ?>]"
-                                    class="da11y-checklist-status da11y-checklist-status--<?php echo esc_attr( $current_status ); ?>"
-                                >
-                                    <?php foreach ( $status_labels as $value => $label ) : ?>
-                                        <option
-                                            value="<?php echo esc_attr( $value ); ?>"
-                                            <?php selected( $statuses[ $id ], $value ); ?>
+                    <div class="da11y-panel-card da11y-panel-card--<?php echo esc_attr( $group_key ); ?>">
+                        <table class="form-table da11y-checklist-table" role="presentation">
+                            <tbody>
+                            <?php foreach ( $group_items as $id => $item ) : ?>
+                                <tr>
+                                    <th scope="row">
+                                        <strong class="da11y-checklist-title">
+                                            <?php echo esc_html( $item['title'] ); ?>
+                                        </strong>
+                                        <?php if ( ! empty( $item['wcag'] ) ) : ?>
+                                            <p class="da11y-checklist-wcag">
+                                                <?php echo esc_html( $item['wcag'] ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </th>
+                                    <td>
+                                        <p class="da11y-checklist-description">
+                                            <?php echo esc_html( $item['description'] ); ?>
+                                        </p>
+
+                                        <?php
+                                        $current_status = isset( $statuses[ $id ] ) ? $statuses[ $id ] : 'needs_attention';
+                                        ?>
+
+                                        <select
+                                            id="da11y-checklist-<?php echo esc_attr( $id ); ?>"
+                                            name="<?php echo esc_attr( self::CHECKLIST_OPTION_NAME ); ?>[<?php echo esc_attr( $id ); ?>]"
+                                            class="da11y-checklist-status da11y-checklist-status--<?php echo esc_attr( $current_status ); ?>"
                                         >
-                                            <?php echo esc_html( $label ); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                            <?php foreach ( $status_labels as $value => $label ) : ?>
+                                                <option
+                                                    value="<?php echo esc_attr( $value ); ?>"
+                                                    <?php selected( $statuses[ $id ], $value ); ?>
+                                                >
+                                                    <?php echo esc_html( $label ); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endforeach; ?>
 
                 <?php submit_button(); ?>
             </form>
