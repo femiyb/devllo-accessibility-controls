@@ -689,7 +689,7 @@ class Accessibility_Controls {
                                 </section>
                             <?php endif; ?>
 
-                            <?php if ( $reduced_motion_enabled && $f_reduced_motion ) : ?>
+                            <?php if ( $f_reduced_motion ) : ?>
                                 <section class="da11y-section da11y-section-motion">
                                     <h3 style="font-size: 0.85rem; margin: 0 0 0.4rem; color: #111; font-family: inherit;">
                                         <?php echo esc_html__( 'Reduce motion', 'devllo-accessibility-controls' ); ?>
