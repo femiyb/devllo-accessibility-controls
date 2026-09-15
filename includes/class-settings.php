@@ -1835,21 +1835,23 @@ class Settings {
                                             <?php echo esc_html( $section['title'] ); ?>
                                         </span>
                                     </h2>
-                                    <?php
-                                    if ( ! empty( $section['callback'] ) ) {
-                                        call_user_func( $section['callback'], $section );
-                                    }
-
-                                    if ( ! empty( $wp_settings_fields[ $page ][ $section_id ] ) ) {
-                                        ?>
-                                        <table class="form-table" role="presentation">
-                                            <tbody>
-                                            <?php do_settings_fields( $page, $section_id ); ?>
-                                            </tbody>
-                                        </table>
+                                    <div class="da11y-panel-card da11y-panel-card--<?php echo esc_attr( $slug ); ?>">
                                         <?php
-                                    }
-                                    ?>
+                                        if ( ! empty( $section['callback'] ) ) {
+                                            call_user_func( $section['callback'], $section );
+                                        }
+
+                                        if ( ! empty( $wp_settings_fields[ $page ][ $section_id ] ) ) {
+                                            ?>
+                                            <table class="form-table" role="presentation">
+                                                <tbody>
+                                                <?php do_settings_fields( $page, $section_id ); ?>
+                                                </tbody>
+                                            </table>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                                 <?php
                                 $is_first = false;

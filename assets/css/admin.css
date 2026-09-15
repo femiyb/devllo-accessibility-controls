@@ -51,15 +51,43 @@
     margin: 0;
 }
 
-/* Section cards on settings page */
-.da11y-tab-panel > h2 + .form-table {
+/*
+ * Section cards on settings page.
+ *
+ * Note: padding lives on this wrapping div, not on the <table> itself —
+ * WP core sets `.form-table { border-collapse: collapse }`, and per the
+ * CSS table model, padding on a table element is ignored entirely once
+ * border-collapse is set. A real block-level wrapper is the reliable fix.
+ */
+.da11y-panel-card {
     background: #fff;
     border-radius: 8px;
     border: 1px solid #dcdcde;
     border-left-width: 4px;
-    padding: 12px 18px 4px;
+    padding: 8px 24px;
     margin-bottom: 16px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.da11y-panel-card .form-table {
+    margin: 0;
+}
+
+.da11y-panel-card .form-table tr {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.da11y-panel-card .form-table tr:last-child {
+    border-bottom: none;
+}
+
+.da11y-panel-card .form-table th,
+.da11y-panel-card .form-table td {
+    padding: 18px 0;
+}
+
+.da11y-panel-card .form-table th {
+    padding-right: 16px;
 }
 
 .da11y-section-heading {
@@ -102,40 +130,36 @@
     color: #0891b2;
 }
 
-.da11y-section-heading--general + .form-table {
+.da11y-panel-card--general {
     border-left-color: #6b7280;
 }
 
-.da11y-section-heading--visual + .form-table {
+.da11y-panel-card--visual {
     border-left-color: #7c3aed;
 }
 
-.da11y-section-heading--text + .form-table {
+.da11y-panel-card--text {
     border-left-color: #2563eb;
 }
 
-.da11y-section-heading--reading + .form-table {
+.da11y-panel-card--reading {
     border-left-color: #059669;
 }
 
-.da11y-section-heading--navigation + .form-table {
+.da11y-panel-card--navigation {
     border-left-color: #d97706;
 }
 
-.da11y-section-heading--widget + .form-table {
+.da11y-panel-card--widget {
     border-left-color: #db2777;
 }
 
-.da11y-section-heading--statement + .form-table {
+.da11y-panel-card--statement {
     border-left-color: #0891b2;
 }
 
 .da11y-settings-sections .form-table th {
     width: 230px;
-}
-
-.da11y-settings-sections .form-table td {
-    padding-bottom: 8px;
 }
 
 /*
