@@ -516,3 +516,67 @@ div#da11y-quick-check-panel h3 {
 .da11y-hide-images-on [style*="background-image"] {
     display: none !important;
 }
+
+/*
+ * Calm mode: de-emphasize common non-essential UI (sidebars, sticky bars,
+ * auto-rotating carousels) using widely-used theme/plugin class patterns.
+ * Kept conservative and scoped to common selectors to avoid breaking layouts.
+ */
+.da11y-calm-mode-on .widget-area,
+.da11y-calm-mode-on .sidebar,
+.da11y-calm-mode-on aside.widget-area,
+.da11y-calm-mode-on [class*="sticky-header"],
+.da11y-calm-mode-on [class*="sticky-bar"],
+.da11y-calm-mode-on [class*="announcement-bar"],
+.da11y-calm-mode-on [class*="notification-bar"],
+.da11y-calm-mode-on [class*="popup"],
+.da11y-calm-mode-on [class*="carousel"],
+.da11y-calm-mode-on [class*="slider"] {
+    display: none !important;
+}
+
+/* Never hide the plugin's own UI when calm mode is on. */
+.da11y-calm-mode-on .da11y-trigger,
+.da11y-calm-mode-on .da11y-dialog-backdrop,
+.da11y-calm-mode-on .da11y-dialog {
+    display: revert !important;
+}
+
+/* High visibility focus: thicker, high-contrast outlines beyond the standard
+ * focus-enhancement toggle, without relying on colour alone. */
+.da11y-focus-strong-on *:focus,
+.da11y-focus-strong-on *:focus-visible {
+    outline: 4px solid #ff9800 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 2px #111 !important;
+}
+
+/* Larger click targets: increase padding/min size on common interactive
+ * elements without shifting layout dramatically. */
+.da11y-targets-large-on a,
+.da11y-targets-large-on button,
+.da11y-targets-large-on input[type="button"],
+.da11y-targets-large-on input[type="submit"],
+.da11y-targets-large-on input[type="reset"],
+.da11y-targets-large-on select,
+.da11y-targets-large-on input[type="checkbox"],
+.da11y-targets-large-on input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5em 0.75em;
+}
+
+.da11y-targets-large-on input[type="checkbox"],
+.da11y-targets-large-on input[type="radio"] {
+    padding: 0;
+    transform: scale(1.4);
+}
+
+/* Keep the plugin's own controls at their intended size. */
+.da11y-targets-large-on .da11y-trigger,
+.da11y-targets-large-on .da11y-dialog a,
+.da11y-targets-large-on .da11y-dialog button {
+    min-height: initial;
+    min-width: initial;
+    padding: revert;
+}

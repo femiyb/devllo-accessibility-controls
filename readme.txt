@@ -4,7 +4,7 @@ Tags: accessibility, a11y, contrast, font-size, dyslexia, reading
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,9 @@ Key visitor controls:
 - Reading mode (narrower column, focus state)
 - Reading guide and reading mask
 - Big cursor and link highlighting
-- Focus outline enhancement and reduced motion
+- Focus outline enhancement, high visibility focus, and reduced motion
+- Calm mode (reduces sidebars, sticky bars, and auto-rotating content)
+- Larger click targets
 - Hide images and reset preferences
 - Preferences stored locally (localStorage) and restored on return visits
 
@@ -85,6 +87,12 @@ Actions:
 - `da11y_before_dialog` / `da11y_after_dialog` — Hooks before/after the accessibility dialog markup.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added Calm mode — reduces distracting sidebars, sticky bars, and auto-rotating content
+* Added High visibility focus — thicker, high-contrast focus outlines
+* Added Larger click targets — increases the size of buttons, links, and form controls
+* Added corresponding admin feature toggles for the three new controls
 
 = 1.0.0 =
 * Stable release — initial WordPress.org distribution (feature-complete for v1)

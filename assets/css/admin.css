@@ -51,15 +51,43 @@
     margin: 0;
 }
 
-/* Section cards on settings page */
-.da11y-settings-sections > h2 + .form-table {
+/*
+ * Section cards on settings page.
+ *
+ * Note: padding lives on this wrapping div, not on the <table> itself —
+ * WP core sets `.form-table { border-collapse: collapse }`, and per the
+ * CSS table model, padding on a table element is ignored entirely once
+ * border-collapse is set. A real block-level wrapper is the reliable fix.
+ */
+.da11y-panel-card {
     background: #fff;
     border-radius: 8px;
     border: 1px solid #dcdcde;
     border-left-width: 4px;
-    padding: 12px 18px 4px;
+    padding: 8px 24px;
     margin-bottom: 16px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.da11y-panel-card .form-table {
+    margin: 0;
+}
+
+.da11y-panel-card .form-table tr {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.da11y-panel-card .form-table tr:last-child {
+    border-bottom: none;
+}
+
+.da11y-panel-card .form-table th,
+.da11y-panel-card .form-table td {
+    padding: 18px 0;
+}
+
+.da11y-panel-card .form-table th {
+    padding-right: 16px;
 }
 
 .da11y-section-heading {
@@ -102,31 +130,31 @@
     color: #0891b2;
 }
 
-.da11y-section-heading--general + .form-table {
+.da11y-panel-card--general {
     border-left-color: #6b7280;
 }
 
-.da11y-section-heading--visual + .form-table {
+.da11y-panel-card--visual {
     border-left-color: #7c3aed;
 }
 
-.da11y-section-heading--text + .form-table {
+.da11y-panel-card--text {
     border-left-color: #2563eb;
 }
 
-.da11y-section-heading--reading + .form-table {
+.da11y-panel-card--reading {
     border-left-color: #059669;
 }
 
-.da11y-section-heading--navigation + .form-table {
+.da11y-panel-card--navigation {
     border-left-color: #d97706;
 }
 
-.da11y-section-heading--widget + .form-table {
+.da11y-panel-card--widget {
     border-left-color: #db2777;
 }
 
-.da11y-section-heading--statement + .form-table {
+.da11y-panel-card--statement {
     border-left-color: #0891b2;
 }
 
@@ -134,8 +162,91 @@
     width: 230px;
 }
 
-.da11y-settings-sections .form-table td {
-    padding-bottom: 8px;
+/*
+ * Settings tabs.
+ *
+ * Progressive enhancement: the tab bar is hidden and every panel is shown
+ * (stacked, as before) until JS marks the wrapper ready — so settings
+ * remain fully usable with JavaScript disabled.
+ */
+.da11y-tabs-wrapper {
+    display: none;
+}
+
+.da11y-tabs-wrapper.da11y-js-tabs-ready {
+    display: block;
+}
+
+.da11y-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    border-bottom: 1px solid #dcdcde;
+    margin-bottom: 16px;
+}
+
+.da11y-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 4px 4px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #50575e;
+    cursor: pointer;
+}
+
+.da11y-tab:hover {
+    background: #f0f0f1;
+    color: #1d2327;
+}
+
+.da11y-tab:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: -2px;
+}
+
+.da11y-tab-active {
+    color: #1d2327;
+    border-bottom-color: #2271b1;
+    background: #f6f7f7;
+}
+
+.da11y-tab--general.da11y-tab-active { border-bottom-color: #6b7280; }
+.da11y-tab--visual.da11y-tab-active { border-bottom-color: #7c3aed; }
+.da11y-tab--text.da11y-tab-active { border-bottom-color: #2563eb; }
+.da11y-tab--reading.da11y-tab-active { border-bottom-color: #059669; }
+.da11y-tab--navigation.da11y-tab-active { border-bottom-color: #d97706; }
+.da11y-tab--widget.da11y-tab-active { border-bottom-color: #db2777; }
+.da11y-tab--statement.da11y-tab-active { border-bottom-color: #0891b2; }
+
+.da11y-tab-panels.da11y-js-tabs .da11y-tab-panel {
+    display: none;
+}
+
+.da11y-tab-panels.da11y-js-tabs .da11y-tab-panel-active {
+    display: block;
+}
+
+.da11y-tab-panel:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+@media (max-width: 782px) {
+    .da11y-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .da11y-tab {
+        flex: 0 0 auto;
+    }
 }
 
 /* Toggle-style checkboxes */
@@ -226,50 +337,176 @@
     padding-inline: 20px;
 }
 
-/* Guidance page: automated results */
+/* Guidance page: "Basic automated checks" card */
+.da11y-panel-card--checks {
+    border-left-color: #0891b2;
+}
+
+.da11y-last-run {
+    color: #50575e;
+    font-size: 13px;
+}
+
 .da11y-check-results {
     list-style: none;
-    margin: 8px 0 16px;
+    margin: 8px 0 0;
     padding-left: 0;
 }
 
 .da11y-check-result {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 4px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f1;
 }
 
-.da11y-check-result-dot {
-    width: 10px;
-    height: 10px;
+.da11y-check-result:last-child {
+    border-bottom: none;
+}
+
+/* Status chip: used for both automated-check results and reused elsewhere. */
+.da11y-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+    padding: 2px 10px;
     border-radius: 999px;
-    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
-.da11y-check-result--ok .da11y-check-result-dot {
-    background: #1f9d55;
+.da11y-status-chip .dashicons {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
 }
 
-.da11y-check-result--warn .da11y-check-result-dot,
-.da11y-check-result--info .da11y-check-result-dot {
-    background: #d9831f;
+.da11y-status-chip--ok {
+    background: #dcfce7;
+    color: #166534;
 }
 
-.da11y-check-result--error .da11y-check-result-dot {
-    background: #d63638;
+.da11y-status-chip--warn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.da11y-status-chip--error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.da11y-status-chip--info {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+/* Guidance page: checklist summary strip */
+.da11y-checklist-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+    margin: 8px 0 20px;
+    padding: 0;
+}
+
+.da11y-checklist-summary-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #dcdcde;
+    background: #fff;
+}
+
+.da11y-checklist-summary-count {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.da11y-checklist-summary-label {
+    font-size: 12px;
+    color: #50575e;
+}
+
+.da11y-checklist-summary-item--reviewed {
+    border-left: 4px solid #16a34a;
+}
+
+.da11y-checklist-summary-item--reviewed .da11y-checklist-summary-count {
+    color: #166534;
+}
+
+.da11y-checklist-summary-item--needs_attention {
+    border-left: 4px solid #d97706;
+}
+
+.da11y-checklist-summary-item--needs_attention .da11y-checklist-summary-count {
+    color: #92400e;
+}
+
+.da11y-checklist-summary-item--not_applicable {
+    border-left: 4px solid #6b7280;
+}
+
+.da11y-checklist-summary-item--not_applicable .da11y-checklist-summary-count {
+    color: #374151;
+}
+
+/* Guidance page: checklist grouped by WCAG principle */
+.da11y-checklist-group-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin: 20px 0 8px;
+}
+
+.da11y-checklist-group-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #f0f0f1;
+    color: #50575e;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.da11y-panel-card--perceivable {
+    border-left-color: #2563eb;
+}
+
+.da11y-panel-card--operable {
+    border-left-color: #d97706;
+}
+
+.da11y-panel-card--understandable {
+    border-left-color: #059669;
+}
+
+.da11y-panel-card--robust {
+    border-left-color: #7c3aed;
+}
+
+.da11y-panel-card--other {
+    border-left-color: #6b7280;
 }
 
 /* Guidance page: checklist table */
 .da11y-checklist-table th {
     width: 260px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-
-.da11y-checklist-table td {
-    padding-top: 12px;
-    padding-bottom: 12px;
 }
 
 .da11y-checklist-table tr:nth-child(odd) th,

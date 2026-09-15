@@ -70,6 +70,9 @@ final class Assets {
                 'alignLeft'     => false,
                 'readingMask'     => false,
                 'hideImages'      => false,
+                'calmMode'        => false,
+                'focusStrong'     => false,
+                'largeTargets'    => false,
 
             ],
             'settings' => [
@@ -81,6 +84,7 @@ final class Assets {
                 'darkMode'         => ! empty( $settings['feature_dark_mode'] ),
                 'grayscale'        => ! empty( $settings['feature_grayscale'] ),
                 'brightness'       => ! empty( $settings['feature_brightness'] ),
+                'calmMode'         => ! empty( $settings['feature_calm_mode'] ),
                 'textSize'         => ! empty( $settings['feature_text_size'] ),
                 'letterSpacing'    => ! empty( $settings['feature_letter_spacing'] ),
                 'lineSpacing'      => ! empty( $settings['feature_line_spacing'] ),
@@ -93,6 +97,8 @@ final class Assets {
                 'bigCursor'        => ! empty( $settings['feature_big_cursor'] ),
                 'highlightLinks'   => ! empty( $settings['feature_highlight_links'] ),
                 'focusEnhanced'    => ! empty( $settings['feature_focus_enhanced'] ),
+                'focusStrong'      => ! empty( $settings['feature_focus_strong'] ),
+                'largeTargets'     => ! empty( $settings['feature_large_targets'] ),
                 'reducedMotion'    => ! empty( $settings['feature_reduced_motion'] ),
                 'hideImages'       => ! empty( $settings['feature_hide_images'] ),
                 'keyboardShortcut' => ! empty( $settings['feature_keyboard_shortcut'] ),

@@ -25,6 +25,9 @@
             alignLeft: false,
             readingMask: false,
             hideImages: false,
+            calmMode: false,
+            focusStrong: false,
+            largeTargets: false,
         },
 
         init() {
@@ -108,6 +111,18 @@
 
             if (typeof defaults.bigCursor === 'boolean') {
                 this.state.bigCursor = defaults.bigCursor;
+            }
+
+            if (typeof defaults.calmMode === 'boolean') {
+                this.state.calmMode = defaults.calmMode;
+            }
+
+            if (typeof defaults.focusStrong === 'boolean') {
+                this.state.focusStrong = defaults.focusStrong;
+            }
+
+            if (typeof defaults.largeTargets === 'boolean') {
+                this.state.largeTargets = defaults.largeTargets;
             }
         },
 
@@ -200,6 +215,18 @@
                     if (typeof stored.hideImages === 'boolean') {
                         this.state.hideImages = stored.hideImages;
                     }
+
+                    if (typeof stored.calmMode === 'boolean') {
+                        this.state.calmMode = stored.calmMode;
+                    }
+
+                    if (typeof stored.focusStrong === 'boolean') {
+                        this.state.focusStrong = stored.focusStrong;
+                    }
+
+                    if (typeof stored.largeTargets === 'boolean') {
+                        this.state.largeTargets = stored.largeTargets;
+                    }
                                     }
             } catch (e) {
                 // Fail silently if storage is unavailable or JSON is invalid.
@@ -276,6 +303,9 @@
             this.$readingMaskBottom  = document.querySelector('.da11y-reading-mask-bottom');
             this.$accordionToggles   = document.querySelectorAll('.da11y-accordion-toggle');
             this.$hideImagesToggle = document.querySelector('.da11y-hide-images-toggle');
+            this.$calmModeToggle = document.querySelector('.da11y-calm-mode-toggle');
+            this.$focusStrongToggle = document.querySelector('.da11y-focus-strong-toggle');
+            this.$largeTargetsToggle = document.querySelector('.da11y-large-targets-toggle');
 
             // Selector for focusable elements inside the dialog.
             this.focusableSelector =
@@ -538,6 +568,51 @@
                 );
                 this.$readingMode.classList.toggle('da11y-toggle-active', !!this.state.readingMode);
             }
+
+            // Calm mode.
+            if (this.state.calmMode) {
+                root.classList.add('da11y-calm-mode-on');
+            } else {
+                root.classList.remove('da11y-calm-mode-on');
+            }
+
+            if (this.$calmModeToggle) {
+                this.$calmModeToggle.setAttribute(
+                    'aria-pressed',
+                    this.state.calmMode ? 'true' : 'false'
+                );
+                this.$calmModeToggle.classList.toggle('da11y-toggle-active', !!this.state.calmMode);
+            }
+
+            // High visibility focus.
+            if (this.state.focusStrong) {
+                root.classList.add('da11y-focus-strong-on');
+            } else {
+                root.classList.remove('da11y-focus-strong-on');
+            }
+
+            if (this.$focusStrongToggle) {
+                this.$focusStrongToggle.setAttribute(
+                    'aria-pressed',
+                    this.state.focusStrong ? 'true' : 'false'
+                );
+                this.$focusStrongToggle.classList.toggle('da11y-toggle-active', !!this.state.focusStrong);
+            }
+
+            // Larger click targets.
+            if (this.state.largeTargets) {
+                root.classList.add('da11y-targets-large-on');
+            } else {
+                root.classList.remove('da11y-targets-large-on');
+            }
+
+            if (this.$largeTargetsToggle) {
+                this.$largeTargetsToggle.setAttribute(
+                    'aria-pressed',
+                    this.state.largeTargets ? 'true' : 'false'
+                );
+                this.$largeTargetsToggle.classList.toggle('da11y-toggle-active', !!this.state.largeTargets);
+            }
         },
 
         bindEvents() {
@@ -763,6 +838,27 @@
             if (this.$readingMode) {
                 this.$readingMode.addEventListener('click', () => {
                     this.toggleReadingMode();
+                });
+            }
+
+            // Calm mode toggle.
+            if (this.$calmModeToggle) {
+                this.$calmModeToggle.addEventListener('click', () => {
+                    this.toggleCalmMode();
+                });
+            }
+
+            // High visibility focus toggle.
+            if (this.$focusStrongToggle) {
+                this.$focusStrongToggle.addEventListener('click', () => {
+                    this.toggleFocusStrong();
+                });
+            }
+
+            // Larger click targets toggle.
+            if (this.$largeTargetsToggle) {
+                this.$largeTargetsToggle.addEventListener('click', () => {
+                    this.toggleLargeTargets();
                 });
             }
 
@@ -1051,6 +1147,24 @@
             this.savePreferences();
         },
 
+        toggleCalmMode() {
+            this.state.calmMode = !this.state.calmMode;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        toggleFocusStrong() {
+            this.state.focusStrong = !this.state.focusStrong;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
+        toggleLargeTargets() {
+            this.state.largeTargets = !this.state.largeTargets;
+            this.applyStateToDOM();
+            this.savePreferences();
+        },
+
         resetAll() {
             this.state.textSize = 0;
             this.state.contrast = false;
@@ -1070,6 +1184,9 @@
             this.state.alignLeft = false;
             this.state.readingMask = false;
             this.state.hideImages = false;
+            this.state.calmMode = false;
+            this.state.focusStrong = false;
+            this.state.largeTargets = false;
 
             this.applyStateToDOM();
             this.clearPreferences();
